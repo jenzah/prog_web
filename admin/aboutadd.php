@@ -37,7 +37,7 @@ if(isset($_POST['addabout']))
 ?>
  
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
         <meta charset="utf-8">
@@ -98,13 +98,13 @@ if(isset($_POST['addabout']))
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
-									<h2 class="card-title">About Us</h2>
+									<h2 class="card-title">À propos</h2>
 								</div>
 								<form method="post" enctype="multipart/form-data">
 								<div class="card-body">
 										<div class="row">
 											<div class="col-xl-12">
-												<h5 class="card-title">About Us </h5>
+												<h5 class="card-title">À propos </h5>
 												<?php echo $error; ?>
 												<?php echo $msg; ?>
 												<div class="form-group row">

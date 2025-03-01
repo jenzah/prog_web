@@ -9,12 +9,12 @@ if(!isset($_SESSION['auser']))
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-        <title>LM HOMES | Profile</title>
+        <title>LM HOMES | Profil</title>
 		
 		<!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
@@ -53,10 +53,10 @@ if(!isset($_SESSION['auser']))
 					<div class="page-header">
 						<div class="row">
 							<div class="col">
-								<h3 class="page-title">Profile</h3>
+								<h3 class="page-title">Profil</h3>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-									<li class="breadcrumb-item active">Profile</li>
+									<li class="breadcrumb-item active">Profil</li>
 								</ul>
 							</div>
 						</div>

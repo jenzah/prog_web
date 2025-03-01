@@ -1,4 +1,4 @@
-<footer class="full-row bg-secondary p-0">
+<footer class="full-row bg-footer p-0">
             <div class="container">
                 <div  class="row">
                     <div class="col-lg-12">
@@ -6,7 +6,7 @@
                             <div class="row">
                                 <div class="col-md-12 col-lg-4">
                                     <div class="footer-widget mb-4">
-                                        <div class="footer-logo mb-4"> <a href="#"><img class="logo-bottom" src="images/logo/logo-white.png" alt="image"></a> </div>
+                                        <div class="footer-logo mb-4"> <a href="#"><img class="logo-bottom" src="images/logo/logo-white.png" height="60px" alt="image"></a> </div>
                                         <p class="pb-20 text-white">Risus commodo congue augue phasellus morbi hymenaeos ante tincidunt eu orci dictum bibendum lacus platea primis mi lacinia felis gravida natoque bibendum cubilia montes tristique et arcu blandit risus. Lobortis dignissim nam.</p>
 										<p class="pb-20 text-white">Risus commodo congue augue phasellus morbi hymenaeos ante tincidunt eu orci dictum bibendum lacus platea primis mi lacinia felis gravida natoque</p>
                                         </div>
@@ -30,12 +30,8 @@
                                             <div class="footer-widget footer-nav mb-4">
                                                 <h4 class="widget-title text-white double-down-line-left position-relative">Quick Links</h4>
                                                 <ul class="hover-text-primary">
-                                                    <li><a href="#" class="text-white">About Us</a></li>
-                                                    <li><a href="#" class="text-white">Featured Property</a></li>
-                                                    <li><a href="#" class="text-white">Become A Member</a></li>
-                                                    <li><a href="#" class="text-white">Submit Property</a></li>
-                                                    <li><a href="#" class="text-white">How It Work</a></li>
-                                                    <li><a href="#" class="text-white">Our Agents</a></li>
+                                                    <li><a href="#" class="text-white">À propos</a></li>
+                                                    <!--- <li><a href="agents.php" class="text-white">Our Agents</a></li> --->
                                                 </ul>
                                             </div>
                                         </div>

@@ -6,7 +6,7 @@ include("config.php");
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
     <head>
         <!-- Required meta tags -->
@@ -57,7 +57,7 @@ include("config.php");
                             <div class="col-md-6">
                                 <nav aria-label="breadcrumb" class="float-left float-md-right">
                                     <ol class="breadcrumb bg-transparent m-0 p-0">
-                                        <li class="breadcrumb-item text-white"><a href="#">Home</a></li>
+                                        <li class="breadcrumb-item text-white"><a href="home.php">Page d'accueil</a></li>
                                         <li class="breadcrumb-item active">À propos de nous</li>
                                     </ol>
                                 </nav>
@@ -70,18 +70,13 @@ include("config.php");
                 <!--	About Our Company start   -->
                 <div class="full-row">
                     <div class="container">
-        				<div class="row">
-                            <div class="col-md-12 col-lg-12">
-                                <h3 class="double-down-line-left text-secondary position-relative pb-4 mb-4">About our company</h3>
-                            </div>
-                        </div>
                         <div class="row about-company">
                             <div class="col-md-12 col-lg-7">
                                 <!--	About content   -->
                                 <div class="about-content">
-                                    <h4>Bienvenue chez Omnes Immobilier</h4>
+                                    <h3 class="double-down-line-left text-secondary position-relative pb-4 mb-4">Bienvenue chez Omnes Immobilier</h3>
                                     <p>Fondée par quatre passionnées de l'immobilier issues d'Omnes Education, Omnes Immobilier se consacre à répondre aux besoins immobiliers de toute la communauté Omnes. Notre plateforme en ligne innovante met en relation les clients avec des agents immobiliers certifiés, offrant une expérience fluide pour la visite des propriétés, la sélection d'agents et la prise de rendez-vous.</p>
-                                    <h4>Notre Mission</h4>
+                                    <h4 class="text-secondary">Notre Mission</h4>
                                     <p>Chez Omnes Immobilier, nous croyons que trouver votre propriété idéale devrait être un voyage passionnant, et non un processus stressant. Notre mission est de révolutionner l'expérience immobilière pour la communauté Omnes en fournissant :</p>
                                         
                                     <ul class="floral-list">
@@ -91,7 +86,7 @@ include("config.php");
                                       <li>Des canaux de communication multiples pour l'interaction client-agent</li>
                                     </ul><br>
 
-                                    <h4>Nos Valeurs</h4>
+                                    <h4 class="text-secondary">Nos Valeurs</h4>
                                     <ul class="floral-list-values">
                                       <li><strong>Intégrité</strong> : Nous croyons en des pratiques commerciales honnêtes et transparentes</li>
                                       <li><strong>Innovation</strong> : Nous recherchons constamment de nouvelles façons d'améliorer nos services</li>
@@ -99,7 +94,7 @@ include("config.php");
                                       <li><strong>Excellence</strong> : Nous visons la plus haute qualité dans tout ce que nous faisons</li>
                                     </ul><br>
 
-                                    <h4>Rejoignez-nous</h4>
+                                    <h4 class="text-secondary">Rejoignez-nous</h4>
                                     <p>Que vous cherchiez à acheter votre première maison, à vendre une propriété ou à explorer des opportunités immobilières commerciales, notre équipe est là pour vous accompagner à chaque étape. Découvrez la différence Omnes Immobilier dès aujourd'hui !</p>
                                 </div>
                             </div>

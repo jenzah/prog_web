@@ -52,7 +52,7 @@ Version      : 1.0
 	url(../fonts/MaterialIcons-Regular.woff) format('woff'),
 	url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
 }
-html {
+html{
 	height: 100%;
 }
 body {
@@ -1951,34 +1951,6 @@ html.menu-opened body {
 }
 .login-wrapper .loginbox .login-right .dont-have a:hover {
 	text-decoration: underline;
-}
-.social-login {
-	text-align: center;
-}
-.social-login > span {
-	color: #a0a0a0;
-	margin-right: 8px;
-}
-.social-login > a {
-	background-color: #ccc;
-	border-radius: 4px;
-	color: #fff;
-	display: inline-block;
-	font-size: 18px;
-	height: 32px;
-	line-height: 32px;
-	margin-right: 6px;
-	text-align: center;
-	width: 32px;
-}
-.social-login > a:last-child {
-	margin-right: 0;
-}
-.social-login > a.facebook {
-	background-color: #4b75bd;
-}
-.social-login > a.google {
-	background-color: #fe5240;
 }
 .login-or {
 	color: #a0a0a0;

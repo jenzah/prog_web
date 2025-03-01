@@ -30,7 +30,7 @@ if(isset($_REQUEST['login']))
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 <!-- Required meta tags -->
@@ -44,7 +44,7 @@ if(isset($_REQUEST['login']))
 
 <!--	Fonts
 	========================================================-->
-<link href="https://fonts.googleapis.com/css?family=Muli:400,400i,500,600,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
 <!--	Css Link
@@ -62,7 +62,7 @@ if(isset($_REQUEST['login']))
 
 <!--	Title
 	=========================================================-->
-<title>Homex - Real Estate Template</title>
+<title>Omnes Immobilier</title>
 </head>
 <body>
 
@@ -94,7 +94,7 @@ if(isset($_REQUEST['login']))
                     <div class="col-md-6">
                         <nav aria-label="breadcrumb" class="float-left float-md-right">
                             <ol class="breadcrumb bg-transparent m-0 p-0">
-                                <li class="breadcrumb-item text-white"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item text-white"><a href="home.php">Page d'accueil</a></li>
                                 <li class="breadcrumb-item active">Login</li>
                             </ol>
                         </nav>
@@ -132,16 +132,6 @@ if(isset($_REQUEST['login']))
 									<span class="or-line"></span>
 									<span class="span-or">or</span>
 								</div>
-								
-								<!-- Social Login -->
-								<div class="social-login">
-									<span>Login with</span>
-									<a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
-									<a href="#" class="google"><i class="fab fa-google"></i></a>
-									<a href="#" class="facebook"><i class="fab fa-twitter"></i></a>
-									<a href="#" class="google"><i class="fab fa-instagram"></i></a>
-								</div>
-								<!-- /Social Login -->
 								
 								<div class="text-center dont-have">Don't have an account? <a href="register.php">Register</a></div>
 								

@@ -7,7 +7,7 @@ include("config.php");
 								
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -23,7 +23,7 @@ include("config.php");
 
 <!--	Fonts
 	========================================================-->
-<link href="https://fonts.googleapis.com/css?family=Muli:400,400i,500,600,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
 <!--	Css Link
@@ -40,7 +40,7 @@ include("config.php");
 
 <!--	Title
 	=========================================================-->
-<title>Homex - Real Estate Template</title>
+<title>Omnes Immobilier</title>
 </head>
 <body>
 
@@ -72,7 +72,7 @@ include("config.php");
                     <div class="col-md-6">
                         <nav aria-label="breadcrumb" class="float-left float-md-right">
                             <ol class="breadcrumb bg-transparent m-0 p-0">
-                                <li class="breadcrumb-item text-white"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item text-white"><a href="home.php">Page d'accueil</a></li>
                                 <li class="breadcrumb-item active">Property</li>
                             </ol>
                         </nav>

@@ -54,8 +54,8 @@ if(!isset($_SESSION['auser']))
 									<p class="text-muted mb-0">Administrator</p>
 								</div>
 							</div>
-							<a class="dropdown-item" href="profile.php">Profile</a>
-							<a class="dropdown-item" href="logout.php">Logout</a>
+							<a class="dropdown-item" href="profile.php">Profil</a>
+							<a class="dropdown-item" href="logout.php">Déconnexion</a>
 						</div>
 					</li>
 

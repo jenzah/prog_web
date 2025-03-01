@@ -574,7 +574,7 @@
  
 
  
-	//  Panel Massage
+	//  Panel message
 	var close = document.getElementsByClassName("closebtn");
 	var i;
 	for (i = 0; i < close.length; i++) {

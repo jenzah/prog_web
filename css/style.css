@@ -229,10 +229,10 @@ label.radios {
 	top: 5px;
 }
 .color-box li.default {
-	background-color: #17c788
+	background-color: #4F6C6B
 }
 .color-box li.default:before {
-	background: #0d1432;
+	background: #F7DDD9;
 }
 .color-box li.color_2 {
 	background-color: #3851ff
@@ -436,6 +436,9 @@ label.radios {
 }
 
 .text-primary, a.text-primary, .text-primary a, a.text-primary:focus, a.hover-text-primary:hover, .hover-text-primary:hover, .hover-text-primary a:hover {
+	color: var(--theme-dark-primary-color) !important
+}
+.text-light-primary, a.text-light-primary, .text-light-primary a, a.text-light-primary:focus, a.hover-text-light-primary:hover, .hover-text-light-primary:hover, .hover-text-light-primary a:hover {
 	color: var(--theme-primary-color) !important
 }
 .icon-primary, .icon-primary i, .icon-primary svg, .hover-primary-nav .navbar-nav .nav-link.active, .hover-primary-nav .navbar-nav .nav-link:hover, .top-header .dropdown-toggle::after, .footer-widget li a:hover, .check-submit li input[type="checkbox"]:checked + label::before, .property-btn li a.active, .property-btn li a:hover, .hover-primary-nav .navbar-nav .nav-link:hover, .breadcrumb-item > a:hover, .copyright .line-menu a:hover, .dashboard-top-left .dropdown-toggle::before, .dashboard-panel .message-list .message-action a:hover, .breadcrumb-item.active, .navigation_link_widget li a:hover, .flat-primary [class^="flaticon-"]::before, .list-text-white a.dropdown-item:hover {
@@ -466,7 +469,7 @@ hover-text-white-nav .navbar-nav .nav-link.active,
 }
 /*============ Background colors ===============*/
 .bg-primary, a.bg-primary, a.bg-primary:hover, a.bg-primary:focus, .hover-bg-primary:hover {
-	background-color: var(--theme-primary-color) !important
+	background-color: var(--theme-dark-primary-color) !important
 }
 .formicon .checkbox-collapse::after, 
 .jslider .jslider-pointer, 
@@ -563,12 +566,13 @@ hover-text-white-nav .navbar-nav .nav-link.active,
 .btn-ordinary {
 	background-color: var(--theme-gray-color);
 	border-color: var(--theme-gray-color);
-	color: var(--theme-ordinary-color)
+	color: var(--theme-ordinary-color);
 }
 .btn-primary, .btn-primary:hover, .btn-ordinary:hover {
 	color: var(--theme-white-color);
-	background-color: var(--theme-primary-color);
-	border-color: var(--theme-primary-color);
+	background-color: var(--theme-dark-primary-color);
+	border-color: var(--theme-dark-primary-color);
+	border-radius: 50px;
 }
 .btn-white {
 	color: var(--theme-secondary-color);
@@ -718,7 +722,7 @@ p {
 }
 a, a:hover, .btn-link, .btn-link:hover {
 	text-decoration: none;
-	cousor: pointer
+	cursor: pointer
 }
 img {
 	width: 100%
@@ -732,7 +736,8 @@ button, button:focus {
 	font-size: 14px;
 	border-radius: 0;
 	line-height: 46px;
-	font-weight: 500
+	font-weight: 500;
+	border-radius: 50px;
 }
 .btn-lg {
 	padding: 0px 30px !important;
@@ -770,7 +775,9 @@ button, button:focus {
 .banner-full-row {
 	position: relative;
 	width: 100%;
-	padding: 100px 0;	
+	padding: 20px;
+	height: 200px;
+	align-content: center;
 }
 
 .landing-header.fixed-top .main-nav {
@@ -970,7 +977,10 @@ blockquote {
  /*==================================================================
  Top Header CSS
  ==================================================================*/
-.top-header {
+.bg-header {
+	background-color: var(--theme-header-footer-color) !important
+}
+ .top-header {
 	line-height: 50px
 }
 .top-header .dropdown-toggle::after {
@@ -1125,8 +1135,8 @@ blockquote {
 .jslider .jslider-pointer-hover {
 	background-position: -20px -60px;
 }
-.jslider .jslider-pointer-to {
-}
+/*.jslider .jslider-pointer-to {
+}*/
 .jslider .jslider-label {
 	font-size: 9px;
 	line-height: 12px;
@@ -1268,6 +1278,7 @@ blockquote {
 .slider-banner1.overlay-black::before {
 	z-index: 0
 }
+
 /*==========================================
  Page Banner CSS
  ===========================================*/
@@ -1278,6 +1289,7 @@ blockquote {
 	content: ">";
 	color:#fff;
 }
+
 /*==========================================
  Form Styles
  ===========================================*/
@@ -2076,6 +2088,49 @@ sup {
 .about-content p, .service-text p {
 	margin-bottom: 30px
 }
+.about-content ul li {
+	margin-bottom: 15px
+}
+.about-content ul.floral-list {
+  list-style: none;
+  padding-left: 20px;
+}
+
+.about-content ul.floral-list li {
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 8px;
+}
+
+.about-content ul.floral-list li::before {
+  content: "✿";  /* Fleur unicode */
+  position: absolute;
+  left: 0;
+  color: #4F6C6B; /* Couleur orange/dorée pour la fleur */
+  font-size: 18px;
+}
+
+/* Variante pour la deuxième liste (valeurs) */
+.about-content ul.floral-list-values {
+  padding-left: 20px;
+}
+
+.about-content ul.floral-list-values li {
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 10px;
+}
+
+.about-content ul.floral-list-values li::before {
+  content: "❀";  /* Autre type de fleur unicode */
+  position: absolute;
+  left: 0;
+  color: #4F6C6B; /* Couleur bleue pour la fleur */
+  font-size: 18px;
+}
+
+
+---------
 .about-content img {
 	width: 200px;
 	height: auto;
@@ -2374,7 +2429,10 @@ Register page
 /*==========================================
  Footer Style
  ===========================================*/
-.footer-widget {
+ .bg-footer {
+	background-color: var(--theme-header-footer-color) !important
+}
+ .footer-widget {
 	display: inline-block;
 	width: 100%;
 }

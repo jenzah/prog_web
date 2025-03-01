@@ -33,12 +33,12 @@ if(isset($_REQUEST['insert']))
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
     
 <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-        <title>Ventura - Register</title>
+        <title>Ventura - Inscription</title>
 		
 		<!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
@@ -67,7 +67,7 @@ if(isset($_REQUEST['insert']))
                     	
                         <div class="login-right">
 							<div class="login-right-wrap">
-								<h1>Register</h1>
+								<h1>Inscription</h1>
 								<p class="account-subtitle">Access to our dashboard</p>
 								<p style="color:red;"><?php echo $error; ?></p>
 								<p style="color:green;"><?php echo $msg; ?></p>
@@ -98,16 +98,6 @@ if(isset($_REQUEST['insert']))
 									<span class="or-line"></span>
 									<span class="span-or">or</span>
 								</div>
-								
-								<!-- Social Login -->
-								<div class="social-login">
-									<span>Register with</span>
-									<a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-									<a href="#" class="google"><i class="fa fa-google"></i></a>
-									<a href="#" class="facebook"><i class="fa fa-twitter"></i></a>
-									<a href="#" class="google"><i class="fa fa-instagram"></i></a>
-								</div>
-								<!-- /Social Login -->
 								
 								<div class="text-center dont-have">Already have an account? <a href="index.php">Login</a></div>
 							</div>

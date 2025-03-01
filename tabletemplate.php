@@ -3,23 +3,13 @@ ini_set('session.cache_limiter','public');
 session_cache_limiter(false);
 session_start();
 include("config.php");
-
-// codeing
-
-if(isset($_REQUEST['calc']))
+if(!isset($_SESSION['uemail']))
 {
-	$amount=$_REQUEST['amount'];
-	$mon=$_REQUEST['month'];
-	$int=$_REQUEST['interest'];
-	
-	$interest = $amount * $int/100;
-	$pay = $amount + $interest;
-	$month = $pay / $mon;
-
-}	
+	header("location:login.php");
+}								
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 <!-- Required meta tags -->
@@ -33,7 +23,7 @@ if(isset($_REQUEST['calc']))
 
 <!--	Fonts
 	========================================================-->
-<link href="https://fonts.googleapis.com/css?family=Muli:400,400i,500,600,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
 <!--	Css Link
@@ -51,7 +41,7 @@ if(isset($_REQUEST['calc']))
 
 <!--	Title
 	=========================================================-->
-<title>Homex - Real Estate Template</title>
+<title>Omnes Immobilier</title>
 </head>
 <body>
 
@@ -83,7 +73,7 @@ if(isset($_REQUEST['calc']))
                     <div class="col-md-6">
                         <nav aria-label="breadcrumb" class="float-left float-md-right">
                             <ol class="breadcrumb bg-transparent m-0 p-0">
-                                <li class="breadcrumb-item text-white"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item text-white"><a href="home.php">Page d'accueil</a></li>
                                 <li class="breadcrumb-item active">User Listed Property</li>
                             </ol>
                         </nav>
@@ -99,48 +89,55 @@ if(isset($_REQUEST['calc']))
             <div class="container">
                     <div class="row mb-5">
 						<div class="col-lg-12">
-							<h2 class="text-secondary double-down-line text-center">EMI Calculator</h2>
+							<h2 class="text-secondary double-down-line text-center">User Listed Property</h2>
+							<?php 
+								if(isset($_GET['msg']))	
+								echo $_GET['msg'];	
+							?>
                         </div>
 					</div>
-					<center>
-					<table class="items-list col-lg-6" style="border-collapse:inherit;">
+					<table class="items-list col-lg-12" style="border-collapse:inherit;">
                         <thead>
                              <tr  class="bg-primary">
-                                <th class="text-white font-weight-bolder">Price</th>
-                                <th class="text-white font-weight-bolder">Amount</th>
+                                <th class="text-white font-weight-bolder">Properties</th>
+                                <th class="text-white font-weight-bolder">BHK</th>
+                                <th class="text-white font-weight-bolder">Reason</th>
+                                <th class="text-white font-weight-bolder">Added Date</th>
+								<th class="text-white font-weight-bolder">Status</th>
+                                <th class="text-white font-weight-bolder">Update</th>
+								<th class="text-white font-weight-bolder">Delete</th>
                              </tr>
                         </thead>
                         <tbody>
 						
-						
-                            <tr class="text-center font-18">
-                                <td><b>Enter Amount</b></td>
-                                <td><b><?php echo $amount ; ?></b></td>
+							<?php 
+							$uid=$_SESSION['uid'];
+							$query=mysqli_query($con,"SELECT * FROM `property` WHERE uid='$uid'");
+								while($row=mysqli_fetch_array($query))
+								{
+							?>
+                            <tr>
+                                <td>
+									<img src="admin/property/<?php echo $row['18'];?>" alt="pimage">
+                                    <div class="property-info d-table">
+                                        <h5 class="text-secondary text-capitalize"><a href="propertydetail.php?pid=<?php echo $row['0'];?>"><?php echo $row['1'];?></a></h5>
+                                        <span class="font-14 text-capitalize"><i class="fas fa-map-marker-alt text-primary font-13"></i>&nbsp; <?php echo $row['14'];?></span>
+                                        <div class="price mt-3">
+											<span class="text-primary">$&nbsp;<?php echo $row['13'];?></span>
+										</div>
+                                    </div>
+								</td>
+                                <td><?php echo $row['4'];?></td>
+                                <td class="text-capitalize">For <?php echo $row['5'];?></td>
+                                <td><?php echo $row['29'];?></td>
+								<td class="text-capitalize"><?php echo $row['24'];?></td>
+                                <td><a class="btn btn-primary" href="submitpropertyupdate.php?id=<?php echo $row['0'];?>">Update</a></td>
+								<td><a class="btn btn-primary" href="submitpropertydelete.php?id=<?php echo $row['0'];?>">Delete</a></td>
                             </tr>
-							<tr class="text-center">
-                                <td><b>Enter Month</b></td>
-                                <td><b><?php echo $mon ; ?></b></td>
-                            </tr>
-							<tr class="text-center">
-                                <td><b>Enter Interest Rate</b></td>
-                                <td><b><?php echo $int ; ?></b></td>
-                            </tr>
-							<tr class="text-center">
-                                <td><b>Total Interest</b></td>
-                                <td><b><?php echo $interest ; ?></b></td>
-                            </tr>
-							<tr class="text-center">
-                                <td><b>Total Amount</b></td>
-                                <td><b><?php echo $pay ; ?></b></td>
-                            </tr>
-							<tr class="text-center">
-                                <td><b>Pay Per Month (EMI)</b></td>
-                                <td><b><?php echo $month ; ?></b></td>
-                            </tr>
+							<?php } ?>
 							
                         </tbody>
-                    </table> 
-					</center>
+                    </table>            
             </div>
         </div>
 	<!--	Submit property   -->

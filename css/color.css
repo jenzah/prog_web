@@ -2,53 +2,54 @@
 Theme Color All Codes Variable
 ==================================*/
 :root {
-	 --theme-ordinary-color: #74777b;  /* theme ordinay font color ok*/
+	 --theme-ordinary-color: #333333;  /* Keeping a dark color for readable text */
+ }
+ :root {
+	 --theme-primary-color: #F7DDD9;  /* Your blush pink */
+ }
+ :root {
+	--theme-dark-primary-color: #d09086;  /* Darker version of blush pink */
 }
-:root {
-	 --theme-primary-color: #17c788;  /* theme primary color ok*/
-}
-:root {
-	 --theme-secondary-color: #0d1432;  /* theme secondary color ok*/
-}
-:root {
-	 --theme-white-color: #fff;  /* theme white font color ok*/
-}
-:root {
-	 --theme-light-color: #f8f8f8;  /* theme light gray color */
-}
-:root {
-	 --theme-gray-color: #f5f5f5;  /* theme gray color ok*/
-}
-:root {
-	 --theme-footer-color: #091b4b;  /* theme dark color */
-}
-:root {
-	 --theme-dark-color: #091b4b;  /* theme dark color */
-}
-:root {
-	 --text-light-color: #a3a7af;  /* Light text color to use in dark area */
-}
-:root {
-	 --theme-primary-opacity-color: rgba(11, 191, 141, .8);  /* theme secondary color */
-}
-:root {
-	 --theme-secondary-opacity-color: rgba(13,20,50,0.7);  /* theme secondary color ok*/
-}
-:root {
-	 --theme-white-opacity-color: rgba(255, 255, 255, 0.3);  /* theme light color */
-}
-:root {
-	 --theme-dark-opacity-color: rgba(0, 0, 0, 0.5);  /* theme dark color ok*/
-}
-/*==================================
+ :root {
+	 --theme-secondary-color: #4F6C6B;  /* Your dusty teal */
+ }
+ :root {
+	 --theme-white-color: #EDEDED;  /* Your warm white */
+ }
+ :root {
+	 --theme-light-color: #F5F5F5;  /* Slightly lighter than your warm white */
+ }
+ :root {
+	 --theme-gray-color: #E6E6E6;  /* Slightly darker shade of warm white for contrast */
+ }
+ :root {
+	 --theme-header-footer-color: #3A5251;  /* Darker version of your teal for footer */
+ }
+ :root {
+	 --theme-dark-color: #3A5251;  /* Darker version of your teal */
+ }
+ :root {
+	 --text-light-color: #8A9A99;  /* Light version of teal for text on dark backgrounds */
+ }
+ :root {
+	 --theme-primary-opacity-color: rgba(79, 108, 107, 0.8);  /* Dusty teal with opacity */
+ }
+ :root {
+	 --theme-secondary-opacity-color: rgba(247, 221, 217, 0.7);  /* Blush pink with opacity */
+ }
+ :root {
+	 --theme-white-opacity-color: rgba(237, 237, 237, 0.3);  /* Warm white with opacity */
+ }
+ :root {
+	 --theme-dark-opacity-color: rgba(58, 82, 81, 0.5);  /* Dark teal with opacity */
+ }
+
+ /*==================================
 Font Variable
 ==================================*/
 :root {
-	 --theme-ordinary-font: 'Muli', sans-serif;  /* Font use for normal text and general text ok*/
+	--theme-ordinary-font: 'Montserrat', sans-serif;  /* Font use for normal text and general text ok*/
 }
 :root {
-	 --theme-highlight-font: 'Comfortaa', cursive;  /* Font used in title or special area ok*/
+	--theme-highlight-font: 'Lora', serif;  /* Font used in title or special area ok*/
 }
-
-
-

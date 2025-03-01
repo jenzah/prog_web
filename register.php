@@ -44,7 +44,7 @@ if(isset($_REQUEST['reg']))
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 <!-- Required meta tags -->
@@ -58,7 +58,7 @@ if(isset($_REQUEST['reg']))
 
 <!--	Fonts
 	========================================================-->
-<link href="https://fonts.googleapis.com/css?family=Muli:400,400i,500,600,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
 <!--	Css Link
@@ -76,7 +76,7 @@ if(isset($_REQUEST['reg']))
 
 <!--	Title
 	=========================================================-->
-<title>Homex - Real Estate Template</title>
+<title>Omnes Immobilier</title>
 </head>
 <body>
 
@@ -103,13 +103,13 @@ if(isset($_REQUEST['reg']))
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <h2 class="page-name float-left text-white text-uppercase mt-1 mb-0"><b>Register</b></h2>
+                        <h2 class="page-name float-left text-white text-uppercase mt-1 mb-0"><b>Inscription</b></h2>
                     </div>
                     <div class="col-md-6">
                         <nav aria-label="breadcrumb" class="float-left float-md-right">
                             <ol class="breadcrumb bg-transparent m-0 p-0">
-                                <li class="breadcrumb-item text-white"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Register</li>
+                                <li class="breadcrumb-item text-white"><a href="home.php">Page d'accueil</a></li>
+                                <li class="breadcrumb-item active">Inscription</li>
                             </ol>
                         </nav>
                     </div>
@@ -126,7 +126,7 @@ if(isset($_REQUEST['reg']))
                 	<div class="loginbox">
                         <div class="login-right">
 							<div class="login-right-wrap">
-								<h1>Register</h1>
+								<h1>Inscription</h1>
 								<p class="account-subtitle">Access to our dashboard</p>
 								<?php echo $error; ?><?php echo $msg; ?>
 								<!-- Form -->
@@ -143,29 +143,13 @@ if(isset($_REQUEST['reg']))
 									<div class="form-group">
 										<input type="text" name="pass"  class="form-control" placeholder="Your Password*">
 									</div>
-
-									 <div class="form-check-inline">
-									  <label class="form-check-label">
-										<input type="radio" class="form-check-input" name="utype" value="user" checked>User
-									  </label>
-									</div>
-									<div class="form-check-inline">
-									  <label class="form-check-label">
-										<input type="radio" class="form-check-input" name="utype" value="agent">Agent
-									  </label>
-									</div>
-									<div class="form-check-inline disabled">
-									  <label class="form-check-label">
-										<input type="radio" class="form-check-input" name="utype" value="builder">Builder
-									  </label>
-									</div> 
 									
 									<div class="form-group">
 										<label class="col-form-label"><b>User Image</b></label>
 										<input class="form-control" name="uimage" type="file">
 									</div>
 									
-									<button class="btn btn-primary" name="reg" value="Register" type="submit">Register</button>
+									<button class="btn btn-primary" name="reg" value="Register" type="submit">Inscription</button>
 									
 								</form>
 								
@@ -173,16 +157,6 @@ if(isset($_REQUEST['reg']))
 									<span class="or-line"></span>
 									<span class="span-or">or</span>
 								</div>
-								
-								<!-- Social Login -->
-								<div class="social-login">
-									<span>Register with</span>
-									<a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
-									<a href="#" class="google"><i class="fab fa-google"></i></a>
-									<a href="#" class="facebook"><i class="fab fa-twitter"></i></a>
-									<a href="#" class="google"><i class="fab fa-instagram"></i></a>
-								</div>
-								<!-- /Social Login -->
 								
 								<div class="text-center dont-have">Already have an account? <a href="login.php">Login</a></div>
 								

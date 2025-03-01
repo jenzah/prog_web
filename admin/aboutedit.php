@@ -33,7 +33,7 @@ if(isset($_POST['update']))
 ?>
  
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
         <meta charset="utf-8">
@@ -95,7 +95,7 @@ if(isset($_POST['update']))
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
-									<h2 class="card-title">About Us</h2>
+									<h2 class="card-title">À propos</h2>
 								</div>
 								<?php 
 								$aid = $_GET['id'];
@@ -108,7 +108,7 @@ if(isset($_POST['update']))
 								<div class="card-body">
 										<div class="row">
 											<div class="col-xl-12">
-												<h5 class="card-title">About Us </h5>
+												<h5 class="card-title">À propos </h5>
 												<div class="form-group row">
 													<label class="col-lg-2 col-form-label">Title</label>
 													<div class="col-lg-9">
@@ -164,5 +164,5 @@ if(isset($_POST['update']))
 		<script  src="assets/js/script.js"></script>
     </body>
 
-<!-- Mirrored from dreamguys.co.in/demo/ventura/form-vertical.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 25 Aug 2019 04:41:05 GMT -->
+<!-- Mirrored from dreamguys.co.in/demo/ventura/form-vertical.htmlby HTTrack Website Copier/3.x [XR&CO'2014], Sun, 25 Aug 2019 04:41:05 GMT -->
 </html>

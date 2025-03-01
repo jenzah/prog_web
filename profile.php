@@ -37,7 +37,7 @@ if(isset($_POST['insert']))
 }								
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 <!-- Required meta tags -->
@@ -51,7 +51,7 @@ if(isset($_POST['insert']))
 
 <!--	Fonts
 	========================================================-->
-<link href="https://fonts.googleapis.com/css?family=Muli:400,400i,500,600,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
 <!--	Css Link
@@ -69,7 +69,7 @@ if(isset($_POST['insert']))
 
 <!--	Title
 	=========================================================-->
-<title>Homex - Real Estate Template</title>
+<title>Omnes Immobilier</title>
 </head>
 <body>
 
@@ -96,13 +96,13 @@ if(isset($_POST['insert']))
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <h2 class="page-name float-left text-white text-uppercase mt-1 mb-0"><b>Profile</b></h2>
+                        <h2 class="page-name float-left text-white text-uppercase mt-1 mb-0"><b>Profil</b></h2>
                     </div>
                     <div class="col-md-6">
                         <nav aria-label="breadcrumb" class="float-left float-md-right">
                             <ol class="breadcrumb bg-transparent m-0 p-0">
-                                <li class="breadcrumb-item text-white"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Profile</li>
+                                <li class="breadcrumb-item text-white"><a href="home.php">Page d'accueil</a></li>
+                                <li class="breadcrumb-item active">Profil</li>
                             </ol>
                         </nav>
                     </div>
@@ -115,11 +115,6 @@ if(isset($_POST['insert']))
 		<!--	Submit property   -->
         <div class="full-row">
             <div class="container">
-                    <div class="row">
-						<div class="col-lg-12">
-							<h2 class="text-secondary double-down-line text-center">Profile</h2>
-                        </div>
-					</div>
                 <div class="dashboard-personal-info p-5 bg-white">
                     <form action="#" method="post">
                         <h5 class="text-secondary border-bottom-on-white pb-3 mb-4">Feedback Form</h5>

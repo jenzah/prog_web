@@ -29,7 +29,7 @@
 	}   
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
     
 <head>
         <meta charset="utf-8">
@@ -83,16 +83,6 @@
 									<span class="or-line"></span>
 									<span class="span-or">or</span>
 								</div>
-								
-								<!-- Social Login -->
-								<div class="social-login">
-									<span>Login with</span>
-									<a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-									<a href="#" class="google"><i class="fa fa-google"></i></a>
-									<a href="#" class="facebook"><i class="fa fa-twitter"></i></a>
-									<a href="#" class="google"><i class="fa fa-instagram"></i></a>
-								</div>
-								<!-- /Social Login -->
 								
 								<div class="text-center dont-have">Don't have an account? <a href="register.php">Register</a></div>
 								

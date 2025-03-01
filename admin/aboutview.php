@@ -9,7 +9,7 @@ if(!isset($_SESSION['auser']))
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
         <meta charset="utf-8">
