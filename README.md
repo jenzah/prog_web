@@ -252,10 +252,3 @@ Pour fusionner une autre branche dans votre branche actuelle :
 ```bash
 git merge nom-de-branche
 ```
-
-### Résoudre les Conflits
-Si vous rencontrez des conflits de fusion, Git marquera les fichiers qui nécessitent une résolution. Après avoir modifié manuellement ces fichiers :
-```bash
-git add fichier-resolu.php
-git commit -m "Résolution des conflits de fusion"
-```
