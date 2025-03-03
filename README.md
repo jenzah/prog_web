@@ -6,6 +6,7 @@ Ce projet est une plateforme web immobilière développée pour la communauté O
 La plateforme permet aux utilisateurs de parcourir les propriétés disponibles, de prendre rendez-vous avec des agents immobiliers et de communiquer avec eux par différents canaux (texte, audio, vidéo ou e-mail).
 
 *Ce projet est dérivé de : https://github.com/suraj25809/Real-Estate-Php*
+ashley Ohnona
 
 
 ## Aperçu du Projet
