@@ -7,6 +7,11 @@ La plateforme permet aux utilisateurs de parcourir les propriétés disponibles,
 
 *Ce projet est dérivé de : https://github.com/suraj25809/Real-Estate-Php*
 
+*Développé par:*
+- *Wendy*
+- *Ashley OHNONA*
+- *Kawtar BENAICHA*
+- *Jennifer ZAHORA*
 
 ## Aperçu du Projet
 
@@ -148,7 +153,7 @@ Nom de la base de données: `omnes_immobilier`
    
 2. **Créer la base de données**
    - Ouvrez phpMyAdmin (http://localhost/phpmyadmin)
-   - Créez une nouvelle base de données nommée "developer"
+   - Créez une nouvelle base de données nommée `omnes_immobilier`
    
 3. **Importer la base de données**
    - Sélectionnez la base de données `omnes_immobilier` dans phpMyAdmin
