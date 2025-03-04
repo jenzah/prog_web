@@ -724,9 +724,12 @@ a, a:hover, .btn-link, .btn-link:hover {
 	text-decoration: none;
 	cursor: pointer
 }
+
 img {
-	width: 100%
+	width: 100%;
 }
+
+
 button, button:focus {
 	border: none;
 	outline: none
