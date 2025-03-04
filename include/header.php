@@ -36,22 +36,21 @@
 										<li class="nav-item"> <a class="nav-link" href="about.php">À propos</a> </li>
 																				
 										<li class="nav-item"> <a class="nav-link" href="property.php">Propriétés</a> </li>
-                                        
-										<li class="nav-item"> <a class="nav-link" href="agent.php">Agent</a> </li>
-										
+                                        										
 										<?php  if(isset($_SESSION['uemail']))
 										{ ?>
 										<li class="nav-item dropdown">
 											<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon compte</a>
 											<ul class="dropdown-menu">
 												<li class="nav-item"> <a class="nav-link" href="profile.php">Profil</a> </li>
-												<li class="nav-item"> <a class="nav-link" href="request.php">Mes RDVs</a> </li>
-												<li class="nav-item"> <a class="nav-link" href="feature.php">Paiment</a> </li>
+												<li class="nav-item"> <a class="nav-link" href="">Mes RDVs</a> </li>
+												<li class="nav-item"> <a class="nav-link" href="">Mes conversations</a> </li>
+												<li class="nav-item"> <a class="nav-link" href="">Paiment</a> </li>
 												<li class="nav-item"> <a class="nav-link" href="logout.php">Déconnexion</a> </li>	
 											</ul>
                                         </li>
 										<?php } else { ?>
-										<li class="nav-item"> <a class="nav-link" href="login.php">Connexion/Inscription</a> </li>
+										<li class="nav-item"> <a class="nav-link" href="login.php">Connexion</a> </li>
 										<?php } ?>
 										
                                     </ul>
