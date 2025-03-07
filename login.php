@@ -3,30 +3,38 @@ session_start();
 include("config.php");
 $error="";
 $msg="";
-if(isset($_REQUEST['login']))
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login']))
 {
 	$email=$_REQUEST['email'];
-	$pass=$_REQUEST['pass'];
+	$password=$_REQUEST['password'];
 	
 	
-	if(!empty($email) && !empty($pass))
+	if(!empty($email) && !empty($password))
 	{
-		$sql = "SELECT * FROM user where uemail='$email' && upass='$pass'";
+		$sql = "SELECT * FROM user where uemail='$email' && upass='$password'";
 		$result=mysqli_query($con, $sql);
-		$row=mysqli_fetch_array($result);
-		   if($row){
+		$user=mysqli_fetch_array($result);
+		
+		if($user){
 			   
-				$_SESSION['uid']=$row['uid'];
-				$_SESSION['uemail']=$email;
-				$_SESSION['utype']=$row['utype'];
+			$_SESSION['uid']=$user['uid'];
+			$_SESSION['uemail']=$email;
+			$_SESSION['utype']=$user['utype'];
+			$_SESSION['logged_in']=true;
+			
+			// Redirect based on user type
+			if($user['utype'] == 'admin' || $user['utype'] == 'agent') {
+				header("location:about.php");
+			} else {
 				header("location:index.php");
+			}
 				
 		   }
-		   else{
-			   $error = "<p class='alert alert-warning'>Login failed.</p> ";
-		   }
+		else{
+			$error = "<p class='alert alert-warning'>Connexion échouée. Email ou mot de passe invalide.</p> ";
+		}
 	}else{
-		$error = "<p class='alert alert-warning'>Please fill out all the fields.</p>";
+		$error = "<p class='alert alert-warning'>Veuillez remplir tous les champs.</p>";
 	}
 }
 ?>
@@ -76,13 +84,13 @@ if(isset($_REQUEST['login']))
 	            <div class="container">
 	                <div class="row">
 	                    <div class="col-md-6">
-	                        <h2 class="page-name float-left text-white text-uppercase mt-1 mb-0"><b>Login</b></h2>
+	                        <h2 class="page-name float-left text-white text-uppercase mt-1 mb-0"><b>Connexion</b></h2>
 	                    </div>
 	                    <div class="col-md-6">
 	                        <nav aria-label="breadcrumb" class="float-left float-md-right">
 	                            <ol class="breadcrumb bg-transparent m-0 p-0">
 	                                <li class="breadcrumb-item text-white"><a href="home.php">Page d'accueil</a></li>
-	                                <li class="breadcrumb-item active">Login</li>
+	                                <li class="breadcrumb-item active">Connexion</li>
 	                            </ol>
 	                        </nav>
 	                    </div>
@@ -107,16 +115,15 @@ if(isset($_REQUEST['login']))
 											<input type="email"  name="email" class="form-control" placeholder="Votre email">
 										</div>
 										<div class="form-group">
-											<input type="password" name="pass"  class="form-control" placeholder="Votre mot de passe">
+											<input type="password" name="password"  class="form-control" placeholder="Votre mot de passe">
 										</div>
 										
 											<button class="btn btn-primary d-block mx-auto" name="login" value="Login" type="submit">Connexion</button>
-										
 									</form>
 									
 									<div class="login-or">
 										<span class="or-line"></span>
-										<span class="span-or">or</span>
+										<span class="span-or">ou</span>
 									</div>
 									
 									<div class="text-center dont-have">Vous n'avez pas de compte ? <a href="register.php">Inscription</a></div>
