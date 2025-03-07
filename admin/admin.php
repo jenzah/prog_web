@@ -8,7 +8,7 @@ if(!isset($_SESSION['uid'])) {
     header("location:../login.php");
 }
 
-if ($_SESSION['role'] !== 'admin') {
+if ($_SESSION['utype'] !== 'admin') {
     // The page requires admin role
     header("Location: unauthorized.php");
     exit();
