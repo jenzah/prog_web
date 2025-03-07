@@ -29,7 +29,7 @@ include("config.php");
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
-        <link rel="stylesheet" type="text/css" href="css/layerslider.css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/layerslider.css"> -->
         <link rel="stylesheet" type="text/css" href="css/color.css" id="color-change">
         <link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
@@ -122,9 +122,9 @@ include("config.php");
         ============================================================--> 
         <script src="js/jquery.min.js"></script> 
         <!--jQuery Layer Slider --> 
-        <script src="js/greensock.js"></script> 
+        <!-- <script src="js/greensock.js"></script> 
         <script src="js/layerslider.transitions.js"></script> 
-        <script src="js/layerslider.kreaturamedia.jquery.js"></script> 
+        <script src="js/layerslider.kreaturamedia.jquery.js"></script>  -->
         <!--jQuery Layer Slider --> 
         <script src="js/popper.min.js"></script> 
         <script src="js/bootstrap.min.js"></script> 

@@ -20,7 +20,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login']))
 			$_SESSION['uid']=$user['uid'];
 			$_SESSION['uemail']=$email;
 			$_SESSION['utype']=$user['utype'];
-			$_SESSION['logged_in']=true;
 			
 			// Redirect based on user type
 			if($user['utype'] == 'admin' || $user['utype'] == 'agent') {

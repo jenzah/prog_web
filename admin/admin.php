@@ -4,10 +4,18 @@ session_cache_limiter(false);
 session_start();
 include("../config.php");
 
-if(!isset($_SESSION['uemail'])) {
+if(!isset($_SESSION['uid'])) {
     header("location:../login.php");
-}								
+}
+
+if ($_SESSION['role'] !== 'admin') {
+    // The page requires admin role
+    header("Location: unauthorized.php");
+    exit();
+}
 ?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -53,7 +61,7 @@ if(!isset($_SESSION['uemail'])) {
 <div id="page-wrapper">
     <div class="row"> 
         <!-- Header -->
-        <?php include("include/header.php");?>
+        <?php include("../include/header.php");?>
 
         <!-- Page Title -->
         <div class="banner-full-row page-banner" style="background-image:url('../images/breadcrumb.jpg');">
@@ -113,7 +121,7 @@ if(!isset($_SESSION['uemail'])) {
                     while($row = mysqli_fetch_array($query)) {
                     ?>
                         <tr>
-                            <td><img src="property/<?php echo $row['pimage1']; ?>" width="100"></td>
+                            <td><img src="../property/<?php echo $row['pimage1']; ?>" width="100"></td>
                             <td><?php echo $row['title']; ?></td>
                             <td><?php echo ucfirst($row['propertyType']); ?></td>
                             <td><?php echo $row['area']; ?> m²</td>
@@ -142,7 +150,7 @@ if(!isset($_SESSION['uemail'])) {
         </div>
 
         <!-- Footer -->
-        <?php include("include/footer.php");?>
+        <?php include("../include/footer.php");?>
     </div>
 </div>
 

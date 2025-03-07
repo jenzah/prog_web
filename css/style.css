@@ -428,6 +428,9 @@ label.radios {
 	background: url(../images/bg-image/bg-10.html) no-repeat center / cover;
 }
 /*==============*Text colors*==============*/
+.text-danger {
+    color: darkred !important;  /* Replace with your desired color code */
+  }
 .text-ordinary-ipmortant {
 	color: var(--theme-ordinary-color) !important
 }
