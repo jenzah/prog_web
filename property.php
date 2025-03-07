@@ -1,196 +1,238 @@
 <?php 
-ini_set('session.cache_limiter','public');
-session_cache_limiter(false);
-session_start();
-include("config.php");
-///code								
+    ini_set('session.cache_limiter','public');
+    session_cache_limiter(false);
+    session_start();
+    include("config.php");
+    ///code	
 ?>
+
+
 <!DOCTYPE html>
 <html>
-<head>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <!--meta http-equiv="X-UA-Compatible" content="IE=edge"-->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Meta Tags -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="Homex template">
-<meta name="keywords" content="">
-<meta name="author" content="Unicoder">
-<link rel="shortcut icon" href="images/favicon.ico">
+        <!-- Meta Tags -->
+        <!--meta http-equiv="X-UA-Compatible" content="IE=edge"-->
+        <!--meta name="description" content="Homex template"-->
+        <!--meta name="keywords" content=""-->
+        <!--meta name="author" content="Unicoder"-->
+        <link rel="shortcut icon" href="images/favicon.ico">
 
-<!--	Fonts
-	========================================================-->
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+        <!--	Fonts   -->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
-<!--	Css Link
-	========================================================-->
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
-<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="css/layerslider.css">
-<link rel="stylesheet" type="text/css" href="css/color.css" id="color-change">
-<link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
-<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css">
-<link rel="stylesheet" type="text/css" href="css/style.css">
+        <!--	Css Links  -->
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="css/layerslider.css">
+        <link rel="stylesheet" type="text/css" href="css/color.css" id="color-change">
+        <link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
 
-<!--	Title
-	=========================================================-->
-<title>Omnes Immobilier</title>
-</head>
-<body>
+        <!--	Title   -->
+        <title>Omnes Immobilier</title>
+    </head>
+    
+    <body>
+        <div id="page-wrapper">
+            <div class="row"> 
+                <!--	Header start  -->
+        		<?php include("include/header.php");?>
+                <!--	Header end  -->
 
-<!--	Page Loader
-=============================================================
-<div class="page-loader position-fixed z-index-9999 w-100 bg-white vh-100">
-	<div class="d-flex justify-content-center y-middle position-relative">
-	  <div class="spinner-border" role="status">
-		<span class="sr-only">Loading...</span>
-	  </div>
-	</div>
-</div>
---> 
-
-
-<div id="page-wrapper">
-    <div class="row"> 
-        <!--	Header start  -->
-		<?php include("include/header.php");?>
-        <!--	Header end  -->
-        
-        <!--	Banner   --->
-        <div class="banner-full-row page-banner" style="background-image:url('images/breadcrumb.jpg');">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h2 class="page-name float-left text-white text-uppercase mt-1 mb-0"><b>Property Grid</b></h2>
-                    </div>
-                    <div class="col-md-6">
-                        <nav aria-label="breadcrumb" class="float-left float-md-right">
-                            <ol class="breadcrumb bg-transparent m-0 p-0">
-                                <li class="breadcrumb-item text-white"><a href="home.php">Page d'accueil</a></li>
-                                <li class="breadcrumb-item active">Property Grid</li>
-                            </ol>
-                        </nav>
+                <!--	Banner start  --->
+                <div class="banner-full-row page-banner" style="background-image:url('images/breadcrumb.jpg');">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h2 class="page-name float-left text-white text-uppercase mt-1 mb-0"><b>Propriétés</b></h2>
+                            </div>
+                            <div class="col-md-6">
+                                <nav aria-label="breadcrumb" class="float-left float-md-right">
+                                    <ol class="breadcrumb bg-transparent m-0 p-0">
+                                        <li class="breadcrumb-item text-white"><a href="home.php">Page d'accueil</a></li>
+                                        <li class="breadcrumb-item active">Propriétés</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-         <!--	Banner   --->
-        
-        <!--	Property Grid
-		===============================================================-->
-        <div class="full-row">
-            <div class="container">
-                <div class="row">
-				
-					<div class="col-lg-8">
+                 <!--	Banner end  --->
+
+                <!--	Property grid start  -->
+                <div class="full-row">
+                    <div class="container">
                         <div class="row">
-						
-							<?php 
-							$query=mysqli_query($con,"SELECT property.*, user.uname,user.utype,user.uimage FROM `property`,`user` WHERE property.uid=user.uid");
-								while($row=mysqli_fetch_array($query))
-								{
-							?>
-									
-                            <div class="col-md-6">
-                                <div class="featured-thumb hover-zoomer mb-4">
-                                    <div class="overlay-black overflow-hidden position-relative"> <img src="admin/property/<?php echo $row['18'];?>" alt="pimage">
-                                        
-                                        <div class="sale bg-secondary text-white">For <?php echo $row['5'];?></div>
-                                        <div class="price text-primary text-capitalize">$<?php echo $row['13'];?> <span class="text-white"><?php echo $row['12'];?> Sqft</span></div>
-                                        
-                                    </div>
-                                    <div class="featured-thumb-data shadow-one">
-                                        <div class="p-4">
-                                            <h5 class="text-secondary hover-text-primary mb-2 text-capitalize"><a href="propertydetail.php?pid=<?php echo $row['0'];?>"><?php echo $row['1'];?></a></h5>
-                                            <span class="location text-capitalize"><i class="fas fa-map-marker-alt text-primary"></i> <?php echo $row['14'];?></span> </div>
-                                        <div class="px-4 pb-4 d-inline-block w-100">
-                                            <div class="float-left text-capitalize"><i class="fas fa-user text-primary mr-1"></i>By : <?php echo $row['uname'];?></div>
-                                            <div class="float-right"><i class="far fa-calendar-alt text-primary mr-1"></i> 6 Months Ago</div>
+                            <div class="col-md-12">
+                                <p>Here is where the search function is going to go</p>
+                                <form method="get" action="" id="propertySearchForm">
+                                    <div class="row">
+                                        <!-- <div class="col-md-6 col-lg-3">
+                                            <?php include("include/filterproperty.php");?>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <?php include("include/filteragent.php");?>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <?php include("include/filterlocation.php");?>
+                                        </div> -->
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                <!-- <label for="searchKeyword">Recherche par mot-clé</label> -->
+                                                <input type="text" class="form-control" id="searchKeyword" name="keyword" 
+                                                    placeholder="Recherche"
+                                                    value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-lg-2">
+                                            <div class="form-group">
+                                                <button type="submit" name="filter" class="btn btn-primary w-100">Rechercher</button>
+                                                <p>search button pressed, the value is:</p>
+                                                <?php
+                                                    if(isset($_GET["keyword"])) {
+                                                        echo "true";
+                                                        echo $_GET['keyword'];
+                                                    } else {
+                                                        echo "false";
+                                                    }
+                                                    ?>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
-                            <?php } ?>
-                            
 
-                            
-                            
-                        <!--    <div class="col-md-12">
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center mt-4">
-                                        <li class="page-item disabled"> <span class="page-link">Previous</span> </li>
-                                        <li class="page-item active" aria-current="page"> <span class="page-link"> 1 <span class="sr-only">(current)</span> </span> </li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">...</li>
-                                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                        <li class="page-item"> <a class="page-link" href="#">Next</a> </li>
-                                    </ul>
-                                </nav>
-                            </div>  -->
-                        </div>
-                    </div>
-					
-                    <div class="col-lg-4">
-                        <div class="sidebar-widget mt-5">
-                            <h4 class="double-down-line-left text-secondary position-relative pb-4 mb-4">Recent Property Add</h4>
-                            <ul class="property_list_widget">
-							
-								<?php 
-								$query=mysqli_query($con,"SELECT * FROM `property` ORDER BY date DESC LIMIT 6");
-										while($row=mysqli_fetch_array($query))
-										{
-								?>
-                                <li> <img src="admin/property/<?php echo $row['18'];?>" alt="pimage">
-                                    <h6 class="text-secondary hover-text-primary text-capitalize"><a href="propertydetail.php?pid=<?php echo $row['0'];?>"><?php echo $row['1'];?></a></h6>
-                                    <span class="font-14"><i class="fas fa-map-marker-alt icon-primary icon-small"></i> <?php echo $row['14'];?></span>
+                            <!--  Showing properties  -->
+		        			<div class="col-md-12">
+                                <div class="row">
+                                <?php
+                                    // Build the query with filters
+                                    // $where_conditions = array("(property.status = 'À vendre' OR property.status = 'À louer')");
+
+                                    // if(isset($_GET['type']) && !empty($_GET['type'])) {
+                                    //     $type = mysqli_real_escape_string($con, $_GET['type']);
+                                    //     $where_conditions[] = "property.type = '$type'";
+                                    // }
+
+                                    // if(isset($_GET['agent']) && !empty($_GET['agent'])) {
+                                    //     $agent = mysqli_real_escape_string($con, $_GET['agent']);
+                                    //     $where_conditions[] = "property.agentid = '$agent'";
+                                    // }
+
+                                    // if(isset($_GET['city']) && !empty($_GET['city'])) {
+                                    //     $city = mysqli_real_escape_string($con, $_GET['city']);
+                                    //     $where_conditions[] = "property.city = '$city'";
+                                    // }
+                                    // if(isset($_GET['status']) && !empty($_GET['status'])) {
+                                    //     $status = mysqli_real_escape_string($con, $_GET['status']);
+                                    //     $where_conditions[] = "property.status = '$status'";
+                                    // }
+                                    if(isset($_GET["filter"]) && $_GET["filter"]) {
+                                        if(isset($_GET['keyword']) && !empty($_GET['keyword'])) {
+                                            $keyword = mysqli_real_escape_string($con, $_GET['keyword']);
+                                            $where_conditions = array("(user.uname LIKE '%$keyword%' OR property.title LIKE '%$keyword%' OR property.location LIKE '%$keyword%' OR property.city LIKE '%$keyword%')");
+                                        }
+
+                                        if(!empty($where_conditions)) {
+                                            $where_clause = implode(" AND ", $where_conditions);
+                                            $query = mysqli_query($con, "SELECT property.*, user.uname, user.utype, user.uimage FROM `property`, `user` 
+                                                                   WHERE property.agentid = user.uid
+                                                                   AND (property.status = 'À vendre' OR property.status = 'À louer')
+                                                                   AND $where_clause
+                                                                   ORDER BY property.date DESC");
+                                        }
+
+                                        // $property_count = mysqli_num_rows($query);
                                     
-                                </li>
-                                <?php } ?>
+                                    }else{
+                                        $query = mysqli_query($con, "SELECT property.*, user.uname, user.utype, user.uimage FROM `property`, `user` 
+                                                                WHERE property.agentid = user.uid 
+                                                                AND (property.status = 'À vendre' OR property.status = 'À louer')");
+                                    }
 
-                            </ul>
+                                    while($row = mysqli_fetch_array($query)) {
+                                    ?>
+
+                                    <div class="col-md-4">
+                                        <div class="featured-thumb hover-zoomer mb-4">
+                                            <div class="overlay-black overflow-hidden position-relative"> <img src="admin/property/<?php echo $row['pimage1'];?>">
+
+                                                <div class="sale bg-secondary text-white"><?php echo $row['status'];?></div>
+                                                <div class="price text-light-primary text-capitalize">€<?php echo $row['price'];?> <span class="text-white"><?php echo $row['area'];?> m2</span></div>
+
+                                            </div>
+                                            <div class="featured-thumb-data shadow-one">
+                                                <div class="p-4">
+                                                    <h5 class="text-secondary hover-text-primary mb-2 text-capitalize"><a href="propertydetail.php?pid=<?php echo $row['pid'];?>"><?php echo $row['title'];?></a></h5>
+                                                    <span class="location text-capitalize"><i class="fas fa-map-marker-alt text-primary"></i> <?php echo $row['location'];?>, <?php echo $row['city'];?></span> </div>
+                                                <div class="px-4 pb-4 d-inline-block w-100">
+                                                    <div class="float-left text-capitalize"><i class="fas fa-user text-primary mr-1"></i>Agent : <?php echo $row['uname'];?></div>
+                                                    <!-- <div class="float-right"><i class="far fa-calendar-alt text-primary mr-1"></i> 6 Months Ago</div> -->
+                                                    <div class="float-right">
+                                                        <i class="far fa-calendar-alt text-primary mr-1"></i>
+                                                        <?php
+                                                            $postDate = new DateTime($row['date']);
+                                                            $currentDate = new DateTime(date('Y-m-d H:i:s'));
+                                                            $interval = $postDate->diff($currentDate);
+                                                                                            
+                                                            if($interval->y > 0) {
+                                                                echo $interval->y . ($interval->y == 1 ? ' year' : ' years') . ' ago';
+                                                            } elseif($interval->m > 0) {
+                                                                echo $interval->m . ($interval->m == 1 ? ' month' : ' months') . ' ago';
+                                                            } else {
+                                                                echo $interval->d . ($interval->d == 1 ? ' day' : ' days') . ' ago';
+                                                            }
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php } ?>
+                                </div>
+                            </div>              
                         </div>
                     </div>
-                    
                 </div>
+                <!--	Property grid end  -->
+                                                
+                <!--	Footer   start-->
+        		<?php include("include/footer.php");?>
+        		<!--	Footer   start-->
+                                                
+                <!-- Scroll to top --> 
+                <a href="#" class="bg-secondary text-white hover-text-secondary" id="scroll"><i class="fas fa-angle-up"></i></a> 
+                <!-- End Scroll To top --> 
             </div>
         </div>
-
-        
-        <!--	Footer   start-->
-		<?php include("include/footer.php");?>
-		<!--	Footer   start-->
-        
-        <!-- Scroll to top --> 
-        <a href="#" class="bg-secondary text-white hover-text-secondary" id="scroll"><i class="fas fa-angle-up"></i></a> 
-        <!-- End Scroll To top --> 
-    </div>
-</div>
-<!-- Wrapper End --> 
-
-<!--	Js Link
-============================================================--> 
-<script src="js/jquery.min.js"></script> 
-<!--jQuery Layer Slider --> 
-<script src="js/greensock.js"></script> 
-<script src="js/layerslider.transitions.js"></script> 
-<script src="js/layerslider.kreaturamedia.jquery.js"></script> 
-<!--jQuery Layer Slider --> 
-<script src="js/popper.min.js"></script> 
-<script src="js/bootstrap.min.js"></script> 
-<script src="js/owl.carousel.min.js"></script> 
-<script src="js/tmpl.js"></script> 
-<script src="js/jquery.dependClass-0.1.js"></script> 
-<script src="js/draggable-0.1.js"></script> 
-<script src="js/jquery.slider.js"></script> 
-<script src="js/wow.js"></script> 
-
-<script src="js/custom.js"></script>
-</body>
-
+        <!-- Wrapper End --> 
+                                                
+        <!--	Js Link
+        ============================================================--> 
+        <script src="js/jquery.min.js"></script> 
+        <!--jQuery Layer Slider --> 
+        <script src="js/greensock.js"></script> 
+        <script src="js/layerslider.transitions.js"></script> 
+        <script src="js/layerslider.kreaturamedia.jquery.js"></script> 
+        <!--jQuery Layer Slider --> 
+        <script src="js/popper.min.js"></script> 
+        <script src="js/bootstrap.min.js"></script> 
+        <script src="js/owl.carousel.min.js"></script> 
+        <script src="js/tmpl.js"></script> 
+        <script src="js/jquery.dependClass-0.1.js"></script> 
+        <script src="js/draggable-0.1.js"></script> 
+        <script src="js/jquery.slider.js"></script> 
+        <script src="js/wow.js"></script> 
+                                                
+        <script src="js/custom.js"></script>
+    </body>
 </html>

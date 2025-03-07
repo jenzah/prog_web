@@ -8,7 +8,7 @@ La plateforme permet aux utilisateurs de parcourir les propriétés disponibles,
 *Ce projet est dérivé de : https://github.com/suraj25809/Real-Estate-Php*
 
 *Développé par:*
-- *Wendy*
+- *Wynona Wendy BELINGA OWONO*
 - *Ashley OHNONA*
 - *Kawtar BENAICHA*
 - *Jennifer ZAHORA*

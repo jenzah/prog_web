@@ -1,13 +1,13 @@
 <?php 
-ini_set('session.cache_limiter','public');
-session_cache_limiter(false);
-session_start();
-include("config.php");								
+    ini_set('session.cache_limiter','public');
+    session_cache_limiter(false);
+    session_start();
+    include("config.php");								
 ?>
+
 
 <!DOCTYPE html>
 <html>
-
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -18,13 +18,11 @@ include("config.php");
         <!--meta http-equiv="X-UA-Compatible" content="IE=edge"-->
         <link rel="shortcut icon" href="images/favicon.ico">
 
-        <!--	Fonts
-        	========================================================-->
+        <!--	Fonts  -->
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
-        <!--	Css Link
-        	========================================================-->
+        <!--	Css Links  -->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
@@ -39,14 +37,14 @@ include("config.php");
         <title>Omnes Immobilier</title>
     </head>
     
-    <body></body>
+    <body>
         <div id="page-wrapper">
             <div class="row"> 
                 <!--	Header start  -->
         		<?php include("include/header.php");?>
                 <!--	Header end  -->
 
-                <!--	Banner Start   -->
+                <!--	Banner start   -->
                 <div class="overlay-black w-100 slider-banner1 position-relative" style="background-image: url('images/banner/04.jpg'); background-size: cover; background-position: center center; background-repeat: no-repeat;">
                     <div class="container h-100">
                         <div class="row h-100 align-items-center">
@@ -57,24 +55,10 @@ include("config.php");
                                     <form method="post" action="propertysearchresults.php" id="propertySearchForm">
                                         <div class="row">
                                             <div class="col-md-6 col-lg-3">
-                                                <div class="form-group">
-                                                    <select class="form-control" name="type">
-                                                        <option value="">Catégorie</option>
-        												<option value="appartment">Immobilier résidentiel</option>
-        												<option value="flat">Immobilier commercial</option>
-        												<option value="bunglow">Terrain</option>
-        												<option value="house">Appartement à louer</option>
-                                                    </select>
-                                                </div>
+        		                                <?php include("include/filterproperty.php");?>
                                             </div>
                                             <div class="col-md-6 col-lg-2">
-                                                <div class="form-group">
-                                                    <select class="form-control" name="stype">
-                                                        <option value="">Agent</option>
-        												<option value="rent">Rent</option>
-        												<option value="sale">Sale</option>
-                                                    </select>
-                                                </div>
+        		                                <?php include("include/filteragent.php");?>
                                             </div>
                                             <div class="col-md-8 col-lg-5">
                                                 <div class="form-group">
@@ -93,7 +77,7 @@ include("config.php");
                         </div>
                     </div>
                 </div>
-                <!--    Banner End   -->
+                <!--    Banner end   -->
                 
                 <!--	Recent Properties  -->
                 <div class="full-row">

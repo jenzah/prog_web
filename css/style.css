@@ -471,6 +471,9 @@ hover-text-white-nav .navbar-nav .nav-link.active,
 .bg-primary, a.bg-primary, a.bg-primary:hover, a.bg-primary:focus, .hover-bg-primary:hover {
 	background-color: var(--theme-dark-primary-color) !important
 }
+.bg-light-primary, a.bg-light-primary, a.bg-light-primary:hover, a.bg-light-primary:focus, .hover-bg-light-primary:hover {
+	background-color: var(--theme-primary-color) !important
+}
 .formicon .checkbox-collapse::after, 
 .jslider .jslider-pointer, 
 .jslider .jslider-bg .v, 
