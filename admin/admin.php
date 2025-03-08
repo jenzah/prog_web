@@ -8,9 +8,9 @@ if(!isset($_SESSION['uid'])) {
     header("location:../login.php");
 }
 
-if ($_SESSION['role'] !== 'admin') {
+if ($_SESSION['utype'] !== 'admin') {
     // The page requires admin role
-    header("Location: unauthorized.php");
+    header("Location: ../unauthorized.php");
     exit();
 }
 ?>
@@ -121,7 +121,7 @@ if ($_SESSION['role'] !== 'admin') {
                     while($row = mysqli_fetch_array($query)) {
                     ?>
                         <tr>
-                            <td><img src="../property/<?php echo $row['pimage1']; ?>" width="100"></td>
+                            <td><img src="images/property/<?php echo $row['pimage1']; ?>" width="100"></td>
                             <td><?php echo $row['title']; ?></td>
                             <td><?php echo ucfirst($row['propertyType']); ?></td>
                             <td><?php echo $row['area']; ?> m²</td>

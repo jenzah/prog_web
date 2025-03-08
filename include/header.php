@@ -49,7 +49,7 @@
                                     // User is logged in
                                     if($_SESSION['utype'] == 'admin') { ?>
                                         <!-- Admin specific menu items -->
-                                        <li class="nav-item"> <a class="nav-link" href="">Dashboard Admin</a> </li> <!-- admin/my_rdv.php -->
+                                        <li class="nav-item"> <a class="nav-link" href="admin/admin.php">Dashboard Admin</a> </li> <!-- admin/my_rdv.php -->
                                         <li class="nav-item"> <a class="nav-link" href="">Gestion Utilisateurs</a> </li>
                                         <li class="nav-item"> <a class="nav-link" href="">Paramètres</a> </li>
                                     
