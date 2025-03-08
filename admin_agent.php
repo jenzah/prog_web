@@ -103,6 +103,16 @@ if (isset($_GET['delete_id'])) {
         <!-- Liste des agents -->
         <div class="full-row bg-gray">
             <div class="container">
+
+             <!-- Bouton Ajouter un Agent -->
+             <div class="row mb-3">
+                    <div class="col-lg-12 text-right">
+                        <a href="admin_ajout_agent.php">
+                            <img src="images/admin/ajouter.png" class="database-icon" title="Ajouter un agent" style="width: 30px !important; height: 30px !important;">
+                        </a>
+                    </div>
+                </div>
+                
                 <div class="row mb-5">
                     <div class="col-lg-12">
                         <h2 class="text-secondary text-center">Agents Immobiliers</h2>

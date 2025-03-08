@@ -205,12 +205,16 @@ if (isset($_POST['update'])) {
                 </div>
 
                 <div class="form-group">
-                    <label>Statut</label>
-                    <select name="status" class="form-control" required>
-                        <option value="disponible" <?php if ($property['status'] == 'disponible') echo "selected"; ?>>Disponible</option>
-                        <option value="vendu" <?php if ($property['status'] == 'vendu') echo "selected"; ?>>Vendu</option>
-                    </select>
+                    
+                <label>Statut</label>
+                <select name="status" class="form-control" required>
+                <option value="A vendre" <?php if ($property['status'] == 'A vendre') echo "selected"; ?>>A vendre</option>
+                <option value="A louer" <?php if ($property['status'] == 'A louer') echo "selected"; ?>>A louer</option>
+                <option value="Loué" <?php if ($property['status'] == 'Loué') echo "selected"; ?>>Loué</option>
+                 <option value="Vendu" <?php if ($property['status'] == 'Vendu') echo "selected"; ?>>Vendu</option>
+                </select>
                 </div>
+
 
                 <h5 class="text-secondary">Images</h5>
                 <div class="form-group">

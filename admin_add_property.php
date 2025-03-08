@@ -36,7 +36,7 @@ if (isset($_POST['add'])) {
     $agentid = (int)$_SESSION['uid']; // Assigne l'ID de l'agent connecté
 
     // Gestion des images
-    $upload_dir = "property/";  // Dossier de stockage des images
+    $upload_dir = "images/property";  // Dossier de stockage des images
     $pimage1 = $_FILES['pimage1']['name'] ? $upload_dir . basename($_FILES['pimage1']['name']) : "";
     $pimage2 = $_FILES['pimage2']['name'] ? $upload_dir . basename($_FILES['pimage2']['name']) : "";
     $pimage3 = $_FILES['pimage3']['name'] ? $upload_dir . basename($_FILES['pimage3']['name']) : "";
@@ -183,8 +183,8 @@ if (isset($_POST['add'])) {
                     <div class="form-group">
                         <label>Statut</label>
                         <select name="status" class="form-control" required>
-                            <option value="disponible">Disponible</option>
-                            <option value="vendu">Vendu</option>
+                            <option value="disponible">A vendre</option>
+                            <option value="vendu">A louer</option>
                         </select>
                     </div>
 
