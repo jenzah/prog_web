@@ -102,7 +102,8 @@ CREATE TABLE `user` (
   `uphone` varchar(20) NOT NULL,
   `upass` varchar(50) NOT NULL,
   `utype` varchar(50) NOT NULL,
-  `uimage` varchar(300) NOT NULL
+  `uimage` varchar(300) NOT NULL,
+  `specialty` VARCHAR(100) DEFAULT NULL -- residentiel,terrain,appartement,commercial
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
