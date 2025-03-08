@@ -3,7 +3,6 @@ include("config.php");
 $error="";
 $msg="";
 if(isset($_REQUEST['register'])) {
-{
     $name = mysqli_real_escape_string($con, $_REQUEST['name']);
 	$firstname = mysqli_real_escape_string($con, $_REQUEST['firstname']);
     $email = mysqli_real_escape_string($con, $_REQUEST['email']);
