@@ -6,34 +6,35 @@ include("../config.php");
 
 if(!isset($_SESSION['uid'])) {
     header("location:../login.php");
+    exit();
 }
 
-// The page requires admin role
+// Check for admin access
 if(empty($_SESSION['isAdmin'])) {
+    // User is either not logged in or not an admin
     header("Location:../unauthorised.php");
     exit();
 }
 
-// Supprimer une propriété si "delete_id" est présent dans l'URL
+// Supprimer un utilisateur si "delete_id" est présent dans l'URL
 if (isset($_GET['delete_id'])) {
-    $pid = (int) $_GET['delete_id'];
+    $user_id = (int) $_GET['delete_id'];
 
-    // Vérifier si la propriété existe
-    $checkQuery = mysqli_query($con, "SELECT * FROM property WHERE pid='$pid'");
+    // Vérifier si l'utilisateur existe
+    $checkQuery = mysqli_query($con, "SELECT * FROM user WHERE uid='$user_id' AND utype='user'");
     if (mysqli_num_rows($checkQuery) > 0) {
         // Suppression
-        $deleteQuery = mysqli_query($con, "DELETE FROM property WHERE pid='$pid'");
+        $deleteQuery = mysqli_query($con, "DELETE FROM user WHERE uid='$user_id'");
         if ($deleteQuery) {
-            echo "<script>alert('Propriété supprimée avec succès.'); window.location='admin.php';</script>";
+            echo "<script>alert('Utilisateur supprimé avec succès.'); window.location='admin_user.php';</script>";
         } else {
             echo "<script>alert('Erreur lors de la suppression.');</script>";
         }
     } else {
-        echo "<script>alert('Propriété introuvable.');</script>";
+        echo "<script>alert('Utilisateur introuvable.');</script>";
     }
 }							
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -51,13 +52,11 @@ if (isset($_GET['delete_id'])) {
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="shortcut icon" href="images/favicon.ico">
 
-<!--	Fonts
-	========================================================-->
+<!--	Fonts	-->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
-<!--	Css Link
-	========================================================-->
+<!--	Css Link	-->
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap-slider.css">
 <link rel="stylesheet" type="text/css" href="../css/jquery-ui.css">
@@ -68,7 +67,7 @@ if (isset($_GET['delete_id'])) {
 <link rel="stylesheet" type="text/css" href="../fonts/flaticon/flaticon.css">
 <link rel="stylesheet" type="text/css" href="../css/style.css">
 <link rel="stylesheet" type="text/css" href="../css/login.css">
-<title>Omnes Immobilier - Propriétés</title>
+<title>Omnes Immobilier - Utilisateurs</title>
 
 <!-- Styles -->
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -87,13 +86,13 @@ if (isset($_GET['delete_id'])) {
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <h2 class="page-name text-white text-uppercase"><b>Liste des Propriétés</b></h2>
+                        <h2 class="page-name text-white text-uppercase"><b>Liste des Utilisateurs</b></h2>
                     </div>
                     <div class="col-md-6">
                         <nav aria-label="breadcrumb" class="float-md-right">
                             <ol class="breadcrumb bg-transparent m-0 p-0">
                                 <li class="breadcrumb-item text-white"><a href="home.php">Accueil</a></li>
-                                <li class="breadcrumb-item active">Liste des Propriétés</li>
+                                <li class="breadcrumb-item active">Liste des Utilisateurs</li>
                             </ol>
                         </nav>
                     </div>
@@ -101,66 +100,42 @@ if (isset($_GET['delete_id'])) {
             </div>
         </div>
 
-        <!-- Liste des propriétés -->
+        <!-- Liste des utilisateurs -->
         <div class="full-row bg-gray">
             <div class="container">
-
-                <!-- Bouton Ajouter une Propriété -->
-                <div class="row mb-3">
-                    <div class="col-lg-12 text-right">
-                        <a href="add_property.php">
-                        <img src="ajouter.png" class="database-icon" title="Ajouter une propriété" style="width: 30px !important; height: 30px !important;">
-                        </a>
-                    </div>
-                </div>
-
                 <div class="row mb-5">
                     <div class="col-lg-12">
-                        <h2 class="text-secondary text-center">Propriétés Disponibles</h2>
+                        <h2 class="text-secondary text-center">Utilisateurs Inscrits</h2>
                     </div>
                 </div>
+
                 <table class="table table-bordered">
                     <thead class="bg-primary text-white">
                         <tr>
-                            <th>Image</th>
-                            <th>Titre</th>
-                            <th>Type</th>
-                            <th>Superficie</th>
-                            <th>Chambres</th>
-                            <th>Salles de bain</th>
-                            <th>Prix</th>
-                            <th>Localisation</th>
-                            <th>Statut</th>
-                            <th>Actions</th> <!-- Nouvelle colonne pour les boutons Modifier/Supprimer -->
+                            <th>Photo</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Actions</th> <!-- Nouvelle colonne pour les boutons Supprimer -->
                         </tr>
                     </thead>
                     <tbody>
                     <?php 
-                    $query = mysqli_query($con, "SELECT * FROM `property`");
+                    $query = mysqli_query($con, "SELECT * FROM user WHERE utype='user'");
                     while($row = mysqli_fetch_array($query)) {
                     ?>
                         <tr>
-                            <td><img src="images/property/<?php echo $row['pimage1']; ?>" width="100"></td>
-                            <td><?php echo $row['title']; ?></td>
-                            <td><?php echo ucfirst($row['propertyType']); ?></td>
-                            <td><?php echo $row['area']; ?> m²</td>
-                            <td><?php echo $row['nbRooms']; ?></td>
-                            <td><?php echo $row['nbBathrooms']; ?></td>
-                            <td><?php echo number_format($row['price'], 0, ',', ' '); ?> €</td>
-                            <td><?php echo $row['location'] . ', ' . $row['city'] . ' (' . $row['department'] . ')'; ?></td>
-                            <td><?php echo ucfirst($row['status']); ?></td>
+                            <td><img src="../images/user/<?php echo $row['uimage']; ?>" width="100"></td>
+                            <td><?php echo $row['uname']; ?></td>
+                            <td><?php echo $row['uemail']; ?></td>
+                            <td><?php echo $row['uphone']; ?></td>
                             <td>
-    <!-- Bouton Modifier -->
-    <a href="edit_property.php?id=<?php echo $row['pid']; ?>">
-        <img src="modifier.png" class="img-action" style="width: 23px !important; height: 23px !important;" title="Modifier" >
-    </a>
-
-    <!-- Bouton Supprimer -->
-    <a href="admin.php?delete_id=<?php echo $row['pid']; ?>" onclick="return confirm('Voulez-vous vraiment supprimer cette propriété ?');">
-        <img src="supprimer.png" class="img-action" style="width: 23px !important; height: 23px !important;" title="Supprimer">
-    </a>
-</td>
-
+                                <!-- Bouton Supprimer -->
+                                <a href="admin_user.php?delete_id=<?php echo $row['uid']; ?>" 
+                                   onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
+                                    <img src="supprimer.png" class="img-action" style="width: 23px !important; height: 23px !important;" title="Supprimer">
+                                </a>
+                            </td>
                         </tr>
                     <?php } ?>
                     </tbody>

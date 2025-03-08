@@ -18,7 +18,7 @@ if(empty($_SESSION['isAdmin'])) {
 
 // Vérifier si un ID de propriété est fourni
 if (!isset($_GET['id']) || empty($_GET['id'])) {
-    header("location:property.php");
+    header("location:admin_property.php");
     exit();
 }
 
@@ -31,7 +31,7 @@ $query = mysqli_query($con, "SELECT * FROM property WHERE pid = '$pid'");
 $property = mysqli_fetch_assoc($query);
 
 if (!$property) {
-    header("location:property.php");
+    header("location:admin_property.php");
     exit();
 }
 
