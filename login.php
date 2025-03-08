@@ -94,7 +94,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login']))
 	                    <div class="col-md-6">
 	                        <nav aria-label="breadcrumb" class="float-left float-md-right">
 	                            <ol class="breadcrumb bg-transparent m-0 p-0">
-	                                <li class="breadcrumb-item text-white"><a href="home.php">Page d'accueil</a></li>
+	                                <li class="breadcrumb-item text-white"><a href="home.php">Accueil</a></li>
 	                                <li class="breadcrumb-item active">Connexion</li>
 	                            </ol>
 	                        </nav>
@@ -117,22 +117,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login']))
 									<!-- Form -->
 									<form method="post">
 										<div class="form-group">
-											<input type="email"  name="email" class="form-control" placeholder="Votre email">
+											<input type="email" name="email" class="form-control" placeholder="Votre email" required>
 										</div>
 										<div class="form-group">
-											<input type="password" name="password"  class="form-control" placeholder="Votre mot de passe">
+											<input type="password" name="password" class="form-control" placeholder="Votre mot de passe" required>
 										</div>
-										
-											<button class="btn btn-primary d-block mx-auto" name="login" value="Login" type="submit">Connexion</button>
+										<button class="btn btn-primary d-block mx-auto" name="login" type="submit">Connexion</button>
 									</form>
 									
 									<div class="login-or">
 										<span class="or-line"></span>
 										<span class="span-or">ou</span>
 									</div>
-									
-									<div class="text-center dont-have">Vous n'avez pas de compte ? <a href="register.php">Inscription</a></div>
-									
+									<div class="text-center dont-have">Pas encore de compte ? <a href="register.php">Inscrivez-vous</a></div>
 								</div>
 	                        </div>
 	                    </div>

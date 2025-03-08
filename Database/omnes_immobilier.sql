@@ -2,12 +2,12 @@
 -- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.3
+-- Hôte : localhost:8889
+-- Généré le : sam. 08 mars 2025 à 11:29
+-- Version du serveur : 5.7.39
+-- Version de PHP : 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -68,7 +68,7 @@ CREATE TABLE `property` (
   `pimage2` varchar(300) NOT NULL,
   `pimage3` varchar(300) NOT NULL,
   `status` varchar(50) NOT NULL, -- à vendre, à louer, vendu, loué
-  `date` datetime NOT NULL DEFAULT current_timestamp()
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -100,7 +100,7 @@ CREATE TABLE `user` (
   `ufirstname` varchar(100) NOT NULL,
   `uemail` varchar(100) NOT NULL,
   `uphone` varchar(20) NOT NULL,
-  `upass` varchar(50) NOT NULL,
+  `upass` varchar(255) NOT NULL,
   `utype` varchar(50) NOT NULL,
   `uimage` varchar(300) NOT NULL,
   `specialty` VARCHAR(100) DEFAULT NULL -- residentiel,terrain,appartement,commercial
@@ -134,7 +134,8 @@ ALTER TABLE `property`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`uid`);
+  ADD PRIMARY KEY (`uid`),
+  ADD UNIQUE KEY `uemail` (`uemail`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -151,5 +152,5 @@ ALTER TABLE `property`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `uid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `uid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
