@@ -4,10 +4,18 @@ session_cache_limiter(false);
 session_start();
 include("config.php");
 
-if(!isset($_SESSION['uemail'])) {
+if(!isset($_SESSION['uid'])) {
     header("location:login.php");
-}								
+}
+
+if ($_SESSION['utype'] !== 'admin') {
+    // The page requires admin role
+    header("Location:unauthorized.php");
+    exit();
+}
 ?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -113,7 +121,7 @@ if(!isset($_SESSION['uemail'])) {
                     while($row = mysqli_fetch_array($query)) {
                     ?>
                         <tr>
-                            <td><img src="admin/property/<?php echo $row['pimage1']; ?>" width="100"></td>
+                            <td><img src="admin/images/property/<?php echo $row['pimage1']; ?>" width="100"></td>
                             <td><?php echo $row['title']; ?></td>
                             <td><?php echo ucfirst($row['propertyType']); ?></td>
                             <td><?php echo $row['area']; ?> m²</td>
