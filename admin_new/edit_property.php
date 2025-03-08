@@ -185,6 +185,16 @@ if (isset($_POST['update'])) {
                     <label>Adresse</label>
                     <input type="text" name="location" class="form-control" required value="<?php echo $property['location']; ?>">
                 </div>
+                
+                <div class="form-group">
+                    <label>Ville</label>
+                    <input type="text" name="city" class="form-control" required value="<?php echo htmlspecialchars($property['city']); ?>">
+                </div>
+
+                <div class="form-group">
+                    <label>Département</label>
+                    <input type="text" name="department" class="form-control" required value="<?php echo htmlspecialchars($property['department']); ?>">
+                </div>
 
                 <div class="form-group">
                     <label>Statut</label>
