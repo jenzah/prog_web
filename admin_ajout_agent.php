@@ -155,7 +155,7 @@ if (isset($_POST['add'])) {
                         <input type="file" name="uimage" class="form-control">
                     </div>
 
-                    <button type="submit" name="add" class="btn btn-primary btn-block mt-3">Ajouter</button>
+                    <button type="submit" name="add" class="btn btn-primary btn-block mt-4 mb-5">Ajouter</button>
                 </form>
             </div>
         </div>
