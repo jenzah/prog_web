@@ -115,7 +115,7 @@ if (isset($_GET['delete_id'])) {
                 
                 <div class="row mb-5">
                     <div class="col-lg-12">
-                        <h2 class="text-secondary text-center">Agents Immobiliers</h2>
+                        <h2 class="text-secondary text-center double-down-line">Agents Immobiliers</h2>
                     </div>
                 </div>
 

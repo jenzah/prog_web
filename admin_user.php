@@ -105,7 +105,7 @@ if (isset($_GET['delete_id'])) {
             <div class="container">
                 <div class="row mb-5">
                     <div class="col-lg-12">
-                        <h2 class="text-secondary text-center">Utilisateurs Inscrits</h2>
+                        <h2 class="text-secondary text-center double-down-line">Utilisateurs Inscrits</h2>
                     </div>
                 </div>
 

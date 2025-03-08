@@ -95,7 +95,7 @@
                                 <!-- Agent specific menu items -->
 							    <a class="btn btn-primary d-none d-xl-block" href="">Consulter l'agenda</a>
 
-                                <?php } else {?>
+                                <?php } elseif(!$_SESSION['isAdmin']) {?>
                                 <!-- Client specific menu items -->
                                 <a class="btn btn-primary d-none d-xl-block" href="prendre_rdv.php">Prendre RDV</a>
                                 <?php } ?>

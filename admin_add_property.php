@@ -134,7 +134,7 @@ if (isset($_POST['add'])) {
 
 
         <div class="container mt-5">
-            <h2 class="text-center text-secondary">Ajouter une Propriété</h2>
+            <h2 class="text-center text-secondary double-down-line">Ajouter une Propriété</h2>
             <div class="col-md-8 offset-md-2">
                 <?php echo $error; ?>
                 <?php echo $msg; ?>

@@ -138,8 +138,8 @@ if (isset($_POST['update'])) {
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/login.css">
     <title>Modifier une propriété</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 
@@ -165,7 +165,7 @@ if (isset($_POST['update'])) {
             </div>
         </div>
         <div class="container mt-5">
-        <h2 class="text-center text-secondary">Modifier une Propriété</h2>
+        <h2 class="text-center text-secondary double-down-line">Modifier une Propriété</h2>
         <div class="col-md-8 offset-md-2">
             <?php echo $error; ?>
             <?php echo $msg; ?>
@@ -255,7 +255,7 @@ if (isset($_POST['update'])) {
                     <img src="images/property/<?php echo $property['pimage3']; ?>" width="100">
                 </div>
 
-                <button type="submit" name="update" class="btn btn-primary btn-block mt-3">Mettre à jour</button>
+                <button type="submit" name="update" class="btn btn-primary btn-block mb-5 mt-4">Mettre à jour</button>
             </form>
         </div>
 

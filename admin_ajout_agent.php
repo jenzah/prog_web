@@ -115,7 +115,7 @@ if (isset($_POST['add'])) {
         </div>
 
         <div class="container mt-5">
-            <h2 class="text-center text-secondary">Ajouter un Agent Immobilier</h2>
+            <h2 class="text-center text-secondary double-down-line">Ajouter un Agent Immobilier</h2>
             <div class="col-md-8 offset-md-2">
                 <?php echo $error; ?>
                 <?php echo $msg; ?>
