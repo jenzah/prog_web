@@ -10,7 +10,7 @@ if(!isset($_SESSION['uid'])) {
 }
 
 // Check for admin access
-if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] !== true) {
+if(empty($_SESSION['isAdmin'])) {
     // User is either not logged in or not an admin
     header("Location:../unauthorised.php");
     exit();

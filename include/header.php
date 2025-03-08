@@ -35,7 +35,7 @@
                             $logoDestination = "index.php"; // Default for visitors
                             
                             if(isset($_SESSION['uid'])) {
-                                if($_SESSION['utype'] == 'admin' || $_SESSION['utype'] == 'agent') {
+                                if($_SESSION['isAdmin'] || $_SESSION['isAgent']) {
                                     $logoDestination = "about.php";
                                 }
                             }
@@ -47,13 +47,13 @@
                                 										
 								<?php  if(isset($_SESSION['uid'])) { 
                                     // User is logged in
-                                    if($_SESSION['utype'] == 'admin') { ?>
+                                    if($_SESSION['isAdmin']) { ?>
                                         <!-- Admin specific menu items -->
                                         <li class="nav-item"> <a class="nav-link" href="admin/admin.php">Dashboard Admin</a> </li> <!-- admin/my_rdv.php -->
                                         <li class="nav-item"> <a class="nav-link" href="">Gestion Utilisateurs</a> </li>
                                         <li class="nav-item"> <a class="nav-link" href="">Paramètres</a> </li>
                                     
-                                        <?php } elseif($_SESSION['utype'] == 'agent') { ?>
+                                        <?php } elseif($_SESSION['isAgent']) { ?>
                                         <!-- Agent specific menu items -->
                                         <li class="nav-item"> <a class="nav-link" href="property.php">Mes propriétés</a> </li>
                                         <li class="nav-item"> <a class="nav-link" href="">Mes RDVs</a> </li> <!-- agent/my_rdv.php -->
@@ -91,11 +91,11 @@
 							
                             <?php if(isset($_SESSION['uid'])) { 
                                 // User is logged in
-                                if($_SESSION['utype'] == 'admin') { ?>
+                                if($_SESSION['isAdmin']) { ?>
                                     <!-- Admin specific action button -->
 							        <a class="btn btn-primary d-none d-xl-block" href="">Ajouter une propriété</a> 
                                     
-                                    <?php } elseif($_SESSION['utype'] == 'agent') { ?>
+                                    <?php } elseif($_SESSION['isAgent']) { ?>
                                     <!-- Agent specific menu items -->
 							    <a class="btn btn-primary d-none d-xl-block" href="">Consulter l'agenda</a> 
                                     
