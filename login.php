@@ -1,26 +1,25 @@
 <?php 
 session_start();
 include("config.php");
-$error="";
-$msg="";
-if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login']))
-{
-	$email=$_REQUEST['email'];
-	$password=$_REQUEST['password'];
-	
-	
-	if(!empty($email) && !empty($password))
-	{
-		$sql = "SELECT * FROM user where uemail='$email' && upass='$password'";
-		$result=mysqli_query($con, $sql);
-		$user=mysqli_fetch_array($result);
-		
-		if($user){
-			   
-			$_SESSION['uid']=$user['uid'];
-			$_SESSION['uemail']=$email;
-			$_SESSION['utype']=$user['utype'];
-			
+$error = "";
+$msg = "";
+
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login'])) {
+    $email = mysqli_real_escape_string($con, $_REQUEST['email']);
+    $password = mysqli_real_escape_string($con, $_REQUEST['password']);
+
+    if(!empty($email) && !empty($password)) {
+        // Récupérer l'utilisateur en fonction de l'email
+        $sql = "SELECT * FROM user WHERE uemail='$email'";
+        $result = mysqli_query($con, $sql);
+        $user = mysqli_fetch_assoc($result);
+
+        if($user && password_verify($password, $user['upass']))
+        {
+            $_SESSION['uid'] = $user['uid'];
+            $_SESSION['uemail'] = $email;
+            $_SESSION['utype'] = $user['utype'];
+
 			$isAdmin = ($user['utype'] == 'admin');
 			$isAgent = ($user['utype'] == 'agent');
 			
@@ -30,17 +29,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login']))
 			
 			// Redirect based on user type
 			if($isAdmin || $isAgent) {
-				header("location:about.php");
-			} else {
-				header("location:index.php");
-			}
-				
-		}else{
-			$error = "<p class='alert alert-warning'>Connexion échouée. Email ou mot de passe invalide.</p> ";
-		}
-	}else{
-		$error = "<p class='alert alert-warning'>Veuillez remplir tous les champs.</p>";
-	}
+                header("location:about.php");
+            } else {
+                header("location: index.php");
+            }
+            exit;
+        }else{
+            $error = "<p class='alert alert-warning'>Connexion échouée. Email ou mot de passe invalide.</p>";
+        }
+    }
+    else
+    {
+        $error = "<p class='alert alert-warning'>Veuillez remplir tous les champs.</p>";
+    }
 }
 ?>
 

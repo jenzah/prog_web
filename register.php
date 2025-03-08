@@ -33,7 +33,7 @@ if(isset($_REQUEST['register'])) {
 
             // Insérer avec le type par défaut "client" et sans image
             $sql = "INSERT INTO user (uname, ufirstname, uemail, uphone, upass, utype, uimage) 
-                    VALUES ('$name', '$email', '$phone', '$hashed_pass', 'client', '$uimage')";
+                    VALUES ('$name', '$firstname', '$email', '$phone', '$hashed_pass', 'client', '$uimage')";
 
             $result = mysqli_query($con, $sql);
 
