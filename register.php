@@ -29,7 +29,7 @@ if(isset($_REQUEST['register'])) {
         $error = "<p class='alert alert-warning'>Email déjà utilisé.</p>";
     } else {
         if(!empty($name) && !empty($email) && !empty($phone) && !empty($password)) {
-            // $hashed_pass = password_hash($password, PASSWORD_DEFAULT); // Sécuriser le mot de passe
+            $hashed_pass = password_hash($password, PASSWORD_DEFAULT); // Sécuriser le mot de passe
 
             // Insérer avec le type par défaut "client" et sans image
             $sql = "INSERT INTO user (uname, ufirstname, uemail, uphone, upass, utype, uimage) 
