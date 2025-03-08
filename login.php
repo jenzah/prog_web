@@ -1,26 +1,27 @@
 <?php 
 session_start();
 include("config.php");
-$error="";
-$msg="";
-if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login']))
-{
-	$email=$_REQUEST['email'];
-	$password=$_REQUEST['password'];
-	
-	
-	if(!empty($email) && !empty($password))
-	{
-		$sql = "SELECT * FROM user where uemail='$email' && upass='$password'";
-		$result=mysqli_query($con, $sql);
-		$user=mysqli_fetch_array($result);
-		
-		if($user){
-			   
-			$_SESSION['uid']=$user['uid'];
-			$_SESSION['uemail']=$email;
-			$_SESSION['utype']=$user['utype'];
-			
+$error = "";
+$msg = "";
+
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login'])) {
+    $email = mysqli_real_escape_string($con, $_REQUEST['email']);
+    $password = mysqli_real_escape_string($con, $_REQUEST['password']);
+
+    if(!empty($email) && !empty($password)) {
+        // Récupérer l'utilisateur en fonction de l'email
+        // $sql = "SELECT * FROM user WHERE uemail='$email'";
+        $sql = "SELECT * FROM user WHERE uemail='$email' AND upass='$password'";
+        $result = mysqli_query($con, $sql);
+        $user = mysqli_fetch_assoc($result);
+
+        // if($user && password_verify($password, $user['upass'])) // for hashing
+        if($user)
+        {
+            $_SESSION['uid'] = $user['uid'];
+            $_SESSION['uemail'] = $email;
+            $_SESSION['utype'] = $user['utype'];
+
 			$isAdmin = ($user['utype'] == 'admin');
 			$isAgent = ($user['utype'] == 'agent');
 			
@@ -30,17 +31,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login']))
 			
 			// Redirect based on user type
 			if($isAdmin || $isAgent) {
-				header("location:about.php");
-			} else {
-				header("location:index.php");
-			}
-				
-		}else{
-			$error = "<p class='alert alert-warning'>Connexion échouée. Email ou mot de passe invalide.</p> ";
-		}
-	}else{
-		$error = "<p class='alert alert-warning'>Veuillez remplir tous les champs.</p>";
-	}
+                header("location:about.php");
+            } else {
+                header("location: index.php");
+            }
+            exit;
+        }else{
+            $error = "<p class='alert alert-warning'>Connexion échouée. Email ou mot de passe invalide.</p>";
+        }
+    }
+    else
+    {
+        $error = "<p class='alert alert-warning'>Veuillez remplir tous les champs.</p>";
+    }
 }
 ?>
 
@@ -94,7 +97,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login']))
 	                    <div class="col-md-6">
 	                        <nav aria-label="breadcrumb" class="float-left float-md-right">
 	                            <ol class="breadcrumb bg-transparent m-0 p-0">
-	                                <li class="breadcrumb-item text-white"><a href="home.php">Page d'accueil</a></li>
+	                                <li class="breadcrumb-item text-white"><a href="home.php">Accueil</a></li>
 	                                <li class="breadcrumb-item active">Connexion</li>
 	                            </ol>
 	                        </nav>
@@ -117,22 +120,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login']))
 									<!-- Form -->
 									<form method="post">
 										<div class="form-group">
-											<input type="email"  name="email" class="form-control" placeholder="Votre email">
+											<input type="email" name="email" class="form-control" placeholder="Votre email" required>
 										</div>
 										<div class="form-group">
-											<input type="password" name="password"  class="form-control" placeholder="Votre mot de passe">
+											<input type="password" name="password" class="form-control" placeholder="Votre mot de passe" required>
 										</div>
-										
-											<button class="btn btn-primary d-block mx-auto" name="login" value="Login" type="submit">Connexion</button>
+										<button class="btn btn-primary d-block mx-auto" name="login" type="submit">Connexion</button>
 									</form>
 									
 									<div class="login-or">
 										<span class="or-line"></span>
 										<span class="span-or">ou</span>
 									</div>
-									
-									<div class="text-center dont-have">Vous n'avez pas de compte ? <a href="register.php">Inscription</a></div>
-									
+									<div class="text-center dont-have">Pas encore de compte ? <a href="register.php">Inscrivez-vous</a></div>
 								</div>
 	                        </div>
 	                    </div>

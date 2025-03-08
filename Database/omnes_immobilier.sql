@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.3
+-- Hôte : localhost:8889
+-- Généré le : sam. 08 mars 2025 à 11:29
+-- Version du serveur : 5.7.39
+-- Version de PHP : 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -16,15 +16,6 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `omnes_immobilier` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `omnes_immobilier`;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `about`
--- 01.03.2025 Jennifer: J'ai supprimé l'utilisation de la table, car on n'en a plus besoin
---
-
-DROP TABLE IF EXISTS `about`;
 
 -- --------------------------------------------------------
 
@@ -100,7 +91,7 @@ CREATE TABLE `user` (
   `ufirstname` varchar(100) NOT NULL,
   `uemail` varchar(100) NOT NULL,
   `uphone` varchar(20) NOT NULL,
-  `upass` varchar(50) NOT NULL,
+  `upass` varchar(255) NOT NULL,
   `utype` varchar(50) NOT NULL,
   `uimage` varchar(300) NOT NULL,
   `specialty` VARCHAR(100) DEFAULT NULL -- residentiel,terrain,appartement,commercial
@@ -134,7 +125,8 @@ ALTER TABLE `property`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`uid`);
+  ADD PRIMARY KEY (`uid`),
+  ADD UNIQUE KEY `uemail` (`uemail`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -151,5 +143,5 @@ ALTER TABLE `property`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `uid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `uid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;

@@ -84,11 +84,7 @@ if(!isset($_SESSION['uid'])) {
                                     if($user) {
                                 ?>
                                 <div class="user-info text-center"> 
-                                    <img src="images/profile_pic/<?php echo $user['uimage'];?>" alt="userimage" class="img-fluid mb-4" style="max-width: 200px; height: auto;">
-                                    <h4 class="text-capitalize mb-3"><?php echo $user['uname'];?></h4>
-                                    <div class="bg-light-primary py-2 px-3 d-inline-block rounded mb-4">
-                                        <span class="text-capitalize"><?php echo $user['utype'];?></span>
-                                    </div>
+                                    <img src="images/profile_pic/<?php echo $user['uimage'];?>" alt="userimage" class="profile-image mb-4">
                                 </div>
                                 <?php } ?>
                             </div>
@@ -96,27 +92,21 @@ if(!isset($_SESSION['uid'])) {
                             <!-- Right Column - User Information -->
                             <div class="col-lg-7 col-md-12">
                                 <div class="profile-details p-4 bg-light rounded">
-                                    <h4 class="mb-4">Information</h4>
-                                    <?php 
-                                        if($user) {
-                                    ?>
+                                    <?php if($user) { ?>
+                                    <h1 class="text-uppercase"><?php echo $user['uname'];?></h1>
+                                    <h1 class="text-capitalise mb-4"><?php echo $user['ufirstname'];?></h1>
+                                    
                                     <div class="font-18">
-                                        <div class="row mb-3">
-                                            <div class="col-md-4 font-weight-bold">Name:</div>
-                                            <div class="col-md-8 text-capitalize"><?php echo $user['uname'];?></div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-4 font-weight-bold">Email:</div>
-                                            <div class="col-md-8"><?php echo $user['uemail'];?></div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-4 font-weight-bold">Phone:</div>
-                                            <div class="col-md-8"><?php echo $user['uphone'];?></div>
-                                        </div>
+                                        <div class="mb-3"><?php echo $user['uemail'];?></div>
+                                        <div class="mb-5">+ 33 0<?php echo $user['uphone'];?></div>
                                     </div>
+                                    
+                                    <!-- si l'agent, affiche un bouton pour voir son CV -->
+                                    <?php if($_SESSION['isAgent']) { ?>
                                     <div class="mt-4">
-                                        <a href="edit-profile.php" class="btn btn-primary">Edit Profile</a>
+                                        <a href="edit-profile.php" class="btn btn-primary">Voir mon CV</a>
                                     </div>
+                                    <?php } ?>
                                     <?php } else { ?>
                                     <p class="alert alert-warning">No user information found.</p>
                                     <?php } ?>

@@ -91,15 +91,17 @@
 							
                             <?php if(isset($_SESSION['uid'])) { 
                                 // User is logged in
-                                if($_SESSION['isAdmin']) { ?>
-                                    
-                                    <?php } elseif($_SESSION['isAgent']) { ?>
-                                    <!-- Agent specific menu items -->
-							    <a class="btn btn-primary d-none d-xl-block" href="">Consulter l'agenda</a> 
-                                    
-                                <?php } else { ?>
-							    <a class="btn btn-primary d-none d-xl-block" href="prendre_rdv.php">Prendre RDV</a> 
+                                if($_SESSION['isAgent']) { ?>
+                                <!-- Agent specific menu items -->
+							    <a class="btn btn-primary d-none d-xl-block" href="">Consulter l'agenda</a>
+
+                                <?php } else {?>
+                                <!-- Client specific menu items -->
+                                <a class="btn btn-primary d-none d-xl-block" href="prendre_rdv.php">Prendre RDV</a>
                                 <?php } ?>
+                                
+                            <?php } else { ?>
+							<a class="btn btn-primary d-none d-xl-block" href="prendre_rdv.php">Prendre RDV</a>
                             <?php } ?>
                         </div>
                     </nav>
