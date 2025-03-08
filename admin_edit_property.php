@@ -246,13 +246,17 @@ if (isset($_POST['update'])) {
                 <div class="form-group">
                     <label>Image 2</label>
                     <input type="file" name="pimage2" class="form-control">
+                    <?php if(!empty($property['pimage3'])) { ?>
                     <img src="images/property/<?php echo $property['pimage2']; ?>" width="100">
+                    <?php } ?>
                 </div>
 
                 <div class="form-group">
                     <label>Image 3</label>
                     <input type="file" name="pimage3" class="form-control">
+                    <?php if(!empty($property['pimage3'])) { ?>
                     <img src="images/property/<?php echo $property['pimage3']; ?>" width="100">
+                    <?php } ?>
                 </div>
 
                 <button type="submit" name="update" class="btn btn-primary btn-block mb-5 mt-4">Mettre à jour</button>
