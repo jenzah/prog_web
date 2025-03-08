@@ -6,7 +6,25 @@ include("../config.php");
 
 if(!isset($_SESSION['uemail'])) {
     header("location:../login.php");
-}								
+}	
+// Supprimer une propriété si "delete_id" est présent dans l'URL
+if (isset($_GET['delete_id'])) {
+    $pid = (int) $_GET['delete_id'];
+
+    // Vérifier si la propriété existe
+    $checkQuery = mysqli_query($con, "SELECT * FROM property WHERE pid='$pid'");
+    if (mysqli_num_rows($checkQuery) > 0) {
+        // Suppression
+        $deleteQuery = mysqli_query($con, "DELETE FROM property WHERE pid='$pid'");
+        if ($deleteQuery) {
+            echo "<script>alert('Propriété supprimée avec succès.'); window.location='admin.php';</script>";
+        } else {
+            echo "<script>alert('Erreur lors de la suppression.');</script>";
+        }
+    } else {
+        echo "<script>alert('Propriété introuvable.');</script>";
+    }
+}							
 ?>
 <!DOCTYPE html>
 <html>
@@ -129,7 +147,7 @@ if(!isset($_SESSION['uemail'])) {
     </a>
 
     <!-- Bouton Supprimer -->
-    <a href="property.php?delete_id=<?php echo $row['pid']; ?>" onclick="return confirm('Voulez-vous vraiment supprimer cette propriété ?');">
+    <a href="admin.php?delete_id=<?php echo $row['pid']; ?>" onclick="return confirm('Voulez-vous vraiment supprimer cette propriété ?');">
         <img src="supprimer.png" class="img-action" style="width: 23px !important; height: 23px !important;" title="Supprimer">
     </a>
 </td>
