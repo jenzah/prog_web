@@ -21,15 +21,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login']))
 			$_SESSION['uemail']=$email;
 			$_SESSION['utype']=$user['utype'];
 			
+			$isAdmin = ($user['utype'] == 'admin');
+			$isAgent = ($user['utype'] == 'agent');
+			
+			// Store these in session for use across the site
+			$_SESSION['isAdmin'] = $isAdmin;
+			$_SESSION['isAgent'] = $isAgent;
+			
 			// Redirect based on user type
-			if($user['utype'] == 'admin' || $user['utype'] == 'agent') {
+			if($isAdmin || $isAgent) {
 				header("location:about.php");
 			} else {
 				header("location:index.php");
 			}
 				
-		   }
-		else{
+		}else{
 			$error = "<p class='alert alert-warning'>Connexion échouée. Email ou mot de passe invalide.</p> ";
 		}
 	}else{
@@ -106,7 +112,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login']))
 	                        <div class="login-right">
 								<div class="login-right-wrap">
 									<h1>Connexion</h1>
-									<p class="account-subtitle">Accès à notre tableau de bord</p>
+									<p class="account-subtitle">Accès à notre dashboard</p>
 									<?php echo $error; ?><?php echo $msg; ?>
 									<!-- Form -->
 									<form method="post">

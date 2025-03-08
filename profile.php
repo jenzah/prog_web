@@ -1,40 +1,13 @@
 <?php 
-    ini_set('session.cache_limiter','public');
-    session_cache_limiter(false);
-    session_start();
-    include("config.php");
-    if(!isset($_SESSION['uemail']))
-    {
-    	header("location:login.php");
-    }
-    
-    ////// code
-    $error='';
-    $msg='';
-    if(isset($_POST['insert']))
-    {
-    	$name=$_POST['name'];
-    	$phone=$_POST['phone'];
-    
-    	$content=$_POST['content'];
-    
-    	$uid=$_SESSION['uid'];
-    
-    	if(!empty($name) && !empty($phone) && !empty($content))
-    	{
-        
-    		$sql="INSERT INTO feedback (uid,fdescription,status) VALUES ('$uid','$content','0')";
-    		   $result=mysqli_query($con, $sql);
-    		   if($result){
-    			   $msg = "<p class='alert alert-success'>Feedback Send Successfully</p> ";
-    		   }
-    		   else{
-    			   $error = "<p class='alert alert-warning'>Feedback Not Send Successfully</p> ";
-    		   }
-    	}else{
-    		$error = "<p class='alert alert-warning'>Please Fill all the fields</p>";
-    	}
-    }								
+ini_set('session.cache_limiter','public');
+session_cache_limiter(false);
+session_start();
+include("config.php");
+
+if(!isset($_SESSION['uid'])) {
+	header("location:login.php");
+    exit();
+}
 ?>
 
 
@@ -108,14 +81,14 @@
                             <?php 
                                 $uid=$_SESSION['uid'];
                                 $query=mysqli_query($con,"SELECT * FROM `user` WHERE uid='$uid'");
-                                $row=mysqli_fetch_array($query);
-                                if($row) {
+                                $user=mysqli_fetch_array($query);
+                                if($user) {
                             ?>
                             <div class="user-info text-center"> 
-                                <img src="admin/user/<?php echo $row['6'];?>" alt="userimage" class="img-fluid mb-4" style="max-width: 200px; height: auto;">
-                                <h4 class="text-capitalize mb-3"><?php echo $row['uname'];?></h4>
+                                <img src="images/profile_pic/<?php echo $user['uimage'];?>" alt="userimage" class="img-fluid mb-4" style="max-width: 200px; height: auto;">
+                                <h4 class="text-capitalize mb-3"><?php echo $user['uname'];?></h4>
                                 <div class="bg-light-primary py-2 px-3 d-inline-block rounded mb-4">
-                                    <span class="text-capitalize"><?php echo $row['status'];?></span>
+                                    <span class="text-capitalize"><?php echo $user['utype'];?></span>
                                 </div>
                             </div>
                             <?php } ?>
@@ -126,24 +99,20 @@
                             <div class="profile-details p-4 bg-light rounded">
                                 <h4 class="mb-4">Information</h4>
                                 <?php 
-                                    if($row) {
+                                    if($user) {
                                 ?>
                                 <div class="font-18">
                                     <div class="row mb-3">
                                         <div class="col-md-4 font-weight-bold">Name:</div>
-                                        <div class="col-md-8 text-capitalize"><?php echo $row['1'];?></div>
+                                        <div class="col-md-8 text-capitalize"><?php echo $user['uname'];?></div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-4 font-weight-bold">Email:</div>
-                                        <div class="col-md-8"><?php echo $row['2'];?></div>
+                                        <div class="col-md-8"><?php echo $user['uemail'];?></div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-4 font-weight-bold">Phone:</div>
-                                        <div class="col-md-8"><?php echo $row['3'];?></div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-4 font-weight-bold">Role:</div>
-                                        <div class="col-md-8 text-capitalize"><?php echo $row['5'];?></div>
+                                        <div class="col-md-8"><?php echo $user['uphone'];?></div>
                                     </div>
                                 </div>
                                 <div class="mt-4">

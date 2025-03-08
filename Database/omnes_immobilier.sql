@@ -21,7 +21,7 @@ USE `omnes_immobilier`;
 
 --
 -- Table structure for table `about`
--- 01.03.2025 Jennifer: J'ai supprimé l'utilisation de la table, donc on l'a plus besoin
+-- 01.03.2025 Jennifer: J'ai supprimé l'utilisation de la table, car on n'en a plus besoin
 --
 
 DROP TABLE IF EXISTS `about`;
@@ -30,76 +30,19 @@ DROP TABLE IF EXISTS `about`;
 
 --
 -- Table structure for table `admin`
+-- 08.03.2025 Jennifer: J'ai supprimé les table, car on n'en a pas besoin
 --
 
 DROP TABLE IF EXISTS `admin`;
-CREATE TABLE `admin` (
-  `aid` int(10) NOT NULL,
-  `auser` varchar(50) NOT NULL,
-  `aemail` varchar(50) NOT NULL,
-  `apass` varchar(50) NOT NULL,
-  `adob` date NOT NULL,
-  `aphone` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`aid`, `auser`, `aemail`, `apass`, `adob`, `aphone`) VALUES
-(2, 'disha', 'disha@gmail.com', 'disha', '1999-02-02', '9689689698'),
-(6, 'final', 'final@gmail.com', 'final', '2020-04-29', '7979656578'),
-(7, 'test', 'test@gmail.com', 'test', '2020-04-29', '8997979765'),
-(8, 'check', 'check@gmail.com', 'check', '2020-04-29', '8979785688'),
-(9, 'admin', 'admin@gmail.com', 'admin', '1999-12-06', '9878786545');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `city`
---
 
 DROP TABLE IF EXISTS `city`;
-CREATE TABLE `city` (
-  `cid` int(50) NOT NULL,
-  `cname` varchar(100) NOT NULL,
-  `sid` int(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `city`
---
-
-INSERT INTO `city` (`cid`, `cname`, `sid`) VALUES
-(9, 'navi mumbai', 3),
-(10, 'vapi', 2),
-(11, 'valsad', 2);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `contact`
---
 
 DROP TABLE IF EXISTS `contact`;
-CREATE TABLE `contact` (
-  `cid` int(50) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  `subject` varchar(100) NOT NULL,
-  `message` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `contact`
---
+DROP TABLE IF EXISTS `state`;
 
-INSERT INTO `contact` (`cid`, `name`, `email`, `phone`, `subject`, `message`) VALUES
-(2, 'demo', 'demo@gmail.com', '9765989689', 'demo', 'demo'),
-(4, 'test', 'test@gmail.com', '7976976979', 'test', 'test'),
-(5, 'final', 'final@gmail.com', '7697967967', 'final', 'final'),
-(6, 'disha', 'disha@gmail.com', '7898797696', 'demo', 'demo');
+DROP TABLE IF EXISTS `feedback`;
+
 
 -- --------------------------------------------------------
 
@@ -147,31 +90,6 @@ INSERT INTO `property` (`pid`, `agentid`, `title`, `propertyDescription`, `prope
 -- --------------------------------------------------------
 
 --
--- Table structure for table `state`
---
-
-DROP TABLE IF EXISTS `state`;
-CREATE TABLE `state` (
-  `sid` int(50) NOT NULL,
-  `sname` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `state`
---
-
-INSERT INTO `state` (`sid`, `sname`) VALUES
-(2, 'gujarat'),
-(3, 'goa'),
-(4, 'maharashtra'),
-(7, 'bihar'),
-(9, 'chhattisgarh'),
-(10, 'uttar pardesh'),
-(15, 'rajasthan');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `user`
 --
 
@@ -179,6 +97,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `uid` int(50) NOT NULL,
   `uname` varchar(100) NOT NULL,
+  `ufirstname` varchar(100) NOT NULL,
   `uemail` varchar(100) NOT NULL,
   `uphone` varchar(20) NOT NULL,
   `upass` varchar(50) NOT NULL,
@@ -190,49 +109,25 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`uid`, `uname`, `uemail`, `uphone`, `upass`, `utype`, `uimage`) VALUES
-(1, 'admin', 'admin@gmail.com', '9876543210', 'admin', 'user', '3.jpg'),
-(2, 'aryan', 'aryan@gmail.com', '9878678678', 'aryan', 'agent', '2.jpg'),
-(3, 'demo', 'demo@gmail.com', '7976976979', 'demo', 'user', '1.jpg'),
-(4, 'disha', 'disha@gmail.com', '7976956956', 'disha', 'agent', '2.jpg'),
-(5, 'disha', 'disha1@gmail.com', '8997897869', 'disha', 'agent', '1.jpg'),
-(6, 'testing', 'testing@gmail.com', '9869596597', 'testing', 'builder', '1.jpg'),
-(7, 'some', 'some@gmail.com', '9689698697', 'some', 'builder', '3.jpg'),
-(8, 'test', 'test12@gmail.com', '9798678969', 'test', 'builder', 'avatar-3.jpg');
+INSERT INTO `user` (`uid`, `uname`, `ufirstname`, `uemail`, `uphone`, `upass`, `utype`, `uimage`) VALUES
+(1, 'Doe', 'John', 'agent1@example.com', '1234567890', 'agent1', 'agent', 'agent1.jpg'),
+(2, 'Williams', 'Alice', 'agent2@example.com', '1234567891', 'agent2', 'agent', 'agent2.jpg'),
+(3, 'Smith', 'Michael', 'agent3@example.com', '1234567892', 'agent3', 'agent', 'agent3.jpg'),
+(4, 'Taylor', 'Sophia', 'agent4@example.com', '1234567893', 'agent4', 'agent', 'agent4.jpg'),
+(5, 'Johnson', 'Daniel', 'agent5@example.com', '1234567894', 'agent5', 'agent', 'agent5.jpg'),
+(6, 'Miller', 'Emily', 'user1@example.com', '1234567895', 'user1', 'user', 'user1.jpg'),
+(7, 'Anderson', 'James', 'user2@example.com', '1234567896', 'user2', 'user', 'user2.jpg'),
+(8, 'Thomas', 'Robert', 'admin1@example.com', '1234567897', 'admin1', 'admin', 'admin1.jpg');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`aid`);
-
---
--- Indexes for table `city`
---
-ALTER TABLE `city`
-  ADD PRIMARY KEY (`cid`);
-
---
--- Indexes for table `contact`
---
-ALTER TABLE `contact`
-  ADD PRIMARY KEY (`cid`);
-
---
 -- Indexes for table `property`
 --
 ALTER TABLE `property`
   ADD PRIMARY KEY (`pid`);
-
---
--- Indexes for table `state`
---
-ALTER TABLE `state`
-  ADD PRIMARY KEY (`sid`);
 
 --
 -- Indexes for table `user`
@@ -245,34 +140,11 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `admin`
---
-ALTER TABLE `admin`
-  MODIFY `aid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `city`
---
-ALTER TABLE `city`
-  MODIFY `cid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT for table `contact`
---
-ALTER TABLE `contact`
-  MODIFY `cid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT for table `property`
 --
 ALTER TABLE `property`
   MODIFY `pid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
---
--- AUTO_INCREMENT for table `state`
---
-ALTER TABLE `state`
-  MODIFY `sid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `user`

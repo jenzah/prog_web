@@ -1,92 +1,95 @@
 <?php 
-	ini_set('session.cache_limiter','public');
-	session_cache_limiter(false);
-	session_start();
-	include("config.php");
-	if(!isset($_SESSION['uemail']))
-	{
-		header("location:login.php");
+ini_set('session.cache_limiter','public');
+session_cache_limiter(false);
+session_start();
+include("config.php");
+
+if(!isset($_SESSION['uid'])) {
+	header("location:login.php");
+	exit();
+}
+
+// Check for admin access
+if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] !== true) {
+    // User is either not logged in or not an admin
+    header("Location:unauthorised.php");
+    exit();
+}
+
+
+$msg="";
+if(isset($_POST['add'])) {
+	$pid=$_REQUEST['id'];
+
+	$title=$_POST['title'];
+	$content=$_POST['content'];
+	$ptype=$_POST['ptype'];
+	$bhk=$_POST['bhk'];
+	$bed=$_POST['bed'];
+	$balc=$_POST['balc'];
+	$hall=$_POST['hall'];
+	$stype=$_POST['stype'];
+	$bath=$_POST['bath'];
+	$kitc=$_POST['kitc'];
+	$floor=$_POST['floor'];
+	$price=$_POST['price'];
+	$city=$_POST['city'];
+	$asize=$_POST['asize'];
+	$loc=$_POST['loc'];
+	$state=$_POST['state'];
+	$status=$_POST['status'];
+	$uid=$_SESSION['uid'];
+	$feature=$_POST['feature'];
+
+	$totalfloor=$_POST['totalfl'];
+
+	$aimage=$_FILES['aimage']['name'];
+	$aimage1=$_FILES['aimage1']['name'];
+	$aimage2=$_FILES['aimage2']['name'];
+	$aimage3=$_FILES['aimage3']['name'];
+	$aimage4=$_FILES['aimage4']['name'];
+
+	$fimage=$_FILES['fimage']['name'];
+	$fimage1=$_FILES['fimage1']['name'];
+	$fimage2=$_FILES['fimage2']['name'];
+
+	$temp_name  =$_FILES['aimage']['tmp_name'];
+	$temp_name1 =$_FILES['aimage1']['tmp_name'];
+	$temp_name2 =$_FILES['aimage2']['tmp_name'];
+	$temp_name3 =$_FILES['aimage3']['tmp_name'];
+	$temp_name4 =$_FILES['aimage4']['tmp_name'];
+
+	$temp_name5 =$_FILES['fimage']['tmp_name'];
+	$temp_name6 =$_FILES['fimage1']['tmp_name'];
+	$temp_name7 =$_FILES['fimage2']['tmp_name'];
+
+	move_uploaded_file($temp_name,"admin/property/$aimage");
+	move_uploaded_file($temp_name1,"admin/property/$aimage1");
+	move_uploaded_file($temp_name2,"admin/property/$aimage2");
+	move_uploaded_file($temp_name3,"admin/property/$aimage3");
+	move_uploaded_file($temp_name4,"admin/property/$aimage4");
+
+	move_uploaded_file($temp_name5,"admin/property/$fimage");
+	move_uploaded_file($temp_name6,"admin/property/$fimage1");
+	move_uploaded_file($temp_name7,"admin/property/$fimage2");
+
+
+	$sql = "UPDATE property SET title= '{$title}', pcontent= '{$content}', type='{$ptype}', bhk='{$bhk}', stype='{$stype}',
+	bedroom='{$bed}', bathroom='{$bath}', balcony='{$balc}', kitchen='{$kitc}', hall='{$hall}', floor='{$floor}', 
+	size='{$asize}', price='{$price}', location='{$loc}', city='{$city}', state='{$state}', feature='{$feature}',
+	pimage='{$aimage}', pimage1='{$aimage1}', pimage2='{$aimage2}', pimage3='{$aimage3}', pimage4='{$aimage4}',
+	uid='{$uid}', status='{$status}', mapimage='{$fimage}', topmapimage='{$fimage1}', groundmapimage='{$fimage2}', 
+	totalfloor='{$totalfloor}' WHERE pid = {$pid}";
+
+	$result=mysqli_query($con,$sql);
+	if($result == true) {
+		$msg="<p class='alert alert-success'>Property Updated</p>";
+		header("Location:feature.php?msg=$msg");
+	}else{
+		$msg="<p class='alert alert-warning'>Property Not Updated</p>";
+		header("Location:feature.php?msg=$msg");
 	}
-
-	//// code insert
-	//// add code
-
-	$msg="";
-	if(isset($_POST['add']))
-	{
-		$pid=$_REQUEST['id'];
-
-		$title=$_POST['title'];
-		$content=$_POST['content'];
-		$ptype=$_POST['ptype'];
-		$bhk=$_POST['bhk'];
-		$bed=$_POST['bed'];
-		$balc=$_POST['balc'];
-		$hall=$_POST['hall'];
-		$stype=$_POST['stype'];
-		$bath=$_POST['bath'];
-		$kitc=$_POST['kitc'];
-		$floor=$_POST['floor'];
-		$price=$_POST['price'];
-		$city=$_POST['city'];
-		$asize=$_POST['asize'];
-		$loc=$_POST['loc'];
-		$state=$_POST['state'];
-		$status=$_POST['status'];
-		$uid=$_SESSION['uid'];
-		$feature=$_POST['feature'];
-
-		$totalfloor=$_POST['totalfl'];
-
-		$aimage=$_FILES['aimage']['name'];
-		$aimage1=$_FILES['aimage1']['name'];
-		$aimage2=$_FILES['aimage2']['name'];
-		$aimage3=$_FILES['aimage3']['name'];
-		$aimage4=$_FILES['aimage4']['name'];
-
-		$fimage=$_FILES['fimage']['name'];
-		$fimage1=$_FILES['fimage1']['name'];
-		$fimage2=$_FILES['fimage2']['name'];
-
-		$temp_name  =$_FILES['aimage']['tmp_name'];
-		$temp_name1 =$_FILES['aimage1']['tmp_name'];
-		$temp_name2 =$_FILES['aimage2']['tmp_name'];
-		$temp_name3 =$_FILES['aimage3']['tmp_name'];
-		$temp_name4 =$_FILES['aimage4']['tmp_name'];
-
-		$temp_name5 =$_FILES['fimage']['tmp_name'];
-		$temp_name6 =$_FILES['fimage1']['tmp_name'];
-		$temp_name7 =$_FILES['fimage2']['tmp_name'];
-
-		move_uploaded_file($temp_name,"admin/property/$aimage");
-		move_uploaded_file($temp_name1,"admin/property/$aimage1");
-		move_uploaded_file($temp_name2,"admin/property/$aimage2");
-		move_uploaded_file($temp_name3,"admin/property/$aimage3");
-		move_uploaded_file($temp_name4,"admin/property/$aimage4");
-
-		move_uploaded_file($temp_name5,"admin/property/$fimage");
-		move_uploaded_file($temp_name6,"admin/property/$fimage1");
-		move_uploaded_file($temp_name7,"admin/property/$fimage2");
-
-
-		$sql = "UPDATE property SET title= '{$title}', pcontent= '{$content}', type='{$ptype}', bhk='{$bhk}', stype='{$stype}',
-		bedroom='{$bed}', bathroom='{$bath}', balcony='{$balc}', kitchen='{$kitc}', hall='{$hall}', floor='{$floor}', 
-		size='{$asize}', price='{$price}', location='{$loc}', city='{$city}', state='{$state}', feature='{$feature}',
-		pimage='{$aimage}', pimage1='{$aimage1}', pimage2='{$aimage2}', pimage3='{$aimage3}', pimage4='{$aimage4}',
-		uid='{$uid}', status='{$status}', mapimage='{$fimage}', topmapimage='{$fimage1}', groundmapimage='{$fimage2}', 
-		totalfloor='{$totalfloor}' WHERE pid = {$pid}";
-
-		$result=mysqli_query($con,$sql);
-		if($result == true)
-		{
-			$msg="<p class='alert alert-success'>Property Updated</p>";
-			header("Location:feature.php?msg=$msg");
-		}
-		else{
-			$msg="<p class='alert alert-warning'>Property Not Updated</p>";
-			header("Location:feature.php?msg=$msg");
-		}
-	}						
+}					
 ?>
 
 

@@ -6,11 +6,13 @@ include("config.php");
 
 if(!isset($_SESSION['uid'])) {
     header("location:login.php");
+    exit();
 }
 
-if ($_SESSION['utype'] !== 'admin') {
-    // The page requires admin role
-    header("Location:unauthorized.php");
+// Check for admin access
+if(!isset($_SESSION['isAdmin']) || $_SESSION['isAdmin'] !== true) {
+    // User is either not logged in or not an admin
+    header("Location:unauthorised.php");
     exit();
 }
 ?>
