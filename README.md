@@ -1,12 +1,11 @@
 # Omnes Immobilier - Plateforme Web Immobilière
 
 ## À propos du Projet
- hellohello
+
 Ce projet est une plateforme web immobilière développée pour la communauté Omnes Education.
 La plateforme permet aux utilisateurs de parcourir les propriétés disponibles, de prendre rendez-vous avec des agents immobiliers et de communiquer avec eux par différents canaux (texte, audio, vidéo ou e-mail).
 
 *Ce projet est dérivé de : https://github.com/suraj25809/Real-Estate-Php*
-ashley 
 
 *Développé par:*
 - *Wynona Wendy BELINGA OWONO*
