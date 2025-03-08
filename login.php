@@ -10,11 +10,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_REQUEST['login'])) {
 
     if(!empty($email) && !empty($password)) {
         // Récupérer l'utilisateur en fonction de l'email
-        $sql = "SELECT * FROM user WHERE uemail='$email'";
+        // $sql = "SELECT * FROM user WHERE uemail='$email'";
+        $sql = "SELECT * FROM user WHERE uemail='$email' AND upass='$password'";
         $result = mysqli_query($con, $sql);
         $user = mysqli_fetch_assoc($result);
 
-        if($user && password_verify($password, $user['upass']))
+        // if($user && password_verify($password, $user['upass'])) // for hashing
+        if($user)
         {
             $_SESSION['uid'] = $user['uid'];
             $_SESSION['uemail'] = $email;
