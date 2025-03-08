@@ -59,7 +59,7 @@ CREATE TABLE `property` (
   `pimage2` varchar(300) NOT NULL,
   `pimage3` varchar(300) NOT NULL,
   `status` varchar(50) NOT NULL, -- à vendre, à louer, vendu, loué
-  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
