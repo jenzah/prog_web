@@ -2,7 +2,7 @@
 ini_set('session.cache_limiter','public');
 session_cache_limiter(false);
 session_start();
-include("../config.php");
+include("config.php");
 
 if(!isset($_SESSION['uid'])) {
     header("location:login.php");
@@ -107,19 +107,19 @@ if (isset($_POST['update'])) {
 
 <!--	Css Link
 	========================================================-->
-<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="../css/bootstrap-slider.css">
-<link rel="stylesheet" type="text/css" href="../css/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="../css/layerslider.css">
-<link rel="stylesheet" type="text/css" href="../css/color.css">
-<link rel="stylesheet" type="text/css" href="../css/owl.carousel.min.css">
-<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="../fonts/flaticon/flaticon.css">
-<link rel="stylesheet" type="text/css" href="../css/style.css">
-<link rel="stylesheet" type="text/css" href="../css/login.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="css/layerslider.css">
+<link rel="stylesheet" type="text/css" href="css/color.css">
+<link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/login.css">
     <title>Modifier une propriété</title>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 
@@ -127,7 +127,7 @@ if (isset($_POST['update'])) {
     <div class="row">
         <?php include("include/header.php"); ?>
         <!-- Page Title -->
-        <div class="banner-full-row page-banner" style="background-image:url('../images/breadcrumb.jpg');">
+        <div class="banner-full-row page-banner" style="background-image:url('images/breadcrumb.jpg');">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
@@ -241,7 +241,7 @@ if (isset($_POST['update'])) {
     </div>
 </div>
 
-<script src="../js/jquery.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

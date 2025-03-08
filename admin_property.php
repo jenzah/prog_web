@@ -2,15 +2,15 @@
 ini_set('session.cache_limiter','public');
 session_cache_limiter(false);
 session_start();
-include("../config.php");
+include("config.php");
 
 if(!isset($_SESSION['uid'])) {
-    header("location:../login.php");
+    header("location:login.php");
 }
 
 // The page requires admin role
 if(empty($_SESSION['isAdmin'])) {
-    header("Location:../unauthorised.php");
+    header("Location:unauthorised.php");
     exit();
 }
 
@@ -58,16 +58,16 @@ if (isset($_GET['delete_id'])) {
 
 <!--	Css Link
 	========================================================-->
-<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="../css/bootstrap-slider.css">
-<link rel="stylesheet" type="text/css" href="../css/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="../css/layerslider.css">
-<link rel="stylesheet" type="text/css" href="../css/color.css">
-<link rel="stylesheet" type="text/css" href="../css/owl.carousel.min.css">
-<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="../fonts/flaticon/flaticon.css">
-<link rel="stylesheet" type="text/css" href="../css/style.css">
-<link rel="stylesheet" type="text/css" href="../css/login.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="css/layerslider.css">
+<link rel="stylesheet" type="text/css" href="css/color.css">
+<link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/login.css">
 <title>Omnes Immobilier - Propriétés</title>
 
 <!-- Styles -->
@@ -80,10 +80,10 @@ if (isset($_GET['delete_id'])) {
 <div id="page-wrapper">
     <div class="row"> 
         <!-- Header -->
-        <?php include("../include/header.php");?>
+        <?php include("include/header.php");?>
 
         <!-- Page Title -->
-        <div class="banner-full-row page-banner" style="background-image:url('../images/breadcrumb.jpg');">
+        <div class="banner-full-row page-banner" style="background-image:url('images/breadcrumb.jpg');">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
@@ -109,7 +109,7 @@ if (isset($_GET['delete_id'])) {
                 <div class="row mb-3">
                     <div class="col-lg-12 text-right">
                         <a href="admin_add_property.php">
-                        <img src="ajouter.png" class="database-icon" title="Ajouter une propriété" style="width: 30px !important; height: 30px !important;">
+                        <img src="images/admin/ajouter.png" class="database-icon" title="Ajouter une propriété" style="width: 30px !important; height: 30px !important;">
                         </a>
                     </div>
                 </div>
@@ -152,12 +152,12 @@ if (isset($_GET['delete_id'])) {
                             <td>
     <!-- Bouton Modifier -->
     <a href="admin_edit_property.php?id=<?php echo $row['pid']; ?>">
-        <img src="modifier.png" class="img-action" style="width: 23px !important; height: 23px !important;" title="Modifier" >
+        <img src="images/admin/modifier.png" class="img-action" style="width: 23px !important; height: 23px !important;" title="Modifier" >
     </a>
 
     <!-- Bouton Supprimer -->
     <a href="admin_property.php?delete_id=<?php echo $row['pid']; ?>" onclick="return confirm('Voulez-vous vraiment supprimer cette propriété ?');">
-        <img src="supprimer.png" class="img-action" style="width: 23px !important; height: 23px !important;" title="Supprimer">
+        <img src="images/admin/supprimer.png" class="img-action" style="width: 23px !important; height: 23px !important;" title="Supprimer">
     </a>
 </td>
 
@@ -169,12 +169,12 @@ if (isset($_GET['delete_id'])) {
         </div>
 
         <!-- Footer -->
-        <?php include("../include/footer.php");?>
+        <?php include("include/footer.php");?>
     </div>
 </div>
 
 <!-- Scripts -->
-<script src="../js/jquery.min.js"></script> 
-<script src="../js/bootstrap.min.js"></script> 
+<script src="js/jquery.min.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
 </body>
 </html>

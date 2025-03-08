@@ -2,17 +2,17 @@
 ini_set('session.cache_limiter','public');
 session_cache_limiter(false);
 session_start();
-include("../config.php");
+include("config.php");
 
 if(!isset($_SESSION['uid'])) {
-    header("location:../login.php");
+    header("location:login.php");
     exit();
 }
 
 // Check for admin access
 if(empty($_SESSION['isAdmin'])) {
     // User is either not logged in or not an admin
-    header("Location:../unauthorised.php");
+    header("Location:unauthorised.php");
     exit();
 }
 
@@ -57,16 +57,16 @@ if (isset($_GET['delete_id'])) {
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
 <!--	Css Link	-->
-<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="../css/bootstrap-slider.css">
-<link rel="stylesheet" type="text/css" href="../css/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="../css/layerslider.css">
-<link rel="stylesheet" type="text/css" href="../css/color.css">
-<link rel="stylesheet" type="text/css" href="../css/owl.carousel.min.css">
-<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="../fonts/flaticon/flaticon.css">
-<link rel="stylesheet" type="text/css" href="../css/style.css">
-<link rel="stylesheet" type="text/css" href="../css/login.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="css/layerslider.css">
+<link rel="stylesheet" type="text/css" href="css/color.css">
+<link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/login.css">
 <title>Omnes Immobilier - Utilisateurs</title>
 
 <!-- Styles -->
@@ -79,10 +79,10 @@ if (isset($_GET['delete_id'])) {
 <div id="page-wrapper">
     <div class="row"> 
         <!-- Header -->
-        <?php include("../include/header.php");?>
+        <?php include("include/header.php");?>
 
         <!-- Page Title -->
-        <div class="banner-full-row page-banner" style="background-image:url('../images/breadcrumb.jpg');">
+        <div class="banner-full-row page-banner" style="background-image:url('images/breadcrumb.jpg');">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
@@ -125,7 +125,7 @@ if (isset($_GET['delete_id'])) {
                     while($row = mysqli_fetch_array($query)) {
                     ?>
                         <tr>
-                            <td><img src="../images/user/<?php echo $row['uimage']; ?>" width="100"></td>
+                            <td><img src="images/user/<?php echo $row['uimage']; ?>" width="100"></td>
                             <td><?php echo $row['uname']; ?></td>
                             <td><?php echo $row['uemail']; ?></td>
                             <td><?php echo $row['uphone']; ?></td>
@@ -133,7 +133,7 @@ if (isset($_GET['delete_id'])) {
                                 <!-- Bouton Supprimer -->
                                 <a href="admin_user.php?delete_id=<?php echo $row['uid']; ?>" 
                                    onclick="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
-                                    <img src="supprimer.png" class="img-action" style="width: 23px !important; height: 23px !important;" title="Supprimer">
+                                    <img src="images/admin/supprimer.png" class="img-action" style="width: 23px !important; height: 23px !important;" title="Supprimer">
                                 </a>
                             </td>
                         </tr>
@@ -144,12 +144,12 @@ if (isset($_GET['delete_id'])) {
         </div>
 
         <!-- Footer -->
-        <?php include("../include/footer.php");?>
+        <?php include("include/footer.php");?>
     </div>
 </div>
 
 <!-- Scripts -->
-<script src="../js/jquery.min.js"></script> 
-<script src="../js/bootstrap.min.js"></script> 
+<script src="js/jquery.min.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
 </body>
 </html>
