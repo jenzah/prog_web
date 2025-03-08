@@ -240,19 +240,19 @@ if (isset($_POST['update'])) {
                 <div class="form-group">
                     <label>Image 1</label>
                     <input type="file" name="pimage1" class="form-control">
-                    <img src="<?php echo $property['pimage1']; ?>" width="100">
+                    <img src="images/property/<?php echo $property['pimage1']; ?>" width="100">
                 </div>
 
                 <div class="form-group">
                     <label>Image 2</label>
                     <input type="file" name="pimage2" class="form-control">
-                    <img src="<?php echo $property['pimage2']; ?>" width="100">
+                    <img src="images/property/<?php echo $property['pimage2']; ?>" width="100">
                 </div>
 
                 <div class="form-group">
                     <label>Image 3</label>
                     <input type="file" name="pimage3" class="form-control">
-                    <img src="<?php echo $property['pimage3']; ?>" width="100">
+                    <img src="images/property/<?php echo $property['pimage3']; ?>" width="100">
                 </div>
 
                 <button type="submit" name="update" class="btn btn-primary btn-block mt-3">Mettre à jour</button>
