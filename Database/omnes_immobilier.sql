@@ -1,5 +1,5 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
@@ -16,15 +16,6 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `omnes_immobilier` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `omnes_immobilier`;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `about`
--- 01.03.2025 Jennifer: J'ai supprimé l'utilisation de la table, car on n'en a plus besoin
---
-
-DROP TABLE IF EXISTS `about`;
 
 -- --------------------------------------------------------
 
