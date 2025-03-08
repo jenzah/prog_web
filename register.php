@@ -7,7 +7,7 @@ if(isset($_REQUEST['register'])) {
 	$firstname=$_REQUEST['firstname'];
 	$email=$_REQUEST['email'];
 	$phone=$_REQUEST['phone'];
-	$password=$_REQUEST['pass'];
+	$password=$_REQUEST['password'];
 	$utype="client";
 	
 	// Check if image is uploaded
@@ -31,7 +31,7 @@ if(isset($_REQUEST['register'])) {
 	
 	}else{
 		if(!empty($name) && !empty($firstname) && !empty($email) && !empty($phone) && !empty($password)) {
-			$sql="INSERT INTO user (uname, firstname, uemail, uphone, upass, utype, uimage) VALUES ('$name', '$firstname', '$email', '$phone', '$password', '$utype', '$uimage')";
+			$sql="INSERT INTO user (uname, ufirstname, uemail, uphone, upass, utype, uimage) VALUES ('$name', '$firstname', '$email', '$phone', '$password', '$utype', '$uimage')";
 			$result=mysqli_query($con, $sql);
 			
 			// Move uploaded file if it exists
@@ -40,7 +40,8 @@ if(isset($_REQUEST['register'])) {
 			}
 
 			if($result) {
-			   $msg = "<p class='alert alert-success'>Inscription réussie.</p> ";
+				// Redirect to login page
+				header("Location: login.php");
 			}else{
 			   $error = "<p class='alert alert-warning'>Inscription échouée.</p> ";
 			}
@@ -138,7 +139,7 @@ if(isset($_REQUEST['register'])) {
 											<input type="text"  name="phone" class="form-control" placeholder="Téléphone*" maxlength="10">
 										</div>
 										<div class="form-group">
-											<input type="text" name="pass"  class="form-control" placeholder="Mot de passe*">
+											<input type="password" name="password"  class="form-control" placeholder="Mot de passe*">
 										</div>
 
 										<div class="form-group">
