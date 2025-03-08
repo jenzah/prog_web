@@ -125,7 +125,7 @@ if (isset($_GET['delete_id'])) {
                     while($row = mysqli_fetch_array($query)) {
                     ?>
                         <tr>
-                            <td><img src="images/user/<?php echo $row['uimage']; ?>" width="100"></td>
+                            <td><img src="images/profile_pic/<?php echo $row['uimage']; ?>" style="width: 80px !important; height: 80px !important;"></td>
                             <td><?php echo $row['uname']; ?></td>
                             <td><?php echo $row['uemail']; ?></td>
                             <td><?php echo $row['uphone']; ?></td>
