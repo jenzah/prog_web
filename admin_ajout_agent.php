@@ -28,27 +28,21 @@ if (isset($_POST['add'])) {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Sécurisation du mot de passe
     $specialty = mysqli_real_escape_string($con, $_POST['specialty']);
 
-    
-   // Check if image is uploaded
-   if(isset($_FILES['uimage']) && $_FILES['uimage']['error'] == 0) {
-    $uimage = $_FILES['uimage']['name'];
-    $temp_name = $_FILES['uimage']['tmp_name'];
-    $imagePath = "images/profile_pic/".$uimage;
+    // Dossier de stockage des images
+    $upload_dir = "images/profile_pic/";
+
+    // Vérifier si une image est téléchargée
+    if(isset($_FILES['uimage']) && $_FILES['uimage']['error'] == 0) {
+        $uimage = basename($_FILES['uimage']['name']); // Stocker uniquement le nom du fichier
+        move_uploaded_file($_FILES['uimage']['tmp_name'], $upload_dir . $uimage); // Déplacer l'image dans le dossier
     } else {
-    // No image or error uploading, use default
-    $uimage = "default.png";
-    $imagePath = "images/profile_pic/default.png";
-}
-    
+        $uimage = "default.png"; // Image par défaut si aucune image n'est téléchargée
+    }
 
     // Requête SQL pour ajouter l'agent dans la base de données
     $sql = "INSERT INTO user (uname, ufirstname, uemail, uphone, upass, utype, uimage, specialty) 
             VALUES ('$name', '$firstname', '$email', '$phone', '$password', 'agent', '$uimage', '$specialty')";
 
-    // Move uploaded file if it exists
-	if(isset($_FILES['uimage']) && $_FILES['uimage']['error'] == 0) {
-		move_uploaded_file($temp_name,"images/profile_pic/$uimage");
-	}
     $result = mysqli_query($con, $sql);
 
     if ($result) {
@@ -58,6 +52,7 @@ if (isset($_POST['add'])) {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -157,7 +152,7 @@ if (isset($_POST['add'])) {
 
                     <div class="form-group">
                         <label>Photo de Profil</label>
-                        <input type="file" name="image" class="form-control">
+                        <input type="file" name="uimage" class="form-control">
                     </div>
 
                     <button type="submit" name="add" class="btn btn-primary btn-block mt-3">Ajouter</button>

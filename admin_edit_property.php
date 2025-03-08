@@ -49,16 +49,36 @@ if (isset($_POST['update'])) {
     $department = mysqli_real_escape_string($con, $_POST['department']);
     $status = mysqli_real_escape_string($con, $_POST['status']);
 
-    // Gestion des images
-    $upload_dir = "property/";
-    $pimage1 = !empty($_FILES['pimage1']['name']) ? $upload_dir . basename($_FILES['pimage1']['name']) : $property['pimage1'];
-    $pimage2 = !empty($_FILES['pimage2']['name']) ? $upload_dir . basename($_FILES['pimage2']['name']) : $property['pimage2'];
-    $pimage3 = !empty($_FILES['pimage3']['name']) ? $upload_dir . basename($_FILES['pimage3']['name']) : $property['pimage3'];
+    // Dossier où les images seront stockées
+    $upload_dir = "images/property/";
 
-    if (!empty($_FILES['pimage1']['name'])) move_uploaded_file($_FILES['pimage1']['tmp_name'], $pimage1);
-    if (!empty($_FILES['pimage2']['name'])) move_uploaded_file($_FILES['pimage2']['tmp_name'], $pimage2);
-    if (!empty($_FILES['pimage3']['name'])) move_uploaded_file($_FILES['pimage3']['tmp_name'], $pimage3);
+    $pimage1 = "";
+    $pimage2 = "";
+    $pimage3 = "";
 
+    // Vérifier et enregistrer les images
+    if(isset($_FILES['pimage1']) && $_FILES['pimage1']['error'] == 0) {
+        $pimage1 = basename($_FILES['pimage1']['name']); // Stocke uniquement le nom du fichier
+        move_uploaded_file($_FILES['pimage1']['tmp_name'], $upload_dir . $pimage1);
+    } else {
+        $pimage1 = $property['pimage1']; // Conserve l'ancienne image si aucune nouvelle image n'est téléchargée
+    }
+
+    if(isset($_FILES['pimage2']) && $_FILES['pimage2']['error'] == 0) {
+        $pimage2 = basename($_FILES['pimage2']['name']);
+        move_uploaded_file($_FILES['pimage2']['tmp_name'], $upload_dir . $pimage2);
+    } else {
+        $pimage2 = $property['pimage2'];
+    }
+
+    if(isset($_FILES['pimage3']) && $_FILES['pimage3']['error'] == 0) {
+        $pimage3 = basename($_FILES['pimage3']['name']);
+        move_uploaded_file($_FILES['pimage3']['tmp_name'], $upload_dir . $pimage3);
+    } else {
+        $pimage3 = $property['pimage3'];
+    }
+
+    // Mettre à jour la base de données avec les nouvelles valeurs
     $sql = "UPDATE property SET 
                 title='$title', 
                 propertyDescription='$propertyDescription', 
@@ -205,7 +225,7 @@ if (isset($_POST['update'])) {
                 </div>
 
                 <div class="form-group">
-                    
+
                 <label>Statut</label>
                 <select name="status" class="form-control" required>
                 <option value="A vendre" <?php if ($property['status'] == 'A vendre') echo "selected"; ?>>A vendre</option>

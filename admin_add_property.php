@@ -19,7 +19,6 @@ if(empty($_SESSION['isAdmin'])) {
 // Messages d'erreur ou de succès
 $error = "";
 $msg = "";
-
 if (isset($_POST['add'])) {
     // Récupération des champs du formulaire
     $title = mysqli_real_escape_string($con, $_POST['title']);
@@ -35,15 +34,29 @@ if (isset($_POST['add'])) {
     $status = mysqli_real_escape_string($con, $_POST['status']);
     $agentid = (int)$_SESSION['uid']; // Assigne l'ID de l'agent connecté
 
-    // Gestion des images
-    $upload_dir = "images/property";  // Dossier de stockage des images
-    $pimage1 = $_FILES['pimage1']['name'] ? $upload_dir . basename($_FILES['pimage1']['name']) : "";
-    $pimage2 = $_FILES['pimage2']['name'] ? $upload_dir . basename($_FILES['pimage2']['name']) : "";
-    $pimage3 = $_FILES['pimage3']['name'] ? $upload_dir . basename($_FILES['pimage3']['name']) : "";
+    // Dossier de stockage des images
+    $upload_dir = "images/property/";
 
-    move_uploaded_file($_FILES['pimage1']['tmp_name'], $pimage1);
-    move_uploaded_file($_FILES['pimage2']['tmp_name'], $pimage2);
-    move_uploaded_file($_FILES['pimage3']['tmp_name'], $pimage3);
+    // Initialisation des variables d'image
+    $pimage1 = "";
+    $pimage2 = "";
+    $pimage3 = "";
+
+    // Vérifier et enregistrer les images
+    if(isset($_FILES['pimage1']) && $_FILES['pimage1']['error'] == 0) {
+        $pimage1 = basename($_FILES['pimage1']['name']); // Enregistre uniquement le nom du fichier
+        move_uploaded_file($_FILES['pimage1']['tmp_name'], $upload_dir . $pimage1);
+    }
+
+    if(isset($_FILES['pimage2']) && $_FILES['pimage2']['error'] == 0) {
+        $pimage2 = basename($_FILES['pimage2']['name']); // Enregistre uniquement le nom du fichier
+        move_uploaded_file($_FILES['pimage2']['tmp_name'], $upload_dir . $pimage2);
+    }
+
+    if(isset($_FILES['pimage3']) && $_FILES['pimage3']['error'] == 0) {
+        $pimage3 = basename($_FILES['pimage3']['name']); // Enregistre uniquement le nom du fichier
+        move_uploaded_file($_FILES['pimage3']['tmp_name'], $upload_dir . $pimage3);
+    }
 
     // Requête d'insertion SQL
     $sql = "INSERT INTO property (agentid, title, propertyDescription, propertyType, area, nbRooms, nbBathrooms, price, location, city, department, pimage1, pimage2, pimage3, status, date) 
@@ -56,6 +69,7 @@ if (isset($_POST['add'])) {
     } else {
         $error = "<p class='alert alert-danger'>Erreur lors de l'ajout de la propriété.</p>";
     }
+
 }
 ?>
 <!DOCTYPE html>
