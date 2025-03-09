@@ -141,28 +141,26 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   KEY `property_id` (`property_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Ajouter quelques utilisateurs qui seront des clients (si nécessaire)
--- Assurez-vous que les UIDs ne sont pas déjà utilisés dans votre table user
+-- Current appointments (future dates)
+-- Thursday is apparently presentation day, so we'll set some appointments for future dates after that
 INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment_date`, `appointment_time`, `place`, `is_paid`, `price`, `comments`, `created_at`) VALUES
-(101, 201, 501, DATE_ADD(CURRENT_DATE(), INTERVAL 2 DAY), '14:30:00', 'Sur place: 12 Avenue Montaigne, Paris', 1, 150.00, 'Client très intéressé par cet appartement haussmannien', CURRENT_TIMESTAMP()),
-(102, 201, 502, DATE_ADD(CURRENT_DATE(), INTERVAL 4 DAY), '10:00:00', 'Agence Omnes Immobilier', 0, 150.00, 'Première visite pour ce loft industriel', CURRENT_TIMESTAMP()),
-(102, 202, 503, DATE_ADD(CURRENT_DATE(), INTERVAL 3 DAY), '15:45:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 200.00, 'Client cherche un local pour ouvrir un restaurant', CURRENT_TIMESTAMP()),
-(101, 202, 504, DATE_ADD(CURRENT_DATE(), INTERVAL 5 DAY), '11:30:00', 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 1, 150.00, 'Client souhaite construire une maison familiale', CURRENT_TIMESTAMP()),
-(102, 203, 505, DATE_ADD(CURRENT_DATE(), INTERVAL 7 DAY), '16:15:00', 'Agence Omnes Immobilier', 0, 75.00, "Étudiant à la recherche d'un studio pour la rentrée", CURRENT_TIMESTAMP());
+-- Client 101 future appointments
+(101, 201, 501, '2025-03-15', '10:00:00', 'Sur place: 12 Avenue Montaigne, Paris', 0, 150.00, 'Premier rendez-vous pour visiter cet appartement haussmannien', CURRENT_TIMESTAMP()),
+(101, 202, 503, '2025-03-16', '14:00:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 200.00, 'Visite du local commercial pour possible restaurant', CURRENT_TIMESTAMP()),
 
--- Insertion de rendez-vous passés
+-- Client 102 future appointments
+(102, 201, 502, '2025-03-14', '11:00:00', 'Sur place: 5 Rue des Entrepreneurs, Boulogne-Billancourt', 0, 150.00, 'Visite du loft industriel', CURRENT_TIMESTAMP()),
+(102, 202, 504, '2025-03-17', '16:00:00', 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 0, 150.00, 'Visite du terrain constructible', CURRENT_TIMESTAMP());
+
+-- Past appointments
 INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment_date`, `appointment_time`, `place`, `is_paid`, `price`, `comments`, `created_at`) VALUES
-(101, 203, 506, DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY), '14:00:00', 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 1, 150.00, 'Le client a beaucoup aimé cette maison de ville, mais elle a été vendue depuis', CURRENT_TIMESTAMP()),
-(102, 204, 507, DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY), '11:30:00', 'Agence Omnes Immobilier', 1, 200.00, 'Client professionnel cherchant des bureaux pour son entreprise', CURRENT_TIMESTAMP()),
-(102, 204, 508, DATE_SUB(CURRENT_DATE(), INTERVAL 10 DAY), '16:45:00', 'Sur place: 25 Rue des Écoles, Créteil', 0, 150.00, 'Famille avec enfants, recherche proximité des écoles', CURRENT_TIMESTAMP()),
-(101, 205, 509, DATE_SUB(CURRENT_DATE(), INTERVAL 21 DAY), '09:15:00', 'Sur place: Route de la Forêt, Évry', 1, 150.00, 'Client souhaite investir dans un terrain avec potentiel', CURRENT_TIMESTAMP()),
-(102, 205, 510, DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY), '15:30:00', 'Agence Omnes Immobilier', 1, 200.00, 'Client recherche un bien haut de gamme pour investissement', CURRENT_TIMESTAMP());
+-- Client 101 past appointments
+(101, 201, 506, '2025-03-05', '09:00:00', 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 1, 150.00, 'Le client a beaucoup aimé cette maison de ville', '2025-03-05 08:30:00'),
+(101, 202, 509, '2025-03-01', '15:00:00', 'Sur place: Route de la Forêt, Évry', 1, 150.00, 'Le client s\'est montré intéressé par le terrain avec vue', '2025-03-01 14:30:00'),
 
--- Rendez-vous d'aujourd'hui 
-INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment_date`, `appointment_time`, `place`, `is_paid`, `price`, `comments`, `created_at`) VALUES
-(102, 201, 501, CURRENT_DATE(), TIME(DATE_SUB(NOW(), INTERVAL 3 HOUR)), 'Sur place: 12 Avenue Montaigne, Paris', 1, 150.00, "Seconde visite de l'appartement, client très intéressé", CURRENT_TIMESTAMP()),
-(101, 202, 503, CURRENT_DATE(), TIME(DATE_ADD(NOW(), INTERVAL 2 HOUR)), 'Agence Omnes Immobilier', 0, 150.00, "Rendez-vous de discussion sur les possibilités d'aménagement du local commercial", CURRENT_TIMESTAMP());
-
+-- Client 102 past appointments
+(102, 201, 510, '2025-03-03', '13:00:00', 'Sur place: 3 Boulevard Haussmann, Paris', 1, 200.00, 'Le client a apprécié les prestations haut de gamme du duplex', '2025-03-03 12:30:00'),
+(102, 202, 507, '2025-02-28', '17:00:00', 'Sur place: 8 Avenue des Champs-Élysées, Paris', 1, 200.00, 'Le client a trouvé l\'espace de travail très lumineux', '2025-02-28 16:30:00');
 
 --
 -- Indexes for dumped tables

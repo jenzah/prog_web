@@ -1215,6 +1215,78 @@ blockquote {
 }
 
 /*==========================================
+ Detailed RDV
+ ===========================================*/
+.property-image {
+	width: 100%;
+	max-height: 400px;
+	object-fit: cover;
+	border-radius: 5px;
+}
+
+.detail-box {
+	background-color: #f8f9fa;
+	border-radius: 5px;
+	padding: 20px;
+	margin-bottom: 20px;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.detail-title {
+	font-weight: 600;
+	color: #3c3c3c;
+	margin-bottom: 5px;
+}
+
+.detail-value {
+	margin-bottom: 15px;
+}
+
+.cancel-btn {
+	background-color: #dc3545;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.cancel-btn:hover {
+	background-color: #c82333;
+}
+
+.property-details {
+	margin-top: 20px;
+}
+
+.property-details li {
+	list-style: none;
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.property-details i {
+	font-size: 18px;
+}
+
+.badge-paid {
+	background-color: #4F6C6B;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 5px;
+	font-weight: 500;
+}
+
+.badge-unpaid {
+	background-color: #dc3545;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 5px;
+	font-weight: 500;
+}
+
+/*==========================================
  Form Styles
  ===========================================*/
 .view-category button {
@@ -2012,6 +2084,7 @@ sup {
     object-position: center; /* Centers the image to show the middle portion */
 }
 
+/*=== Appointment dashboard ===*/
 .no-appointments {
 	text-align: center;
 	padding: 20px;
@@ -2034,6 +2107,36 @@ sup {
 .auto-table td.actions {
 	width: 1%; /* This makes the column as narrow as possible */
 	white-space: nowrap;
+}
+
+.property-link {
+	display: flex;
+	flex-direction: column;
+}
+
+.property-title {
+	margin-bottom: 5px;
+}
+
+.details-link {
+	font-size: 12px;
+	color: #4F6C6B !important; /* This uses your theme color */
+	text-decoration: none;
+	font-weight: 500;
+	align-self: flex-start;
+}
+
+.details-link:hover {
+	text-decoration: underline !important;
+}
+
+.details-link i {
+	margin-right: 4px;
+}
+
+.alert-info {
+    background-color: #d2e0df !important;
+    border-color: #d2e0df !important;
 }
 
 /*==========================================

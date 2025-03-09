@@ -218,7 +218,14 @@ $pastQuery = mysqli_query($con, $pastSql);
                             $formattedTime = $time->format('H:i');
                         ?>
                             <tr>
-                                <td><?php echo $app['property_title']; ?></td>
+                                <td>
+                                    <div class="property-link">
+                                        <span class="property-title"><?php echo $app['property_title']; ?></span>
+                                        <a href="appointment_details.php?id=<?php echo $app['aid']; ?>" class="details-link">
+                                            <i class="fas fa-eye"></i>Voir détails
+                                        </a>
+                                    </div>
+                                </td>
                                 <td><?php echo $app['place']; ?></td>
                                 <td><?php echo $formattedDate; ?></td>
                                 <td><?php echo $formattedTime; ?></td>
@@ -300,7 +307,14 @@ $pastQuery = mysqli_query($con, $pastSql);
                             $formattedTime = $time->format('H:i');
                         ?>
                             <tr>
-                                <td><?php echo $app['property_title']; ?></td>
+                                <td>
+                                    <div class="property-link">
+                                        <span class="property-title"><?php echo $app['property_title']; ?></span>
+                                        <a href="appointment_details.php?id=<?php echo $app['aid']; ?>" class="details-link">
+                                            <i class="fas fa-eye"></i>Voir détails
+                                        </a>
+                                    </div>
+                                </td>
                                 <td><?php echo $app['place']; ?></td>
                                 <td><?php echo $formattedDate; ?></td>
                                 <td><?php echo $formattedTime; ?></td>

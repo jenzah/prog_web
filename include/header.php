@@ -63,6 +63,7 @@
 									        	<li class="nav-item"> <a class="nav-link" href="">Disponibilités</a> </li>
 									        	<li class="nav-item"> <a class="nav-link" href="">Calendrier</a> </li>
 									        	<li class="nav-item"> <a class="nav-link" href="appointments.php">Mes RDVs</a> </li>	
+									        	<li class="nav-item"> <a class="nav-link" href="appdetails.php">RDV details</a> </li>	
 									        </ul>
                                         </li>
                                         <li class="nav-item"> <a class="nav-link" href="">Mes conversations</a> </li>

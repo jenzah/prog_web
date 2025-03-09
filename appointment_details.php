@@ -85,7 +85,22 @@ $formattedDate = $date->format('d/m/Y');
 
 $time = new DateTime($app['appointment_time']);
 $formattedTime = $time->format('H:i');
+
+// Check if the appointment is in the past or future
+$currentDate = date('Y-m-d');
+$currentTime = date('H:i:s');
+$isPastAppointment = false;
+
+// Compare appointment date with current date
+if ($app['appointment_date'] < $currentDate) {
+    $isPastAppointment = true;
+} 
+// If same date, check if time has passed
+elseif ($app['appointment_date'] == $currentDate && $app['appointment_time'] < $currentTime) {
+    $isPastAppointment = true;
+}
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -122,77 +137,6 @@ $formattedTime = $time->format('H:i');
 <link rel="stylesheet" type="text/css" href="css/login.css">
 <title>Omnes Immobilier - Détail du Rendez-vous</title>
 
-<style>
-    .property-image {
-        width: 100%;
-        max-height: 400px;
-        object-fit: cover;
-        border-radius: 5px;
-    }
-    
-    .detail-box {
-        background-color: #f8f9fa;
-        border-radius: 5px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    
-    .detail-title {
-        font-weight: 600;
-        color: #3c3c3c;
-        margin-bottom: 5px;
-    }
-    
-    .detail-value {
-        margin-bottom: 15px;
-    }
-    
-    .cancel-btn {
-        background-color: #dc3545;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        font-weight: 600;
-        cursor: pointer;
-    }
-    
-    .cancel-btn:hover {
-        background-color: #c82333;
-    }
-    
-    .property-details {
-        margin-top: 20px;
-    }
-    
-    .property-details li {
-        list-style: none;
-        display: inline-block;
-        margin-right: 20px;
-    }
-    
-    .property-details i {
-        font-size: 18px;
-        color: #0d6efd;
-    }
-    
-    .badge-paid {
-        background-color: #28a745;
-        color: white;
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-weight: 500;
-    }
-    
-    .badge-unpaid {
-        background-color: #dc3545;
-        color: white;
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-weight: 500;
-    }
-</style>
 </head>
 
 <body>
@@ -227,26 +171,34 @@ $formattedTime = $time->format('H:i');
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="property-details-inner">
-                            <h2 class="text-secondary"><?php echo $app['property_title']; ?></h2>
-                            <p class="property-address"><i class="fas fa-map-marker-alt text-success"></i> <?php echo $app['location'] . ', ' . $app['city']; ?></p>
-                            
-                            <div class="property-details-info">
-                                <ul class="property-details mb-4">
-                                    <li><i class="fas fa-bed"></i> <span><?php echo $app['nbRooms']; ?> pièces</span></li>
-                                    <li><i class="fas fa-bath"></i> <span><?php echo $app['nbBathrooms']; ?> bains</span></li>
-                                    <li><i class="fas fa-chart-area"></i> <span><?php echo $app['area']; ?> m²</span></li>
-                                    <li><i class="fas fa-euro-sign"></i> <span><?php echo number_format($app['property_price'], 0, ',', ' '); ?> €</span></li>
-                                </ul>
-                            </div>
-                            
+                           
                             <div class="mb-4">
                                 <?php if (!empty($app['pimage1'])) { ?>
-                                    <img src="property/<?php echo $app['pimage1']; ?>" alt="<?php echo $app['property_title']; ?>" class="property-image">
+                                    <img src="images/property/<?php echo $app['pimage1']; ?>" alt="<?php echo $app['property_title']; ?>" class="property-image">
                                 <?php } else { ?>
                                     <div class="alert alert-warning">Aucune image disponible</div>
                                 <?php } ?>
                             </div>
                             
+                            <h2 class="text-secondary"><?php echo $app['property_title']; ?></h2>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <p class="property-address "><i class="fas fa-map-marker-alt text-primary"></i> <?php echo $app['location'] . ', ' . $app['city']; ?></p>
+                                    <div class="property-details-info">
+                                        <ul class="property-details mb-4">
+                                            <li><i class="fas fa-bed text-primary"></i> <span><?php echo $app['nbRooms']; ?> pièces</span></li>
+                                            <li><i class="fas fa-bath text-primary"></i> <span><?php echo $app['nbBathrooms']; ?> bains</span></li>
+                                            <li><i class="fas fa-chart-area text-primary"></i> <span><?php echo $app['area']; ?> m²</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                    
+                                <div class="col-md-6">
+                                    <div class="text-primary text-left h5 my-2 text-md-right"><?php echo number_format($app['property_price'], 0, ',', ' ') . ' €';?></div>
+                                </div>
+                            </div>
+
                             <div class="mb-4">
                                 <h4 class="text-secondary mb-3">Description</h4>
                                 <p><?php echo $app['propertyDescription']; ?></p>
@@ -256,7 +208,7 @@ $formattedTime = $time->format('H:i');
                     
                     <div class="col-lg-4">
                         <div class="detail-box">
-                            <h3 class="text-secondary mb-4">Détails du rendez-vous</h3>
+                            <h3 class="text-secondary mb-4">Détails du RDV</h3>
                             
                             <div class="mb-4">
                                 <p class="detail-title">Date et heure</p>
@@ -314,9 +266,15 @@ $formattedTime = $time->format('H:i');
                             <?php } ?>
                             
                             <div class="text-center">
-                                <a href="appointment-details.php?id=<?php echo $appointmentId; ?>&cancel=1" class="btn cancel-btn" onclick="return confirm('Êtes-vous sûr de vouloir annuler ce rendez-vous ?');">
-                                    <i class="fas fa-times-circle"></i> Annuler ce rendez-vous
-                                </a>
+                                <?php if (!$isPastAppointment) { ?>
+                                    <a href="appointment-details.php?id=<?php echo $appointmentId; ?>&cancel=1" class="btn cancel-btn" onclick="return confirm('Êtes-vous sûr de vouloir annuler ce rendez-vous ?');">
+                                        <i class="fas fa-times-circle"></i> Annuler ce rendez-vous
+                                    </a>
+                                <?php } else { ?>
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-info-circle"></i> Ce RDV est déjà passé et ne peut plus être annulé.
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
