@@ -9,6 +9,12 @@ if(isset($_REQUEST['register'])) {
     $phone = mysqli_real_escape_string($con, $_REQUEST['phone']);
     $password = mysqli_real_escape_string($con, $_REQUEST['password']);
 
+    $name = mysqli_real_escape_string($con, $_REQUEST['name']);
+	$firstname = mysqli_real_escape_string($con, $_REQUEST['firstname']);
+    $email = mysqli_real_escape_string($con, $_REQUEST['email']);
+    $phone = mysqli_real_escape_string($con, $_REQUEST['phone']);
+    $password = mysqli_real_escape_string($con, $_REQUEST['password']);
+
 	// Check if image is uploaded
     if(isset($_FILES['uimage']) && $_FILES['uimage']['error'] == 0) {
 		$uimage = $_FILES['uimage']['name'];
@@ -26,14 +32,15 @@ if(isset($_REQUEST['register'])) {
 	$user=mysqli_num_rows($res);
 	
 	if($user > 0) {
-        $error = "<p class='alert alert-warning'>Email déjà utilisé.</p>";
+        $error = "<p class='alert alert-warning'>Email déjà utilisé. Veuillez vous connecter ou utiliser une autre adresse e-mail.</p>";
     } else {
-        if(!empty($name) && !empty($email) && !empty($phone) && !empty($password)) {
+        if(!empty($name) && !empty($firstname) && !empty($email) && !empty($phone) && !empty($password)) {
             // $hashed_pass = password_hash($password, PASSWORD_DEFAULT); // Sécuriser le mot de passe
 
             // Insérer avec le type par défaut "client" et sans image
             $sql = "INSERT INTO user (uname, ufirstname, uemail, uphone, upass, utype, uimage) 
-                    VALUES ('$name', '$firstname', '$email', '$phone', '$hashed_pass', 'client', '$uimage')";
+                    VALUES ('$name', '$firstname', '$email', '$phone', '$password', 'client', '$uimage')";
+                    // VALUES ('$name', '$firstname', '$email', '$phone', '$hashed_pass', 'client', '$uimage')";
 
             $result = mysqli_query($con, $sql);
 
