@@ -113,7 +113,7 @@ if(isset($_REQUEST['register'])) {
 	                    <div class="col-md-6">
 	                        <nav aria-label="breadcrumb" class="float-left float-md-right">
 	                            <ol class="breadcrumb bg-transparent m-0 p-0">
-	                                <li class="breadcrumb-item text-white"><a href="home.php">Page d'accueil</a></li>
+	                                <li class="breadcrumb-item text-white"><a href="home.php">Accueil</a></li>
 	                                <li class="breadcrumb-item active">Inscription</li>
 	                            </ol>
 	                        </nav>

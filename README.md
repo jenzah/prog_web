@@ -54,7 +54,7 @@ Le site est géré par une équipe administrative qui peut ajouter de nouvelles 
 
 ### Fonctionnalités Détaillées
 
-1. **Page d'Accueil**
+1. **Accueil**
    - Message de bienvenue
    - Section "Événement de la semaine"
    - Carrousel de propriétés

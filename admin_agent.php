@@ -136,40 +136,8 @@ while ($row = mysqli_fetch_assoc($specialtyQuery)) {
                 </div>
             </div>
         </div>
-
-         <!-- Formulaire de Filtrage et Tri -->
-         <div class="container mt-4">
-            <form method="GET" action="admin_agent.php" class="mb-4">
-                <div class="row">
-                    <div class="col-md-4">
-                        <label>Spécialité</label>
-                        <select name="specialty" class="form-control">
-                            <option value="">Toutes</option>
-                            <?php foreach ($specialties as $spec) { ?>
-                                <option value="<?php echo $spec; ?>" <?php if (!empty($_GET['specialty']) && $_GET['specialty'] == $spec) echo 'selected'; ?>>
-                                    <?php echo ucfirst($spec); ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label>Tri par nom</label>
-                        <select name="sort" class="form-control">
-                            <option value="name_asc" <?php if (!empty($_GET['sort']) && $_GET['sort'] == "name_asc") echo 'selected'; ?>>A-Z</option>
-                            <option value="name_desc" <?php if (!empty($_GET['sort']) && $_GET['sort'] == "name_desc") echo 'selected'; ?>>Z-A</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-4 mt-4">
-                        <button type="submit" class="btn btn-primary">Filtrer</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
         <!-- Liste des agents -->
-        <div class="full-row bg-gray">
+        <div class="full-row">
             <div class="container">
 
              <!-- Bouton Ajouter un Agent -->
@@ -185,6 +153,37 @@ while ($row = mysqli_fetch_assoc($specialtyQuery)) {
                     <div class="col-lg-12">
                         <h2 class="text-secondary text-center double-down-line">Agents Immobiliers</h2>
                     </div>
+                </div>
+
+                <!-- Formulaire de Filtrage et Tri -->
+                 <div class="container">
+                    <form method="GET" action="admin_agent.php" class="mb-4">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Spécialité</label>
+                                <select name="specialty" class="form-control">
+                                    <option value="">Toutes</option>
+                                    <?php foreach ($specialties as $spec) { ?>
+                                        <option value="<?php echo $spec; ?>" <?php if (!empty($_GET['specialty']) && $_GET['specialty'] == $spec) echo 'selected'; ?>>
+                                            <?php echo ucfirst($spec); ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                                    
+                            <div class="col-md-4">
+                                <label>Tri par nom</label>
+                                <select name="sort" class="form-control">
+                                    <option value="name_asc" <?php if (!empty($_GET['sort']) && $_GET['sort'] == "name_asc") echo 'selected'; ?>>A-Z</option>
+                                    <option value="name_desc" <?php if (!empty($_GET['sort']) && $_GET['sort'] == "name_desc") echo 'selected'; ?>>Z-A</option>
+                                </select>
+                            </div>
+                                    
+                            <div class="col-md-2 mt-4 text-center">
+                                <button type="submit" class="btn btn-primary">Filtrer</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
                 <table class="table table-bordered">
@@ -203,7 +202,9 @@ while ($row = mysqli_fetch_assoc($specialtyQuery)) {
                     while($row = mysqli_fetch_array($query)) {
                     ?>
                         <tr>
-                            <td><img src="images/profile_pic/<?php echo $row['uimage']; ?>" style="width: 80px !important; height: 80px !important;"></td>
+                            <td><div class="dashboard-user-image-container">
+                                    <img src="images/profile_pic/<?php echo $row['uimage']; ?>" >
+                                </div></td>
                             <td><?php echo $row['uname'] . " " . $row['ufirstname']; ?></td>
                             <td><?php echo $row['uemail']; ?></td>
                             <td><?php echo $row['uphone']; ?></td>

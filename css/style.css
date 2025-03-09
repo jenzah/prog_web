@@ -1570,6 +1570,22 @@ blockquote {
 	font-size: 13px;
 	display: block;
 }
+.featured-thumb .overlay-black {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 66.67%; /* This creates a 3:2 aspect ratio */
+    overflow: hidden;
+}
+.featured-thumb .overlay-black img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This will crop the image while maintaining aspect ratio */
+    object-position: center; /* This centers the image in the container */
+}
 .featured-thumb .starmark {
 	position: absolute;
 	bottom: 20px;
@@ -1963,6 +1979,37 @@ sup {
 }
 .discusion-setting label {
 	width: 180px;
+}
+.dashboard-property-image-container {
+    width: 200px;
+    height: 150px; /* 4:3 aspect ratio based on width of 100px */
+    overflow: hidden;
+    position: relative;
+}
+.dashboard-property-image-container img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.dashboard-user-image-container {
+    width: 112px;
+    height: 150px; /* 1:1 aspect ratio (square) */
+    overflow: hidden;
+    position: relative;
+}
+.dashboard-user-image-container img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center; /* Centers the image to show the middle portion */
 }
 
 /*==========================================
