@@ -26,6 +26,13 @@ $pid = (int) $_GET['id'];
 $error = "";
 $msg = "";
 
+// Récupérer les types de propriétés depuis la base de données
+$propertyTypesQuery = mysqli_query($con, "SELECT DISTINCT propertyType FROM property");
+$propertyTypes = [];
+while ($row = mysqli_fetch_assoc($propertyTypesQuery)) {
+    $propertyTypes[] = $row['propertyType'];
+}
+
 // Récupérer les détails de la propriété
 $query = mysqli_query($con, "SELECT * FROM property WHERE pid = '$pid'");
 $property = mysqli_fetch_assoc($query);
@@ -181,13 +188,17 @@ if (isset($_POST['update'])) {
                 </div>
 
                 <div class="form-group">
-                    <label>Type de Propriété</label>
-                    <select name="propertyType" class="form-control" required>
-                        <option value="appartement" <?php if ($property['propertyType'] == 'appartement') echo "selected"; ?>>Appartement</option>
-                        <option value="maison" <?php if ($property['propertyType'] == 'maison') echo "selected"; ?>>Maison</option>
-                        <option value="villa" <?php if ($property['propertyType'] == 'villa') echo "selected"; ?>>Villa</option>
-                    </select>
-                </div>
+    <label>Type de Propriété</label>
+    <select name="propertyType" class="form-control" required>
+        <?php foreach ($propertyTypes as $type) { ?>
+            <option value="<?php echo $type; ?>" 
+                <?php if ($property['propertyType'] == $type) echo "selected"; ?>>
+                <?php echo ucfirst($type); ?>
+            </option>
+        <?php } ?>
+    </select>
+</div>
+
 
                 <div class="form-group">
                     <label>Superficie (m²)</label>

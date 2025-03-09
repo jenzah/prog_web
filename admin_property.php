@@ -14,6 +14,13 @@ if(empty($_SESSION['isAdmin'])) {
     exit();
 }
 
+// Récupérer les types de propriétés depuis la base de données
+$propertyTypesQuery = mysqli_query($con, "SELECT DISTINCT propertyType FROM property");
+$propertyTypes = [];
+while ($row = mysqli_fetch_assoc($propertyTypesQuery)) {
+    $propertyTypes[] = $row['propertyType'];
+}
+
 // Supprimer une propriété si "delete_id" est présent dans l'URL
 if (isset($_GET['delete_id'])) {
     $pid = (int) $_GET['delete_id'];
@@ -142,11 +149,14 @@ $query = mysqli_query($con, $sql);
                     <div class="col-md-2">
                         <label>Type</label>
                         <select name="propertyType" class="form-control">
-                            <option value="">Tous</option>
-                            <option value="appartement">Appartement</option>
-                            <option value="maison">Maison</option>
-                            <option value="villa">Villa</option>
-                        </select>
+    <option value="">Tous</option> <!-- Ajout de l'option "Tous" -->
+    <?php foreach ($propertyTypes as $type) { ?>
+        <option value="<?php echo $type; ?>" <?php if (!empty($_GET['propertyType']) && $_GET['propertyType'] == $type) echo "selected"; ?>>
+            <?php echo ucfirst($type); ?>
+        </option>
+    <?php } ?>
+</select>
+
                     </div>
 
                     <div class="col-md-2">

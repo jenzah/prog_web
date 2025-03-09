@@ -15,6 +15,13 @@ if(empty($_SESSION['isAdmin'])) {
     exit();
 }
 
+// Récupérer les spécialités distinctes de la BDD
+$specialtiesQuery = mysqli_query($con, "SELECT DISTINCT specialty FROM user WHERE specialty IS NOT NULL AND specialty <> ''");
+$specialties = [];
+while ($row = mysqli_fetch_assoc($specialtiesQuery)) {
+    $specialties[] = $row['specialty'];
+}
+
 // Messages d'erreur ou de succès
 $error = "";
 $msg = "";
@@ -147,7 +154,14 @@ if (isset($_POST['add'])) {
 
                     <div class="form-group">
                         <label>Spécialité</label>
-                        <input type="text" name="specialty" class="form-control">
+                        <select name="specialty" class="form-control">
+                            <option value="">Sélectionner une spécialité</option>
+                            <?php foreach ($specialties as $spec) { ?>
+                                <option value="<?php echo $spec; ?>" <?php if (!empty($_POST['specialty']) && $_POST['specialty'] == $spec) echo 'selected'; ?>>
+                                    <?php echo ucfirst($spec); ?>
+                                </option>
+                            <?php } ?>
+                        </select>
                     </div>
 
                     <div class="form-group">

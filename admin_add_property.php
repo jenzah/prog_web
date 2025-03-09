@@ -15,6 +15,12 @@ if(empty($_SESSION['isAdmin'])) {
     header("Location:unauthorised.php");
     exit();
 }
+// Récupérer les types de propriétés depuis la base de données
+$propertyTypesQuery = mysqli_query($con, "SELECT DISTINCT propertyType FROM property");
+$propertyTypes = [];
+while ($row = mysqli_fetch_assoc($propertyTypesQuery)) {
+    $propertyTypes[] = $row['propertyType'];
+}
 
 // Messages d'erreur ou de succès
 $error = "";
@@ -152,10 +158,10 @@ if (isset($_POST['add'])) {
                     <div class="form-group">
                         <label>Type de Propriété</label>
                         <select name="propertyType" class="form-control" required>
-                            <option value="appartement">Appartement</option>
-                            <option value="maison">Maison</option>
-                            <option value="villa">Villa</option>
-                            <option value="bureau">Bureau</option>
+                            <option value="">Sélectionner un type</option>
+                            <?php foreach ($propertyTypes as $type) { ?>
+                                <option value="<?php echo $type; ?>"><?php echo ucfirst($type); ?></option>
+                            <?php } ?>
                         </select>
                     </div>
 
