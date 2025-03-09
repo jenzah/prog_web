@@ -251,7 +251,9 @@ if (isset($_POST['update'])) {
                 <div class="form-group">
                     <label>Image 1</label>
                     <input type="file" name="pimage1" class="form-control">
+                    <?php if(!empty($property['pimage3'])) { ?>
                     <img src="images/property/<?php echo $property['pimage1']; ?>" width="100">
+                    <?php } ?>
                 </div>
 
                 <div class="form-group">
