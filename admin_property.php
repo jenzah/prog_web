@@ -31,7 +31,42 @@ if (isset($_GET['delete_id'])) {
     } else {
         echo "<script>alert('Propriété introuvable.');</script>";
     }
-}							
+}	
+// Construction de la requête SQL avec filtres
+$sql = "SELECT * FROM property";
+$conditions = [];
+
+if (!empty($_GET['propertyType'])) {
+    $propertyType = mysqli_real_escape_string($con, $_GET['propertyType']);
+    $conditions[] = "propertyType = '$propertyType'";
+}
+
+if (!empty($_GET['status'])) {
+    $status = mysqli_real_escape_string($con, $_GET['status']);
+    $conditions[] = "status = '$status'";
+}
+
+if (!empty($_GET['minPrice'])) {
+    $minPrice = (int)$_GET['minPrice'];
+    $conditions[] = "price >= $minPrice";
+}
+
+if (!empty($_GET['maxPrice'])) {
+    $maxPrice = (int)$_GET['maxPrice'];
+    $conditions[] = "price <= $maxPrice";
+}
+
+if (!empty($_GET['city'])) {
+    $city = mysqli_real_escape_string($con, $_GET['city']);
+    $conditions[] = "city LIKE '%$city%'";
+}
+
+if (!empty($conditions)) {
+    $sql .= " WHERE " . implode(" AND ", $conditions);
+}
+
+// Exécuter la requête SQL
+$query = mysqli_query($con, $sql);						
 ?>
 
 
@@ -101,6 +136,52 @@ if (isset($_GET['delete_id'])) {
             </div>
         </div>
 
+        <div class="container mt-4">
+            <form method="GET" action="admin_property.php" class="mb-4">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Type</label>
+                        <select name="propertyType" class="form-control">
+                            <option value="">Tous</option>
+                            <option value="appartement">Appartement</option>
+                            <option value="maison">Maison</option>
+                            <option value="villa">Villa</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label>Statut</label>
+                        <select name="status" class="form-control">
+                            <option value="">Tous</option>
+                            <option value="A vendre">À vendre</option>
+                            <option value="A louer">À louer</option>
+                            <option value="Loué">Loué</option>
+                            <option value="Vendu">Vendu</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label>Prix Min (€)</label>
+                        <input type="number" name="minPrice" class="form-control" placeholder="Min">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label>Prix Max (€)</label>
+                        <input type="number" name="maxPrice" class="form-control" placeholder="Max">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label>Ville</label>
+                        <input type="text" name="city" class="form-control" placeholder="Ville">
+                    </div>
+
+                    <div class="col-md-2 mt-4">
+                        <button type="submit" class="btn btn-primary">Filtrer</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <!-- Liste des propriétés -->
         <div class="full-row bg-gray">
             <div class="container">
@@ -136,7 +217,6 @@ if (isset($_GET['delete_id'])) {
                     </thead>
                     <tbody>
                     <?php 
-                    $query = mysqli_query($con, "SELECT * FROM `property`");
                     while($row = mysqli_fetch_array($query)) {
                     ?>
                         <tr>
