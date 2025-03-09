@@ -1,0 +1,337 @@
+<?php 
+ini_set('session.cache_limiter','public');
+session_cache_limiter(false);
+session_start();
+include("config.php");
+
+if(!isset($_SESSION['uid'])) {
+    header("location:login.php");
+}
+
+// Get current user ID
+$userId = $_SESSION['uid'];
+
+// Check if appointment ID is provided
+if(!isset($_GET['id'])) {
+    header("location:appointments.php");
+    exit;
+}
+
+$appointmentId = (int) $_GET['id'];
+
+// Annuler un rendez-vous si "cancel" est présent dans l'URL
+if (isset($_GET['cancel'])) {
+    // Vérifier si le rendez-vous existe et appartient à l'utilisateur courant
+    $checkQuery = mysqli_query($con, "SELECT * FROM appointments, user WHERE aid='$appointmentId' AND 
+                                      (utype = 'agent' AND agent_id='$userId' OR 
+                                       utype = 'client' AND client_id='$userId' OR 
+                                       utype = 'admin')");
+                                       
+    if (mysqli_num_rows($checkQuery) > 0) {
+        // Annulation
+        $cancelQuery = mysqli_query($con, "DELETE FROM appointments WHERE aid='$appointmentId'");
+        if ($cancelQuery) {
+            echo "<script>alert('RDV annulé avec succès.'); window.location='appointments.php';</script>";
+        } else {
+            echo "<script>alert('Erreur lors de l\'annulation.');</script>";
+        }
+    } else {
+        echo "<script>alert('RDV introuvable ou non autorisé.');</script>";
+    }
+}
+
+// Récupérer les détails du rendez-vous
+$sql = "SELECT a.*, 
+               p.title as property_title, 
+               p.location, 
+               p.city, 
+               p.propertyDescription, 
+               p.pimage1,
+               p.nbRooms,
+               p.nbBathrooms,
+               p.area,
+               p.price as property_price,
+               agent.uname as agent_name,
+               agent.ufirstname as agent_firstname,
+               agent.uphone as agent_phone,
+               agent.uemail as agent_email,
+               client.uname as client_name,
+               client.ufirstname as client_firstname,
+               client.uphone as client_phone,
+               client.uemail as client_email
+        FROM appointments a
+        LEFT JOIN property p ON a.property_id = p.pid
+        LEFT JOIN user agent ON a.agent_id = agent.uid
+        LEFT JOIN user client ON a.client_id = client.uid
+        WHERE a.aid = '$appointmentId'";
+
+// Vérifier si l'utilisateur a le droit de voir ce rendez-vous
+if (!$_SESSION['isAdmin']) {
+    $sql .= " AND (a.agent_id = '$userId' OR a.client_id = '$userId')";
+}
+
+$query = mysqli_query($con, $sql);
+
+if (mysqli_num_rows($query) == 0) {
+    echo "<script>alert('Rendez-vous introuvable ou accès non autorisé.'); window.location='appointments.php';</script>";
+    exit;
+}
+
+$app = mysqli_fetch_assoc($query);
+
+// Formater la date et l'heure
+$date = new DateTime($app['appointment_date']);
+$formattedDate = $date->format('d/m/Y');
+
+$time = new DateTime($app['appointment_time']);
+$formattedTime = $time->format('H:i');
+?>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Meta Tags -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<!--	Fonts
+	========================================================-->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+<!--	Css Link
+	========================================================-->
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="css/layerslider.css">
+<link rel="stylesheet" type="text/css" href="css/color.css">
+<link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/login.css">
+<title>Omnes Immobilier - Détail du Rendez-vous</title>
+
+<style>
+    .property-image {
+        width: 100%;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+    
+    .detail-box {
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .detail-title {
+        font-weight: 600;
+        color: #3c3c3c;
+        margin-bottom: 5px;
+    }
+    
+    .detail-value {
+        margin-bottom: 15px;
+    }
+    
+    .cancel-btn {
+        background-color: #dc3545;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    
+    .cancel-btn:hover {
+        background-color: #c82333;
+    }
+    
+    .property-details {
+        margin-top: 20px;
+    }
+    
+    .property-details li {
+        list-style: none;
+        display: inline-block;
+        margin-right: 20px;
+    }
+    
+    .property-details i {
+        font-size: 18px;
+        color: #0d6efd;
+    }
+    
+    .badge-paid {
+        background-color: #28a745;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: 500;
+    }
+    
+    .badge-unpaid {
+        background-color: #dc3545;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: 500;
+    }
+</style>
+</head>
+
+<body>
+<div id="page-wrapper">
+    <div class="row"> 
+        <!-- Header -->
+        <?php include("include/header.php");?>
+
+        <!-- Page Title -->
+        <div class="banner-full-row page-banner" style="background-image:url('images/breadcrumb.jpg');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="page-name text-white text-uppercase"><b>Détail du RDV</b></h2>
+                    </div>
+                    <div class="col-md-6">
+                        <nav aria-label="breadcrumb" class="float-md-right">
+                            <ol class="breadcrumb bg-transparent m-0 p-0">
+                                <li class="breadcrumb-item text-white"><a href="home.php">Accueil</a></li>
+                                <li class="breadcrumb-item text-white"><a href="appointments.php">Mes RDVs</a></li>
+                                <li class="breadcrumb-item active">Détail du RDV</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Détail du RDV -->
+        <div class="full-row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="property-details-inner">
+                            <h2 class="text-secondary"><?php echo $app['property_title']; ?></h2>
+                            <p class="property-address"><i class="fas fa-map-marker-alt text-success"></i> <?php echo $app['location'] . ', ' . $app['city']; ?></p>
+                            
+                            <div class="property-details-info">
+                                <ul class="property-details mb-4">
+                                    <li><i class="fas fa-bed"></i> <span><?php echo $app['nbRooms']; ?> pièces</span></li>
+                                    <li><i class="fas fa-bath"></i> <span><?php echo $app['nbBathrooms']; ?> bains</span></li>
+                                    <li><i class="fas fa-chart-area"></i> <span><?php echo $app['area']; ?> m²</span></li>
+                                    <li><i class="fas fa-euro-sign"></i> <span><?php echo number_format($app['property_price'], 0, ',', ' '); ?> €</span></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <?php if (!empty($app['pimage1'])) { ?>
+                                    <img src="property/<?php echo $app['pimage1']; ?>" alt="<?php echo $app['property_title']; ?>" class="property-image">
+                                <?php } else { ?>
+                                    <div class="alert alert-warning">Aucune image disponible</div>
+                                <?php } ?>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h4 class="text-secondary mb-3">Description</h4>
+                                <p><?php echo $app['propertyDescription']; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="detail-box">
+                            <h3 class="text-secondary mb-4">Détails du rendez-vous</h3>
+                            
+                            <div class="mb-4">
+                                <p class="detail-title">Date et heure</p>
+                                <p class="detail-value">
+                                    <i class="far fa-calendar-alt text-primary"></i> <?php echo $formattedDate; ?><br>
+                                    <i class="far fa-clock text-primary"></i> <?php echo $formattedTime; ?>
+                                </p>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <p class="detail-title">Lieu</p>
+                                <p class="detail-value"><i class="fas fa-map-marker-alt text-primary"></i> <?php echo $app['place']; ?></p>
+                            </div>
+                            
+                            <?php if ($_SESSION['isAdmin'] || $_SESSION['isAgent']) { ?>
+                            <div class="mb-4">
+                                <p class="detail-title">Client</p>
+                                <p class="detail-value">
+                                    <i class="fas fa-user text-primary"></i> <?php echo $app['client_firstname'] . ' ' . strtoupper($app['client_name']); ?><br>
+                                    <i class="fas fa-phone text-primary"></i> <?php echo $app['client_phone']; ?><br>
+                                    <i class="fas fa-envelope text-primary"></i> <?php echo $app['client_email']; ?>
+                                </p>
+                            </div>
+                            <?php } ?>
+                            
+                            <?php if ($_SESSION['isAdmin'] || !$_SESSION['isAgent']) { ?>
+                            <div class="mb-4">
+                                <p class="detail-title">Agent immobilier</p>
+                                <p class="detail-value">
+                                    <i class="fas fa-user-tie text-primary"></i> <?php echo $app['agent_firstname'] . ' ' . strtoupper($app['agent_name']); ?><br>
+                                    <i class="fas fa-phone text-primary"></i> <?php echo $app['agent_phone']; ?><br>
+                                    <i class="fas fa-envelope text-primary"></i> <?php echo $app['agent_email']; ?>
+                                </p>
+                            </div>
+                            <?php } ?>
+                            
+                            <?php if (!$_SESSION['isAgent']) { ?>
+                            <div class="mb-4">
+                                <p class="detail-title">Statut de paiement</p>
+                                <p class="detail-value">
+                                    <?php if ($app['is_paid']) { ?>
+                                    <span class="badge-paid"><i class="fas fa-check-circle"></i> Payé</span>
+                                    <?php } else { ?>
+                                    <span class="badge-unpaid"><i class="fas fa-times-circle"></i> À payer : <?php echo number_format($app['price'], 0, ',', ' ') . ' €'; ?></span>
+                                    <?php } ?>
+                                </p>
+                            </div>
+                            <?php } ?>
+                            
+                            <?php if (!empty($app['comments'])) { ?>
+                            <div class="mb-4">
+                                <p class="detail-title">Commentaires</p>
+                                <p class="detail-value"><?php echo $app['comments']; ?></p>
+                            </div>
+                            <?php } ?>
+                            
+                            <div class="text-center">
+                                <a href="appointment-details.php?id=<?php echo $appointmentId; ?>&cancel=1" class="btn cancel-btn" onclick="return confirm('Êtes-vous sûr de vouloir annuler ce rendez-vous ?');">
+                                    <i class="fas fa-times-circle"></i> Annuler ce rendez-vous
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <?php include("include/footer.php");?>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/font-awesome.js"></script>
+</body>
+</html>
