@@ -1243,7 +1243,7 @@ blockquote {
 }
 
 .cancel-btn {
-	background-color: #dc3545;
+	background-color: #b84853;
 	color: white;
 	padding: 10px 20px;
 	border: none;
@@ -1253,7 +1253,7 @@ blockquote {
 }
 
 .cancel-btn:hover {
-	background-color: #c82333;
+	background-color: #d4606c;
 }
 
 .property-details {
@@ -1278,10 +1278,22 @@ blockquote {
 	font-weight: 500;
 }
 
-.badge-unpaid {
-	background-color: #dc3545;
+.badge-payment {
+	cursor: pointer;
+	background-color: #b84853;
 	color: white;
 	padding: 5px 10px;
+	border-radius: 5px;
+	font-weight: 500;
+}
+.badge-payment:hover {
+    background-color: #d4606c;
+	color: black
+}
+.badge-unpaid {
+    display: inline-block;
+	background-color: #b84853;
+	color: white;
 	border-radius: 5px;
 	font-weight: 500;
 }
@@ -2120,7 +2132,7 @@ sup {
 
 .details-link {
 	font-size: 12px;
-	color: #4F6C6B !important; /* This uses your theme color */
+	color: #4F6C6B !important;
 	text-decoration: none;
 	font-weight: 500;
 	align-self: flex-start;
@@ -2138,6 +2150,48 @@ sup {
     background-color: #d2e0df !important;
     border-color: #d2e0df !important;
 }
+.payment-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+}
+
+/* .payment-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    background-color: #4F6C6B;
+    color: var(--theme-white-color);
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: var(--theme-ordinary-font);
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    width: fit-content;
+} */
+
+/* .payment-link:hover {
+    background-color: #3A5251;
+    color: var(--theme-white-color);
+} */
+
+.payment-link {
+    padding: 6px 12px;
+	font-size: 14px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+	color: #4F6C6B !important;
+	font-weight: 500;
+	align-self: flex-start;
+	text-decoration: none;
+    margin-right: 5px;
+}
+.payment-link:hover {
+	text-decoration: underline !important;
+}
+
 
 /*==========================================
  About us page

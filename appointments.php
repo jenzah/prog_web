@@ -197,6 +197,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                 <?php if($_SESSION['isAdmin']) { ?>
                                     <th>Agent</th>
                                     <th>Client</th>
+                                    <th>Paiement</th>
                                 <?php } elseif($_SESSION['isAgent']) { ?>
                                     <th>Client</th>
                                 <?php } else { ?>
@@ -222,7 +223,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                     <div class="property-link">
                                         <span class="property-title"><?php echo $app['property_title']; ?></span>
                                         <a href="appointment_details.php?id=<?php echo $app['aid']; ?>" class="details-link">
-                                            <i class="fas fa-eye"></i>Voir détails
+                                            <i class="fas fa-eye"></i>Voir détails du RDV
                                         </a>
                                     </div>
                                 </td>
@@ -244,9 +245,14 @@ $pastQuery = mysqli_query($con, $pastSql);
                                 <?php if(!$_SESSION['isAgent']) { ?>
                                 <td class="text-center">
                                     <?php if($app['is_paid']) { ?>
-                                    <img src="images/admin/checkmark.png" alt="Payé" title="Payé" style="width: 30px; height: 30px;">
+                                    <span class="badge-paid"><i class="fas fa-check-circle"></i> Payé</span>
                                     <?php } else { ?>
-                                    <span class="rdv-badge rdv-unpaid"><?php echo number_format($app['price'], 0, ',', ' ') . ' €'; ?></span>
+                                    <div class="payment-container">
+                                        <span class="badge-unpaid"><i class="fas fa-times-circle"></i> <?php echo number_format($app['price'], 0, ',', ' ') . ' €'; ?></span>
+                                        <a href="payment.php?appointment_id=<?php echo $app['aid']; ?>" class="payment-link">
+                                            <i class="fas fa-credit-card"></i>Payer
+                                        </a>
+                                    </div>
                                     <?php } ?>
                                 </td>
                                 <?php } ?>
@@ -311,7 +317,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                     <div class="property-link">
                                         <span class="property-title"><?php echo $app['property_title']; ?></span>
                                         <a href="appointment_details.php?id=<?php echo $app['aid']; ?>" class="details-link">
-                                            <i class="fas fa-eye"></i>Voir détails
+                                            <i class="fas fa-eye"></i>Voir détails du RDV
                                         </a>
                                     </div>
                                 </td>
@@ -333,9 +339,14 @@ $pastQuery = mysqli_query($con, $pastSql);
                                 <?php if(!$_SESSION['isAgent']) { ?>
                                 <td class="text-center">
                                     <?php if($app['is_paid']) { ?>
-                                    <img src="images/admin/checkmark.png" alt="Payé" title="Payé" style="width: 30px; height: 30px;">
+                                        <span class="badge-paid"><i class="fas fa-check-circle"></i> Payé</span>
                                     <?php } else { ?>
-                                    <span class="rdv-badge rdv-unpaid"><?php echo number_format($app['price'], 0, ',', ' ') . ' €'; ?></span>
+                                    <div class="payment-container">
+                                        <span class="badge-unpaid"><i class="fas fa-times-circle"></i> <?php echo number_format($app['price'], 0, ',', ' ') . ' €'; ?></span>
+                                        <a href="payment.php?appointment_id=<?php echo $app['aid']; ?>" class="payment-link">
+                                            <i class="fas fa-credit-card"></i>Payer
+                                        </a>
+                                    </div>
                                     <?php } ?>
                                 </td>
                                 <?php } ?>

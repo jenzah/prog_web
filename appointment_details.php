@@ -252,7 +252,9 @@ elseif ($app['appointment_date'] == $currentDate && $app['appointment_time'] < $
                                     <?php if ($app['is_paid']) { ?>
                                     <span class="badge-paid"><i class="fas fa-check-circle"></i> Payé</span>
                                     <?php } else { ?>
-                                    <span class="badge-unpaid"><i class="fas fa-times-circle"></i> À payer : <?php echo number_format($app['price'], 0, ',', ' ') . ' €'; ?></span>
+                                    <a href="payment.php?appointment_id=<?php echo $app['aid']; ?>" class="badge-payment">
+                                        <i class="fas fa-times-circle"></i> À payer : <?php echo number_format($app['price'], 0, ',', ' ') . ' €'; ?>
+                                    </a>
                                     <?php } ?>
                                 </p>
                             </div>
