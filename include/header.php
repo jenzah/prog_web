@@ -52,6 +52,7 @@
                                         <li class="nav-item"> <a class="nav-link" href="admin_property.php">Gestion Propriétés</a> </li> <!-- admin/my_rdv.php -->
                                         <li class="nav-item"> <a class="nav-link" href="admin_user.php">Gestion Utilisateurs</a> </li>
                                         <li class="nav-item"> <a class="nav-link" href="admin_agent.php">Gestion Agents Immobiliers</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="profile.php">Mon profil</a> </li>
                                     
                                         <?php } elseif($_SESSION['isAgent']) { ?>
                                         <!-- Agent specific menu items -->
@@ -91,15 +92,17 @@
 							
                             <?php if(isset($_SESSION['uid'])) { 
                                 // User is logged in
-                                if($_SESSION['isAdmin']) { ?>
-                                    
-                                    <?php } elseif($_SESSION['isAgent']) { ?>
-                                    <!-- Agent specific menu items -->
-							    <a class="btn btn-primary d-none d-xl-block" href="">Consulter l'agenda</a> 
-                                    
-                                <?php } else { ?>
-							    <a class="btn btn-primary d-none d-xl-block" href="prendre_rdv.php">Prendre RDV</a> 
+                                if($_SESSION['isAgent']) { ?>
+                                <!-- Agent specific menu items -->
+							    <a class="btn btn-primary d-none d-xl-block" href="">Consulter l'agenda</a>
+
+                                <?php } elseif(!$_SESSION['isAdmin']) {?>
+                                <!-- Client specific menu items -->
+                                <a class="btn btn-primary d-none d-xl-block" href="prendre_rdv.php">Prendre RDV</a>
                                 <?php } ?>
+                                
+                            <?php } else { ?>
+							<a class="btn btn-primary d-none d-xl-block" href="prendre_rdv.php">Prendre RDV</a>
                             <?php } ?>
                         </div>
                     </nav>

@@ -3,44 +3,48 @@ include("config.php");
 $error="";
 $msg="";
 if(isset($_REQUEST['register'])) {
-	$name=$_REQUEST['name'];
-	$firstname=$_REQUEST['firstname'];
-	$email=$_REQUEST['email'];
-	$phone=$_REQUEST['phone'];
-	$password=$_REQUEST['password'];
-	$utype="client";
-	
+    $name = mysqli_real_escape_string($con, $_REQUEST['name']);
+	$firstname = mysqli_real_escape_string($con, $_REQUEST['firstname']);
+    $email = mysqli_real_escape_string($con, $_REQUEST['email']);
+    $phone = mysqli_real_escape_string($con, $_REQUEST['phone']);
+    $password = mysqli_real_escape_string($con, $_REQUEST['password']);
+
 	// Check if image is uploaded
     if(isset($_FILES['uimage']) && $_FILES['uimage']['error'] == 0) {
-        $uimage = $_FILES['uimage']['name'];
+		$uimage = $_FILES['uimage']['name'];
         $temp_name = $_FILES['uimage']['tmp_name'];
         $imagePath = "images/profile_pic/".$uimage;
-    } else {
+	} else {
         // No image or error uploading, use default
         $uimage = "default.png";
         $imagePath = "images/profile_pic/default.png";
     }
-	
-	
-	$query = "SELECT * FROM user where uemail='$email'";
+
+    // Vérifier si l'email existe déjà
+    $query = "SELECT * FROM user where uemail='$email'";
 	$res=mysqli_query($con, $query);
 	$user=mysqli_num_rows($res);
 	
-	if($user == 1) {
-		$error = "<p class='alert alert-warning'>Un compte avec cet email existe déjà.</p> ";
-	
-	}else{
-		if(!empty($name) && !empty($firstname) && !empty($email) && !empty($phone) && !empty($password)) {
-			$sql="INSERT INTO user (uname, ufirstname, uemail, uphone, upass, utype, uimage) VALUES ('$name', '$firstname', '$email', '$phone', '$password', '$utype', '$uimage')";
-			$result=mysqli_query($con, $sql);
-			
+	if($user > 0) {
+        $error = "<p class='alert alert-warning'>Email déjà utilisé.</p>";
+    } else {
+        if(!empty($name) && !empty($firstname) && !empty($email) && !empty($phone) && !empty($password)) {
+            // $hashed_pass = password_hash($password, PASSWORD_DEFAULT); // Sécuriser le mot de passe
+
+            // Insérer avec le type par défaut "client" et sans image
+            $sql = "INSERT INTO user (uname, ufirstname, uemail, uphone, upass, utype, uimage) 
+                    VALUES ('$name', '$firstname', '$email', '$phone', '$password', 'client', '$uimage')";
+                    // VALUES ('$name', '$firstname', '$email', '$phone', '$hashed_pass', 'client', '$uimage')";
+
+            $result = mysqli_query($con, $sql);
+
 			// Move uploaded file if it exists
 			if(isset($_FILES['uimage']) && $_FILES['uimage']['error'] == 0) {
 				move_uploaded_file($temp_name,"images/profile_pic/$uimage");
 			}
 
-			if($result) {
-				// Redirect to login page
+            if($result) {
+                // Redirect to login page
 				header("Location: login.php");
 			}else{
 			   $error = "<p class='alert alert-warning'>Inscription échouée.</p> ";
@@ -127,19 +131,19 @@ if(isset($_REQUEST['register'])) {
 									<!-- Form -->
 									<form method="post" enctype="multipart/form-data">
 										<div class="form-group">
-											<input type="text"  name="name" class="form-control" placeholder="Nom*">
+											<input type="text"  name="name" class="form-control" placeholder="Nom" required>
 										</div>
 										<div class="form-group">
-											<input type="text"  name="firstname" class="form-control" placeholder="Prénom*">
+											<input type="text"  name="firstname" class="form-control" placeholder="Prénom" required>
 										</div>
 										<div class="form-group">
-											<input type="email"  name="email" class="form-control" placeholder="E-mail*">
+											<input type="email"  name="email" class="form-control" placeholder="E-mail" required>
 										</div>
 										<div class="form-group">
-											<input type="text"  name="phone" class="form-control" placeholder="Téléphone*" maxlength="10">
+											<input type="text"  name="phone" class="form-control" placeholder="Téléphone" maxlength="10" required>
 										</div>
 										<div class="form-group">
-											<input type="password" name="password"  class="form-control" placeholder="Mot de passe*">
+											<input type="password" name="password"  class="form-control" placeholder="Mot de passe" required>
 										</div>
 
 										<div class="form-group">

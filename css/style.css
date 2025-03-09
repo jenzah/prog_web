@@ -425,7 +425,7 @@ hover-text-white-nav .navbar-nav .nav-link.active,
 	background-color: rgba(13,20,50,0.4);
 }
 [class*="double-down-line"]::before, [class*="double-down-line"]::after {
-	background-color: var(--theme-primary-color)
+	background-color: var(--theme-dark-primary-color)
 }
 .landing-header.fixed-top,
 .nav-logo-with-bg .navbar-brand, 

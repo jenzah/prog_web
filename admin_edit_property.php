@@ -26,6 +26,13 @@ $pid = (int) $_GET['id'];
 $error = "";
 $msg = "";
 
+// Récupérer les types de propriétés depuis la base de données
+$propertyTypesQuery = mysqli_query($con, "SELECT DISTINCT propertyType FROM property");
+$propertyTypes = [];
+while ($row = mysqli_fetch_assoc($propertyTypesQuery)) {
+    $propertyTypes[] = $row['propertyType'];
+}
+
 // Récupérer les détails de la propriété
 $query = mysqli_query($con, "SELECT * FROM property WHERE pid = '$pid'");
 $property = mysqli_fetch_assoc($query);
@@ -49,16 +56,36 @@ if (isset($_POST['update'])) {
     $department = mysqli_real_escape_string($con, $_POST['department']);
     $status = mysqli_real_escape_string($con, $_POST['status']);
 
-    // Gestion des images
-    $upload_dir = "property/";
-    $pimage1 = !empty($_FILES['pimage1']['name']) ? $upload_dir . basename($_FILES['pimage1']['name']) : $property['pimage1'];
-    $pimage2 = !empty($_FILES['pimage2']['name']) ? $upload_dir . basename($_FILES['pimage2']['name']) : $property['pimage2'];
-    $pimage3 = !empty($_FILES['pimage3']['name']) ? $upload_dir . basename($_FILES['pimage3']['name']) : $property['pimage3'];
+    // Dossier où les images seront stockées
+    $upload_dir = "images/property/";
 
-    if (!empty($_FILES['pimage1']['name'])) move_uploaded_file($_FILES['pimage1']['tmp_name'], $pimage1);
-    if (!empty($_FILES['pimage2']['name'])) move_uploaded_file($_FILES['pimage2']['tmp_name'], $pimage2);
-    if (!empty($_FILES['pimage3']['name'])) move_uploaded_file($_FILES['pimage3']['tmp_name'], $pimage3);
+    $pimage1 = "";
+    $pimage2 = "";
+    $pimage3 = "";
 
+    // Vérifier et enregistrer les images
+    if(isset($_FILES['pimage1']) && $_FILES['pimage1']['error'] == 0) {
+        $pimage1 = basename($_FILES['pimage1']['name']); // Stocke uniquement le nom du fichier
+        move_uploaded_file($_FILES['pimage1']['tmp_name'], $upload_dir . $pimage1);
+    } else {
+        $pimage1 = $property['pimage1']; // Conserve l'ancienne image si aucune nouvelle image n'est téléchargée
+    }
+
+    if(isset($_FILES['pimage2']) && $_FILES['pimage2']['error'] == 0) {
+        $pimage2 = basename($_FILES['pimage2']['name']);
+        move_uploaded_file($_FILES['pimage2']['tmp_name'], $upload_dir . $pimage2);
+    } else {
+        $pimage2 = $property['pimage2'];
+    }
+
+    if(isset($_FILES['pimage3']) && $_FILES['pimage3']['error'] == 0) {
+        $pimage3 = basename($_FILES['pimage3']['name']);
+        move_uploaded_file($_FILES['pimage3']['tmp_name'], $upload_dir . $pimage3);
+    } else {
+        $pimage3 = $property['pimage3'];
+    }
+
+    // Mettre à jour la base de données avec les nouvelles valeurs
     $sql = "UPDATE property SET 
                 title='$title', 
                 propertyDescription='$propertyDescription', 
@@ -118,8 +145,8 @@ if (isset($_POST['update'])) {
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/login.css">
     <title>Modifier une propriété</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 
@@ -145,7 +172,7 @@ if (isset($_POST['update'])) {
             </div>
         </div>
         <div class="container mt-5">
-        <h2 class="text-center text-secondary">Modifier une Propriété</h2>
+        <h2 class="text-center text-secondary double-down-line">Modifier une Propriété</h2>
         <div class="col-md-8 offset-md-2">
             <?php echo $error; ?>
             <?php echo $msg; ?>
@@ -161,13 +188,17 @@ if (isset($_POST['update'])) {
                 </div>
 
                 <div class="form-group">
-                    <label>Type de Propriété</label>
-                    <select name="propertyType" class="form-control" required>
-                        <option value="appartement" <?php if ($property['propertyType'] == 'appartement') echo "selected"; ?>>Appartement</option>
-                        <option value="maison" <?php if ($property['propertyType'] == 'maison') echo "selected"; ?>>Maison</option>
-                        <option value="villa" <?php if ($property['propertyType'] == 'villa') echo "selected"; ?>>Villa</option>
-                    </select>
-                </div>
+    <label>Type de Propriété</label>
+    <select name="propertyType" class="form-control" required>
+        <?php foreach ($propertyTypes as $type) { ?>
+            <option value="<?php echo $type; ?>" 
+                <?php if ($property['propertyType'] == $type) echo "selected"; ?>>
+                <?php echo ucfirst($type); ?>
+            </option>
+        <?php } ?>
+    </select>
+</div>
+
 
                 <div class="form-group">
                     <label>Superficie (m²)</label>
@@ -205,33 +236,43 @@ if (isset($_POST['update'])) {
                 </div>
 
                 <div class="form-group">
-                    <label>Statut</label>
-                    <select name="status" class="form-control" required>
-                        <option value="disponible" <?php if ($property['status'] == 'disponible') echo "selected"; ?>>Disponible</option>
-                        <option value="vendu" <?php if ($property['status'] == 'vendu') echo "selected"; ?>>Vendu</option>
-                    </select>
+
+                <label>Statut</label>
+                <select name="status" class="form-control" required>
+                <option value="A vendre" <?php if ($property['status'] == 'A vendre') echo "selected"; ?>>A vendre</option>
+                <option value="A louer" <?php if ($property['status'] == 'A louer') echo "selected"; ?>>A louer</option>
+                <option value="Loué" <?php if ($property['status'] == 'Loué') echo "selected"; ?>>Loué</option>
+                 <option value="Vendu" <?php if ($property['status'] == 'Vendu') echo "selected"; ?>>Vendu</option>
+                </select>
                 </div>
+
 
                 <h5 class="text-secondary">Images</h5>
                 <div class="form-group">
                     <label>Image 1</label>
                     <input type="file" name="pimage1" class="form-control">
-                    <img src="<?php echo $property['pimage1']; ?>" width="100">
+                    <?php if(!empty($property['pimage3'])) { ?>
+                    <img src="images/property/<?php echo $property['pimage1']; ?>" width="100">
+                    <?php } ?>
                 </div>
 
                 <div class="form-group">
                     <label>Image 2</label>
                     <input type="file" name="pimage2" class="form-control">
-                    <img src="<?php echo $property['pimage2']; ?>" width="100">
+                    <?php if(!empty($property['pimage3'])) { ?>
+                    <img src="images/property/<?php echo $property['pimage2']; ?>" width="100">
+                    <?php } ?>
                 </div>
 
                 <div class="form-group">
                     <label>Image 3</label>
                     <input type="file" name="pimage3" class="form-control">
-                    <img src="<?php echo $property['pimage3']; ?>" width="100">
+                    <?php if(!empty($property['pimage3'])) { ?>
+                    <img src="images/property/<?php echo $property['pimage3']; ?>" width="100">
+                    <?php } ?>
                 </div>
 
-                <button type="submit" name="update" class="btn btn-primary btn-block mt-3">Mettre à jour</button>
+                <button type="submit" name="update" class="btn btn-primary btn-block mb-5 mt-4">Mettre à jour</button>
             </form>
         </div>
 
