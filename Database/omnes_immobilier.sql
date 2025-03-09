@@ -1,12 +1,7 @@
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
--- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:8889
--- Généré le : sam. 08 mars 2025 à 11:29
--- Version du serveur : 5.7.39
--- Version de PHP : 8.2.0
 -- Hôte : localhost:8889
 -- Généré le : sam. 08 mars 2025 à 11:29
 -- Version du serveur : 5.7.39
@@ -72,16 +67,16 @@ CREATE TABLE `property` (
 --
 
 INSERT INTO `property` (`pid`, `agentid`, `title`, `propertyDescription`, `propertyType`, `area`, `nbRooms`, `nbBathrooms`, `price`, `location`, `city`, `department`, `pimage1`, `pimage2`, `pimage3`, `status`, `date`) VALUES
-(1, 1, 'Appartement Haussmannien', 'Lumineux avec moulures anciennes', 'résidentiel', 85, 3, 1, 780000, '12 Avenue Montaigne', 'Paris', 'Paris', '1.jpg', '2.jpg', '3.jpg', 'A vendre', '2025-02-28 10:30:00'),
-(2, 1, 'Loft industriel', 'Espace ouvert plein charme', 'résidentiel', 120, 2, 2, 950000, '5 Rue des Entrepreneurs', 'Boulogne-Billancourt', 'Hauts-de-Seine', '4.jpg', '5.jpg', '6.jpg', 'A vendre', '2025-02-27 15:45:00'),
-(3, 2, 'Local Commercial', 'Idéal pour restaurant chic', 'commercial', 150, 3, 2, 1200000, '28 Rue du Commerce', 'Versailles', 'Yvelines', '7.jpg', '8.jpg', '9.jpg', 'A vendre', '2025-03-01 09:15:00'),
-(4, 2, 'Terrain constructible', 'Vue dégagée zone résidentielle', 'terrain', 500, 0, 0, 320000, 'Chemin des Vignes', 'Saint-Germain-en-Laye', 'Yvelines', '10.jpg', '11.jpg', '12.jpg', 'A vendre', '2025-02-25 11:20:00'),
-(5, 3, 'Studio moderne', 'Proche transports et commerces', 'appartement A louer', 35, 1, 1, 950, '45 Rue Mouffetard', 'Paris', 'Paris', '13.jpg', '14.jpg', '15.jpg', 'A louer', '2025-02-26 14:00:00'),
-(6, 3, 'Maison de ville', 'Jardin privatif bien exposé', 'résidentiel', 145, 5, 2, 890000, '17 Rue des Rosiers', 'Neuilly-sur-Seine', 'Hauts-de-Seine', '16.jpg', '17.jpg', '18.jpg', 'vendu', '2025-02-22 16:30:00'),
-(7, 4, 'Bureaux modernes', 'Espace de travail lumineux', 'commercial', 200, 5, 2, 1500000, '8 Avenue des Champs-Élysées', 'Paris', 'Paris', '19.jpg', '20.jpg', '21.jpg', 'A vendre', '2025-03-02 10:00:00'),
-(8, 4, 'Appartement familial', 'Proche écoles et parcs', 'résidentiel', 110, 4, 2, 720000, '25 Rue des Écoles', 'Créteil', 'Val-de-Marne', '22.jpg', '23.jpg', '24.jpg', 'A louer', '2025-02-24 13:45:00'),
-(9, 5, 'Terrain avec vue', 'Constructible zone calme', 'terrain', 800, 0, 0, 450000, 'Route de la Forêt', 'Évry', 'Essonne', '25.jpg', '26.jpg', '27.jpg', 'A vendre', '2025-02-23 11:15:00'),
-(10, 5, 'Duplex contemporain', 'Prestations haut de gamme', 'résidentiel', 130, 4, 3, 1050000, '3 Boulevard Haussmann', 'Paris', 'Paris', '28.jpg', '29.jpg', '30.jpg', 'loué', '2025-02-21 09:30:00');
+(501, 1, 'Appartement Haussmannien', 'Lumineux avec moulures anciennes', 'résidentiel', 85, 3, 1, 780000, '12 Avenue Montaigne', 'Paris', 'Paris', '1.jpg', '2.jpg', '3.jpg', 'A vendre', '2025-02-28 10:30:00'),
+(502, 1, 'Loft industriel', 'Espace ouvert plein charme', 'résidentiel', 120, 2, 2, 950000, '5 Rue des Entrepreneurs', 'Boulogne-Billancourt', 'Hauts-de-Seine', '4.jpg', '5.jpg', '6.jpg', 'A vendre', '2025-02-27 15:45:00'),
+(503, 2, 'Local Commercial', 'Idéal pour restaurant chic', 'commercial', 150, 3, 2, 1200000, '28 Rue du Commerce', 'Versailles', 'Yvelines', '7.jpg', '8.jpg', '9.jpg', 'A vendre', '2025-03-01 09:15:00'),
+(504, 2, 'Terrain constructible', 'Vue dégagée zone résidentielle', 'terrain', 500, 0, 0, 320000, 'Chemin des Vignes', 'Saint-Germain-en-Laye', 'Yvelines', '10.jpg', '11.jpg', '12.jpg', 'A vendre', '2025-02-25 11:20:00'),
+(505, 3, 'Studio moderne', 'Proche transports et commerces', 'appartement A louer', 35, 1, 1, 950, '45 Rue Mouffetard', 'Paris', 'Paris', '13.jpg', '14.jpg', '15.jpg', 'A louer', '2025-02-26 14:00:00'),
+(506, 3, 'Maison de ville', 'Jardin privatif bien exposé', 'résidentiel', 145, 5, 2, 890000, '17 Rue des Rosiers', 'Neuilly-sur-Seine', 'Hauts-de-Seine', '16.jpg', '17.jpg', '18.jpg', 'vendu', '2025-02-22 16:30:00'),
+(507, 4, 'Bureaux modernes', 'Espace de travail lumineux', 'commercial', 200, 5, 2, 1500000, '8 Avenue des Champs-Élysées', 'Paris', 'Paris', '19.jpg', '20.jpg', '21.jpg', 'A vendre', '2025-03-02 10:00:00'),
+(508, 4, 'Appartement familial', 'Proche écoles et parcs', 'résidentiel', 110, 4, 2, 720000, '25 Rue des Écoles', 'Créteil', 'Val-de-Marne', '22.jpg', '23.jpg', '24.jpg', 'A louer', '2025-02-24 13:45:00'),
+(509, 5, 'Terrain avec vue', 'Constructible zone calme', 'terrain', 800, 0, 0, 450000, 'Route de la Forêt', 'Évry', 'Essonne', '25.jpg', '26.jpg', '27.jpg', 'A vendre', '2025-02-23 11:15:00'),
+(510, 5, 'Duplex contemporain', 'Prestations haut de gamme', 'résidentiel', 130, 4, 3, 1050000, '3 Boulevard Haussmann', 'Paris', 'Paris', '28.jpg', '29.jpg', '30.jpg', 'loué', '2025-02-21 09:30:00');
 
 -- --------------------------------------------------------
 
@@ -89,16 +84,85 @@ INSERT INTO `property` (`pid`, `agentid`, `title`, `propertyDescription`, `prope
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `uid` int(50) NOT NULL,
   `uname` varchar(100) NOT NULL,
+  `ufirstname` varchar(100) NOT NULL,
   `uemail` varchar(100) NOT NULL,
   `uphone` varchar(20) NOT NULL,
   `upass` varchar(255) NOT NULL,
   `utype` varchar(50) NOT NULL,
-  `uimage` varchar(300) DEFAULT NULL,
-  `specialty` VARCHAR(100) DEFAULT NULL -- residentiel, terrain, appartement, commercial
+  `uimage` varchar(300) NOT NULL,
+  `specialty` VARCHAR(100) DEFAULT NULL -- residentiel,terrain,appartement,commercial
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`uid`, `uname`, `ufirstname`, `uemail`, `uphone`, `upass`, `utype`, `uimage`) VALUES
+(201, 'Doe', 'John', 'agent1@example.com', '1234567890', 'agent1', 'agent', 'agent1.jpg'),
+(202, 'Williams', 'Alice', 'agent2@example.com', '1234567891', 'agent2', 'agent', 'agent2.jpg'),
+(203, 'Smith', 'Michael', 'agent3@example.com', '1234567892', 'agent3', 'agent', 'agent3.jpg'),
+(204, 'Taylor', 'Sophia', 'agent4@example.com', '1234567893', 'agent4', 'agent', 'agent4.jpg'),
+(205, 'Johnson', 'Daniel', 'agent5@example.com', '1234567894', 'agent5', 'agent', 'agent5.jpg'),
+(101, 'Miller', 'Emily', 'user1@example.com', '1234567895', 'user1', 'user', 'user1.jpg'),
+(102, 'Anderson', 'James', 'user2@example.com', '1234567896', 'user2', 'user', 'user2.jpg'),
+(301, 'Thomas', 'Robert', 'admin1@example.com', '1234567897', 'admin1', 'admin', 'admin1.jpg');
+
+
+
+
+
+-- Création de la table appointments en utilisant la table user existante
+CREATE TABLE IF NOT EXISTS `appointments` (
+  `aid` int(50) NOT NULL AUTO_INCREMENT,
+  `client_id` int(50) NOT NULL,
+  `agent_id` int(50) NOT NULL,
+  `property_id` int(50) NOT NULL,
+  `date_time` datetime NOT NULL,
+  `place` varchar(255) NOT NULL,
+  `is_paid` tinyint(1) DEFAULT 0,
+  `price` decimal(10,2) DEFAULT NULL,
+  `comments` text DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`aid`),
+  KEY `client_id` (`client_id`),
+  KEY `agent_id` (`agent_id`),
+  KEY `property_id` (`property_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Ajouter quelques utilisateurs qui seront des clients (si nécessaire)
+-- Assurez-vous que les UIDs ne sont pas déjà utilisés dans votre table user
+INSERT INTO `user` (`uid`, `uname`, `uemail`, `uphone`, `upass`, `utype`, `uimage`) VALUES 
+(110, 'Marie Dupont', 'marie.dupont@example.com', '06 12 34 56 78', MD5('password123'), 'client', NULL),
+(111, 'Jean Martin', 'jean.martin@example.com', '06 23 45 67 89', MD5('password123'), 'client', NULL),
+(112, 'Sophie Bernard', 'sophie.bernard@example.com', '06 34 56 78 90', MD5('password123'), 'client', NULL),
+(113, 'Thomas Petit', 'thomas.petit@example.com', '06 45 67 89 01', MD5('password123'), 'client', NULL),
+(114, 'Camille Leroy', 'camille.leroy@example.com', '06 56 78 90 12', MD5('password123'), 'client', NULL);
+
+-- Insertion de rendez-vous à venir
+INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `date_time`, `place`, `is_paid`, `price`, `comments`) VALUES
+(110, 201, 501, DATE_ADD(NOW(), INTERVAL 2 DAY), 'Sur place: 12 Avenue Montaigne, Paris', 1, 150.00, 'Client très intéressé par cet appartement haussmannien'),
+(111, 201, 502, DATE_ADD(NOW(), INTERVAL 4 DAY), 'Agence Omnes Immobilier', 0, 150.00, 'Première visite pour ce loft industriel'),
+(112, 202, 503, DATE_ADD(NOW(), INTERVAL 3 DAY), 'Sur place: 28 Rue du Commerce, Versailles', 0, 200.00, 'Client cherche un local pour ouvrir un restaurant'),
+(113, 202, 504, DATE_ADD(NOW(), INTERVAL 5 DAY), 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 1, 150.00, 'Client souhaite construire une maison familiale'),
+(114, 203, 505, DATE_ADD(NOW(), INTERVAL 1 WEEK), 'Agence Omnes Immobilier', 0, 75.00, "Étudiant à la recherche d'un studio pour la rentrée");
+
+-- Insertion de rendez-vous passés
+INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `date_time`, `place`, `is_paid`, `price`, `comments`) VALUES
+(110, 203, 506, DATE_SUB(NOW(), INTERVAL 1 WEEK), 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 1, 150.00, 'Le client a beaucoup aimé cette maison de ville, mais elle a été vendue depuis'),
+(111, 204, 507, DATE_SUB(NOW(), INTERVAL 2 WEEK), 'Agence Omnes Immobilier', 1, 200.00, 'Client professionnel cherchant des bureaux pour son entreprise'),
+(112, 204, 508, DATE_SUB(NOW(), INTERVAL 10 DAY), 'Sur place: 25 Rue des Écoles, Créteil', 0, 150.00, 'Famille avec enfants, recherche proximité des écoles'),
+(113, 205, 509, DATE_SUB(NOW(), INTERVAL 3 WEEK), 'Sur place: Route de la Forêt, Évry', 1, 150.00, 'Client souhaite investir dans un terrain avec potentiel'),
+(114, 205, 510, DATE_SUB(NOW(), INTERVAL 1 MONTH), 'Agence Omnes Immobilier', 1, 200.00, 'Client recherche un bien haut de gamme pour investissement');
+
+-- Rendez-vous d'aujourd'hui 
+INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `date_time`, `place`, `is_paid`, `price`, `comments`) VALUES
+(112, 201, 501, DATE_SUB(NOW(), INTERVAL 3 HOUR), 'Sur place: 12 Avenue Montaigne, Paris', 1, 150.00, "Seconde visite de l'appartement, client très intéressé"),
+(113, 202, 503, DATE_ADD(NOW(), INTERVAL 2 HOUR), 'Agence Omnes Immobilier', 0, 150.00, "Rendez-vous de discussion sur les possibilités d'aménagement du local commercial");
+
 
 --
 -- Indexes for dumped tables
@@ -117,6 +181,11 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`uid`),
   ADD UNIQUE KEY `uemail` (`uemail`);
 
+
+ALTER TABLE `appointments`
+ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`),
+ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`),
+ADD CONSTRAINT `fk_appointments_property` FOREIGN KEY (`property_id`) REFERENCES `property` (`pid`);
 --
 -- AUTO_INCREMENT for dumped tables
 --
@@ -125,12 +194,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `property`
 --
 ALTER TABLE `property`
-  MODIFY `pid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `pid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=500;
 
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `uid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `uid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 COMMIT;
