@@ -34,6 +34,13 @@ DROP TABLE IF EXISTS `state`;
 
 DROP TABLE IF EXISTS `feedback`;
 
+DROP TABLE IF EXISTS `appointments`;
+
+DROP TABLE IF EXISTS `property`;
+
+DROP TABLE IF EXISTS `user`;
+
+
 
 -- --------------------------------------------------------
 
@@ -67,16 +74,16 @@ CREATE TABLE `property` (
 --
 
 INSERT INTO `property` (`pid`, `agentid`, `title`, `propertyDescription`, `propertyType`, `area`, `nbRooms`, `nbBathrooms`, `price`, `location`, `city`, `department`, `pimage1`, `pimage2`, `pimage3`, `status`, `date`) VALUES
-(501, 1, 'Appartement Haussmannien', 'Lumineux avec moulures anciennes', 'résidentiel', 85, 3, 1, 780000, '12 Avenue Montaigne', 'Paris', 'Paris', '1.jpg', '2.jpg', '3.jpg', 'A vendre', '2025-02-28 10:30:00'),
-(502, 1, 'Loft industriel', 'Espace ouvert plein charme', 'résidentiel', 120, 2, 2, 950000, '5 Rue des Entrepreneurs', 'Boulogne-Billancourt', 'Hauts-de-Seine', '4.jpg', '5.jpg', '6.jpg', 'A vendre', '2025-02-27 15:45:00'),
-(503, 2, 'Local Commercial', 'Idéal pour restaurant chic', 'commercial', 150, 3, 2, 1200000, '28 Rue du Commerce', 'Versailles', 'Yvelines', '7.jpg', '8.jpg', '9.jpg', 'A vendre', '2025-03-01 09:15:00'),
-(504, 2, 'Terrain constructible', 'Vue dégagée zone résidentielle', 'terrain', 500, 0, 0, 320000, 'Chemin des Vignes', 'Saint-Germain-en-Laye', 'Yvelines', '10.jpg', '11.jpg', '12.jpg', 'A vendre', '2025-02-25 11:20:00'),
-(505, 3, 'Studio moderne', 'Proche transports et commerces', 'appartement A louer', 35, 1, 1, 950, '45 Rue Mouffetard', 'Paris', 'Paris', '13.jpg', '14.jpg', '15.jpg', 'A louer', '2025-02-26 14:00:00'),
-(506, 3, 'Maison de ville', 'Jardin privatif bien exposé', 'résidentiel', 145, 5, 2, 890000, '17 Rue des Rosiers', 'Neuilly-sur-Seine', 'Hauts-de-Seine', '16.jpg', '17.jpg', '18.jpg', 'vendu', '2025-02-22 16:30:00'),
-(507, 4, 'Bureaux modernes', 'Espace de travail lumineux', 'commercial', 200, 5, 2, 1500000, '8 Avenue des Champs-Élysées', 'Paris', 'Paris', '19.jpg', '20.jpg', '21.jpg', 'A vendre', '2025-03-02 10:00:00'),
-(508, 4, 'Appartement familial', 'Proche écoles et parcs', 'résidentiel', 110, 4, 2, 720000, '25 Rue des Écoles', 'Créteil', 'Val-de-Marne', '22.jpg', '23.jpg', '24.jpg', 'A louer', '2025-02-24 13:45:00'),
-(509, 5, 'Terrain avec vue', 'Constructible zone calme', 'terrain', 800, 0, 0, 450000, 'Route de la Forêt', 'Évry', 'Essonne', '25.jpg', '26.jpg', '27.jpg', 'A vendre', '2025-02-23 11:15:00'),
-(510, 5, 'Duplex contemporain', 'Prestations haut de gamme', 'résidentiel', 130, 4, 3, 1050000, '3 Boulevard Haussmann', 'Paris', 'Paris', '28.jpg', '29.jpg', '30.jpg', 'loué', '2025-02-21 09:30:00');
+(501, 201, 'Appartement Haussmannien', 'Lumineux avec moulures anciennes', 'résidentiel', 85, 3, 1, 780000, '12 Avenue Montaigne', 'Paris', 'Paris', '1.jpg', '2.jpg', '3.jpg', 'A vendre', '2025-02-28 10:30:00'),
+(502, 201, 'Loft industriel', 'Espace ouvert plein charme', 'résidentiel', 120, 2, 2, 950000, '5 Rue des Entrepreneurs', 'Boulogne-Billancourt', 'Hauts-de-Seine', '4.jpg', '5.jpg', '6.jpg', 'A vendre', '2025-02-27 15:45:00'),
+(503, 202, 'Local Commercial', 'Idéal pour restaurant chic', 'commercial', 150, 3, 2, 1200000, '28 Rue du Commerce', 'Versailles', 'Yvelines', '7.jpg', '8.jpg', '9.jpg', 'A vendre', '2025-03-01 09:15:00'),
+(504, 202, 'Terrain constructible', 'Vue dégagée zone résidentielle', 'terrain', 500, 0, 0, 320000, 'Chemin des Vignes', 'Saint-Germain-en-Laye', 'Yvelines', '10.jpg', '11.jpg', '12.jpg', 'A vendre', '2025-02-25 11:20:00'),
+(505, 203, 'Studio moderne', 'Proche transports et commerces', 'appartement A louer', 35, 1, 1, 950, '45 Rue Mouffetard', 'Paris', 'Paris', '13.jpg', '14.jpg', '15.jpg', 'A louer', '2025-02-26 14:00:00'),
+(506, 203, 'Maison de ville', 'Jardin privatif bien exposé', 'résidentiel', 145, 5, 2, 890000, '17 Rue des Rosiers', 'Neuilly-sur-Seine', 'Hauts-de-Seine', '16.jpg', '17.jpg', '18.jpg', 'vendu', '2025-02-22 16:30:00'),
+(507, 204, 'Bureaux modernes', 'Espace de travail lumineux', 'commercial', 200, 5, 2, 1500000, '8 Avenue des Champs-Élysées', 'Paris', 'Paris', '19.jpg', '20.jpg', '21.jpg', 'A vendre', '2025-03-02 10:00:00'),
+(508, 204, 'Appartement familial', 'Proche écoles et parcs', 'résidentiel', 110, 4, 2, 720000, '25 Rue des Écoles', 'Créteil', 'Val-de-Marne', '22.jpg', '23.jpg', '24.jpg', 'A louer', '2025-02-24 13:45:00'),
+(509, 205, 'Terrain avec vue', 'Constructible zone calme', 'terrain', 800, 0, 0, 450000, 'Route de la Forêt', 'Évry', 'Essonne', '25.jpg', '26.jpg', '27.jpg', 'A vendre', '2025-02-23 11:15:00'),
+(510, 205, 'Duplex contemporain', 'Prestations haut de gamme', 'résidentiel', 130, 4, 3, 1050000, '3 Boulevard Haussmann', 'Paris', 'Paris', '28.jpg', '29.jpg', '30.jpg', 'loué', '2025-02-21 09:30:00');
 
 -- --------------------------------------------------------
 
@@ -121,7 +128,8 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   `client_id` int(50) NOT NULL,
   `agent_id` int(50) NOT NULL,
   `property_id` int(50) NOT NULL,
-  `date_time` datetime NOT NULL,
+  `appointment_date` date NOT NULL,
+  `appointment_time` time NOT NULL,
   `place` varchar(255) NOT NULL,
   `is_paid` tinyint(1) DEFAULT 0,
   `price` decimal(10,2) DEFAULT NULL,
@@ -135,33 +143,25 @@ CREATE TABLE IF NOT EXISTS `appointments` (
 
 -- Ajouter quelques utilisateurs qui seront des clients (si nécessaire)
 -- Assurez-vous que les UIDs ne sont pas déjà utilisés dans votre table user
-INSERT INTO `user` (`uid`, `uname`, `uemail`, `uphone`, `upass`, `utype`, `uimage`) VALUES 
-(110, 'Marie Dupont', 'marie.dupont@example.com', '06 12 34 56 78', MD5('password123'), 'client', NULL),
-(111, 'Jean Martin', 'jean.martin@example.com', '06 23 45 67 89', MD5('password123'), 'client', NULL),
-(112, 'Sophie Bernard', 'sophie.bernard@example.com', '06 34 56 78 90', MD5('password123'), 'client', NULL),
-(113, 'Thomas Petit', 'thomas.petit@example.com', '06 45 67 89 01', MD5('password123'), 'client', NULL),
-(114, 'Camille Leroy', 'camille.leroy@example.com', '06 56 78 90 12', MD5('password123'), 'client', NULL);
-
--- Insertion de rendez-vous à venir
-INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `date_time`, `place`, `is_paid`, `price`, `comments`) VALUES
-(110, 201, 501, DATE_ADD(NOW(), INTERVAL 2 DAY), 'Sur place: 12 Avenue Montaigne, Paris', 1, 150.00, 'Client très intéressé par cet appartement haussmannien'),
-(111, 201, 502, DATE_ADD(NOW(), INTERVAL 4 DAY), 'Agence Omnes Immobilier', 0, 150.00, 'Première visite pour ce loft industriel'),
-(112, 202, 503, DATE_ADD(NOW(), INTERVAL 3 DAY), 'Sur place: 28 Rue du Commerce, Versailles', 0, 200.00, 'Client cherche un local pour ouvrir un restaurant'),
-(113, 202, 504, DATE_ADD(NOW(), INTERVAL 5 DAY), 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 1, 150.00, 'Client souhaite construire une maison familiale'),
-(114, 203, 505, DATE_ADD(NOW(), INTERVAL 1 WEEK), 'Agence Omnes Immobilier', 0, 75.00, "Étudiant à la recherche d'un studio pour la rentrée");
+INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment_date`, `appointment_time`, `place`, `is_paid`, `price`, `comments`, `created_at`) VALUES
+(101, 201, 501, DATE_ADD(CURRENT_DATE(), INTERVAL 2 DAY), '14:30:00', 'Sur place: 12 Avenue Montaigne, Paris', 1, 150.00, 'Client très intéressé par cet appartement haussmannien', CURRENT_TIMESTAMP()),
+(102, 201, 502, DATE_ADD(CURRENT_DATE(), INTERVAL 4 DAY), '10:00:00', 'Agence Omnes Immobilier', 0, 150.00, 'Première visite pour ce loft industriel', CURRENT_TIMESTAMP()),
+(102, 202, 503, DATE_ADD(CURRENT_DATE(), INTERVAL 3 DAY), '15:45:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 200.00, 'Client cherche un local pour ouvrir un restaurant', CURRENT_TIMESTAMP()),
+(101, 202, 504, DATE_ADD(CURRENT_DATE(), INTERVAL 5 DAY), '11:30:00', 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 1, 150.00, 'Client souhaite construire une maison familiale', CURRENT_TIMESTAMP()),
+(102, 203, 505, DATE_ADD(CURRENT_DATE(), INTERVAL 7 DAY), '16:15:00', 'Agence Omnes Immobilier', 0, 75.00, "Étudiant à la recherche d'un studio pour la rentrée", CURRENT_TIMESTAMP());
 
 -- Insertion de rendez-vous passés
-INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `date_time`, `place`, `is_paid`, `price`, `comments`) VALUES
-(110, 203, 506, DATE_SUB(NOW(), INTERVAL 1 WEEK), 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 1, 150.00, 'Le client a beaucoup aimé cette maison de ville, mais elle a été vendue depuis'),
-(111, 204, 507, DATE_SUB(NOW(), INTERVAL 2 WEEK), 'Agence Omnes Immobilier', 1, 200.00, 'Client professionnel cherchant des bureaux pour son entreprise'),
-(112, 204, 508, DATE_SUB(NOW(), INTERVAL 10 DAY), 'Sur place: 25 Rue des Écoles, Créteil', 0, 150.00, 'Famille avec enfants, recherche proximité des écoles'),
-(113, 205, 509, DATE_SUB(NOW(), INTERVAL 3 WEEK), 'Sur place: Route de la Forêt, Évry', 1, 150.00, 'Client souhaite investir dans un terrain avec potentiel'),
-(114, 205, 510, DATE_SUB(NOW(), INTERVAL 1 MONTH), 'Agence Omnes Immobilier', 1, 200.00, 'Client recherche un bien haut de gamme pour investissement');
+INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment_date`, `appointment_time`, `place`, `is_paid`, `price`, `comments`, `created_at`) VALUES
+(101, 203, 506, DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY), '14:00:00', 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 1, 150.00, 'Le client a beaucoup aimé cette maison de ville, mais elle a été vendue depuis', CURRENT_TIMESTAMP()),
+(102, 204, 507, DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY), '11:30:00', 'Agence Omnes Immobilier', 1, 200.00, 'Client professionnel cherchant des bureaux pour son entreprise', CURRENT_TIMESTAMP()),
+(102, 204, 508, DATE_SUB(CURRENT_DATE(), INTERVAL 10 DAY), '16:45:00', 'Sur place: 25 Rue des Écoles, Créteil', 0, 150.00, 'Famille avec enfants, recherche proximité des écoles', CURRENT_TIMESTAMP()),
+(101, 205, 509, DATE_SUB(CURRENT_DATE(), INTERVAL 21 DAY), '09:15:00', 'Sur place: Route de la Forêt, Évry', 1, 150.00, 'Client souhaite investir dans un terrain avec potentiel', CURRENT_TIMESTAMP()),
+(102, 205, 510, DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY), '15:30:00', 'Agence Omnes Immobilier', 1, 200.00, 'Client recherche un bien haut de gamme pour investissement', CURRENT_TIMESTAMP());
 
 -- Rendez-vous d'aujourd'hui 
-INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `date_time`, `place`, `is_paid`, `price`, `comments`) VALUES
-(112, 201, 501, DATE_SUB(NOW(), INTERVAL 3 HOUR), 'Sur place: 12 Avenue Montaigne, Paris', 1, 150.00, "Seconde visite de l'appartement, client très intéressé"),
-(113, 202, 503, DATE_ADD(NOW(), INTERVAL 2 HOUR), 'Agence Omnes Immobilier', 0, 150.00, "Rendez-vous de discussion sur les possibilités d'aménagement du local commercial");
+INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment_date`, `appointment_time`, `place`, `is_paid`, `price`, `comments`, `created_at`) VALUES
+(102, 201, 501, CURRENT_DATE(), TIME(DATE_SUB(NOW(), INTERVAL 3 HOUR)), 'Sur place: 12 Avenue Montaigne, Paris', 1, 150.00, "Seconde visite de l'appartement, client très intéressé", CURRENT_TIMESTAMP()),
+(101, 202, 503, CURRENT_DATE(), TIME(DATE_ADD(NOW(), INTERVAL 2 HOUR)), 'Agence Omnes Immobilier', 0, 150.00, "Rendez-vous de discussion sur les possibilités d'aménagement du local commercial", CURRENT_TIMESTAMP());
 
 
 --

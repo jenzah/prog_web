@@ -155,7 +155,7 @@ include("config.php");
                                                 </div>
                                                 <div class="px-4 pb-4 d-inline-block w-100">
                                                     <div class="float-left">
-                                                        <i class="fas fa-user text-primary mr-1"></i>Agent : <?php echo $row['uname'];?>, <?php echo $row['ufirstname'];?>
+                                                        <i class="fas fa-user text-primary mr-1"></i>Agent : <?php echo $row['ufirstname'];?> <?php echo strtoupper($row['uname']);?>
                                                     </div>
                                                     <div class="float-right">
                                                         <i class="far fa-calendar-alt text-primary mr-1"></i>

@@ -2012,6 +2012,30 @@ sup {
     object-position: center; /* Centers the image to show the middle portion */
 }
 
+.no-appointments {
+	text-align: center;
+	padding: 20px;
+	font-style: italic;
+	color: #6c757d;
+}
+.img-action {
+	margin: 0 5px;
+	cursor: pointer;
+}
+.auto-table {
+	width: 100%;
+}
+
+.auto-table td.comments {
+	white-space: normal;
+}
+
+.auto-table th.actions,
+.auto-table td.actions {
+	width: 1%; /* This makes the column as narrow as possible */
+	white-space: nowrap;
+}
+
 /*==========================================
  About us page
  ===========================================*/

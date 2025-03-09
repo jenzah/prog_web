@@ -57,7 +57,14 @@
                                         <?php } elseif($_SESSION['isAgent']) { ?>
                                         <!-- Agent specific menu items -->
                                         <li class="nav-item"> <a class="nav-link" href="property.php">Mes propriétés</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="">Mes RDVs</a> </li> <!-- agent/my_rdv.php -->
+                                        <li class="nav-item dropdown">
+									        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon agenda</a>
+									        <ul class="dropdown-menu">
+									        	<li class="nav-item"> <a class="nav-link" href="">Disponibilités</a> </li>
+									        	<li class="nav-item"> <a class="nav-link" href="">Calendrier</a> </li>
+									        	<li class="nav-item"> <a class="nav-link" href="appointments.php">Mes RDVs</a> </li>	
+									        </ul>
+                                        </li>
                                         <li class="nav-item"> <a class="nav-link" href="">Mes conversations</a> </li>
                                         <li class="nav-item dropdown">
 									        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon compte</a>
@@ -76,7 +83,7 @@
 								        	<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon compte</a>
 								        	<ul class="dropdown-menu">
 								        		<li class="nav-item"> <a class="nav-link" href="profile.php">Profil</a> </li>
-								        		<li class="nav-item"> <a class="nav-link" href="">Mes RDVs</a> </li>
+								        		<li class="nav-item"> <a class="nav-link" href="appointments.php">Mes RDVs</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="">Mes conversations</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="">Paiment</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="logout.php">Déconnexion</a> </li>	
