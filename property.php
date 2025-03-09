@@ -89,29 +89,41 @@ include("config.php");
                                     <?php
                                     // Initialisation des conditions de filtrage
                                     $where_conditions = [];
-    
-                                    // Vérification si un mot-clé est entré
-                                    if(isset($_GET['keyword']) && !empty($_GET['keyword'])) {
-                                        $keyword = mysqli_real_escape_string($con, $_GET['keyword']);
-                                        $where_conditions[] = "(user.uname LIKE '%$keyword%'
-                                                                OR user.ufirstname LIKE '%$keyword%'
-                                                                OR property.title LIKE '%$keyword%'
-                                                                OR property.status LIKE '%$keyword%'
-                                                                OR property.location LIKE '%$keyword%' 
-                                                                OR property.city LIKE '%$keyword%')";
+
+                                    if($_SESSION['isAgent']) {
+                                        $where_conditions[] = "user.uid = '".$_SESSION['uid']."'";
+
+                                        if(isset($_GET['keyword']) && !empty($_GET['keyword'])) {
+                                            $keyword = mysqli_real_escape_string($con, $_GET['keyword']);
+                                            $where_conditions[] = "(property.title LIKE '%$keyword%'
+                                                                    OR property.status LIKE '%$keyword%'
+                                                                    OR property.location LIKE '%$keyword%' 
+                                                                    OR property.city LIKE '%$keyword%')";
+                                        }
+                                    } else {
+                                        $where_conditions[] = "(property.status = 'À vendre' OR property.status = 'À louer')";
+
+                                        // Vérification si un mot-clé est entré
+                                        if(isset($_GET['keyword']) && !empty($_GET['keyword'])) {
+                                            $keyword = mysqli_real_escape_string($con, $_GET['keyword']);
+                                            $where_conditions[] = "(user.uname LIKE '%$keyword%'
+                                                                    OR user.ufirstname LIKE '%$keyword%'
+                                                                    OR property.title LIKE '%$keyword%'
+                                                                    OR property.status LIKE '%$keyword%'
+                                                                    OR property.location LIKE '%$keyword%' 
+                                                                    OR property.city LIKE '%$keyword%')";
+                                        }
                                     }
                                 
                                     // Construction de la clause WHERE uniquement si un filtre est actif
-                                    $where_clause = !empty($where_conditions) ? "AND " . implode(" AND ", $where_conditions) : "";
+                                    $where_clause = !empty($where_conditions) ? "WHERE " . implode(" AND ", $where_conditions) : "";
                                 
                                     // Exécution de la requête SQL avec filtre
-                                    $where_clause = !empty($where_conditions) ? "AND " . implode(" AND ", $where_conditions) : "";
-                                     $query = mysqli_query($con, "SELECT property.*, user.uname, user.ufirstname, user.utype, user.uimage 
+                                    $query = mysqli_query($con, "SELECT property.*, user.uname, user.ufirstname, user.utype, user.uimage 
                                     FROM `property` 
                                     JOIN `user` ON property.agentid = user.uid
-                                     WHERE (property.status = 'À vendre' OR property.status = 'À louer') 
-                                     $where_clause
-                                     ORDER BY property.date DESC");
+                                    $where_clause
+                                    ORDER BY property.date DESC");
     
                                 
                                     // Vérifier si la requête fonctionne
