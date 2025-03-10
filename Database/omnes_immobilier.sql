@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : lun. 10 mars 2025 à 11:06
+-- Généré le : sam. 08 mars 2025 à 11:29
 -- Version du serveur : 5.7.39
 -- Version de PHP : 8.2.0
 
@@ -14,10 +14,36 @@ SET time_zone = "+00:00";
 --
 -- Database: `omnes_immobilier`
 --
+CREATE DATABASE IF NOT EXISTS `omnes_immobilier` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `omnes_immobilier`;
 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin`
+-- 08.03.2025 Jennifer: J'ai supprimé les table, car on n'en a pas besoin
+--
+
+DROP TABLE IF EXISTS `admin`;
+
+DROP TABLE IF EXISTS `city`;
+
+DROP TABLE IF EXISTS `contact`;
+
+DROP TABLE IF EXISTS `state`;
+
+DROP TABLE IF EXISTS `feedback`;
+
+DROP TABLE IF EXISTS `appointments`;
+
+DROP TABLE IF EXISTS `property`;
+
+DROP TABLE IF EXISTS `user`;
+
+
+
+-- --------------------------------------------------------
+
 -- Structure de la table `payment`
 --
 
@@ -45,12 +71,13 @@ INSERT INTO `payment` (`payment_id`, `user_id`, `property_id`, `amount`, `paymen
 -- Structure de la table `property`
 --
 
+DROP TABLE IF EXISTS `property`;
 CREATE TABLE `property` (
   `pid` int(50) NOT NULL,
-  `agentid` int(11) NOT NULL,
+  `agentid` int(50) NOT NULL,
   `title` varchar(200) NOT NULL,
   `propertyDescription` longtext NOT NULL,
-  `propertyType` varchar(100) NOT NULL,
+  `propertyType` varchar(100) NOT NULL, -- résidentiel, commercial, terrain, appartement à louer
   `area` int(50) NOT NULL,
   `nbRooms` int(50) NOT NULL,
   `nbBathrooms` int(50) NOT NULL,
@@ -66,7 +93,7 @@ CREATE TABLE `property` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Déchargement des données de la table `property`
+-- Dumping data for table `property`
 --
 
 INSERT INTO `property` (`pid`, `agentid`, `title`, `propertyDescription`, `propertyType`, `area`, `nbRooms`, `nbBathrooms`, `price`, `location`, `city`, `department`, `pimage1`, `pimage2`, `pimage3`, `status`, `date`) VALUES
@@ -84,12 +111,12 @@ INSERT INTO `property` (`pid`, `agentid`, `title`, `propertyDescription`, `prope
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Table structure for table `user`
 --
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `uid` int(11) NOT NULL,
+  `uid` int(50) NOT NULL,
   `uname` varchar(100) NOT NULL,
   `ufirstname` varchar(100) NOT NULL,
   `uemail` varchar(100) NOT NULL,
@@ -98,11 +125,11 @@ CREATE TABLE `user` (
   `utype` varchar(50) NOT NULL,
   `uimage` varchar(300) NOT NULL,
   `specialty` VARCHAR(100) DEFAULT NULL -- residentiel,terrain,appartement,commercial
-  `address1` varchar(255) NOT NULL,
+  `address1` varchar(255) DEFAULT NULL,
   `address2` varchar(255) DEFAULT NULL,
-  `city` varchar(100) NOT NULL,
-  `postal_code` varchar(10) NOT NULL,
-  `country` varchar(100) NOT NULL
+  `city` varchar(100) DEFAULT NULL,
+  `postal_code` varchar(10) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -193,7 +220,7 @@ ALTER TABLE `property`
   ADD KEY `fk_property_user` (`agentid`);
 
 --
--- Index pour la table `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`uid`),
@@ -205,7 +232,7 @@ ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `us
 ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`),
 ADD CONSTRAINT `fk_appointments_property` FOREIGN KEY (`property_id`) REFERENCES `property` (`pid`);
 --
--- AUTO_INCREMENT pour les tables déchargées
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
@@ -220,11 +247,12 @@ ALTER TABLE `payment`
 ALTER TABLE `property`
   MODIFY `pid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=505;
 
+
 --
--- AUTO_INCREMENT pour la table `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+  MODIFY `uid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 --
 -- Contraintes pour les tables déchargées
