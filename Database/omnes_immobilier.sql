@@ -34,11 +34,17 @@ DROP TABLE IF EXISTS `state`;
 
 DROP TABLE IF EXISTS `feedback`;
 
-DROP TABLE IF EXISTS `payment`;
-
 DROP TABLE IF EXISTS `appointments`;
 
 DROP TABLE IF EXISTS `property`;
+
+DROP TABLE IF EXISTS `chat_message`;
+
+DROP TABLE IF EXISTS `chat_paticipant`;
+
+DROP TABLE IF EXISTS `chat_rooms`;
+
+DROP TABLE IF EXISTS `rendez-vous`;
 
 DROP TABLE IF EXISTS `user`;
 
@@ -47,7 +53,7 @@ DROP TABLE IF EXISTS `user`;
 -- --------------------------------------------------------
 
 --
--- Structure de la table `property`
+-- Table structure for table `property`
 --
 
 DROP TABLE IF EXISTS `property`;
@@ -177,11 +183,11 @@ INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment
 (102, 202, 507, '2025-02-28', '17:00:00', 'Sur place: 8 Avenue des Champs-Élysées, Paris', 1, 200.00, 'Le client a trouvé l\'espace de travail très lumineux', '2025-02-28 16:30:00');
 
 --
--- Index pour les tables déchargées
+-- Indexes for dumped tables
 --
 
 --
--- Index pour la table `property`
+-- Indexes for table `property`
 --
 ALTER TABLE `property`
   ADD PRIMARY KEY (`pid`),
@@ -204,7 +210,7 @@ ADD CONSTRAINT `fk_appointments_property` FOREIGN KEY (`property_id`) REFERENCES
 --
 
 --
--- AUTO_INCREMENT pour la table `property`
+-- AUTO_INCREMENT for table `property`
 --
 ALTER TABLE `property`
   MODIFY `pid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=505;
