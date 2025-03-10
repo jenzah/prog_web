@@ -34,6 +34,8 @@ DROP TABLE IF EXISTS `state`;
 
 DROP TABLE IF EXISTS `feedback`;
 
+DROP TABLE IF EXISTS `payment`;
+
 DROP TABLE IF EXISTS `appointments`;
 
 DROP TABLE IF EXISTS `property`;
@@ -124,7 +126,7 @@ CREATE TABLE `user` (
   `upass` varchar(255) NOT NULL,
   `utype` varchar(50) NOT NULL,
   `uimage` varchar(300) NOT NULL,
-  `specialty` VARCHAR(100) DEFAULT NULL -- residentiel,terrain,appartement,commercial
+  `specialty` VARCHAR(100) DEFAULT NULL, -- residentiel,terrain,appartement,commercial
   `address1` varchar(255) DEFAULT NULL,
   `address2` varchar(255) DEFAULT NULL,
   `city` varchar(100) DEFAULT NULL,
@@ -144,7 +146,10 @@ INSERT INTO `user` (`uid`, `uname`, `ufirstname`, `uemail`, `uphone`, `upass`, `
 (205, 'Johnson', 'Daniel', 'agent5@example.com', '1234567894', 'agent5', 'agent', 'agent5.jpg'),
 (101, 'Miller', 'Emily', 'user1@example.com', '1234567895', 'user1', 'user', 'user1.jpg'),
 (102, 'Anderson', 'James', 'user2@example.com', '1234567896', 'user2', 'user', 'user2.jpg'),
-(301, 'Thomas', 'Robert', 'admin1@example.com', '1234567897', 'admin1', 'admin', 'admin1.jpg');
+(301, 'Thomas', 'Robert', 'admin1@example.com', '1234567897', 'admin1', 'admin', 'admin1.jpg'),
+(401, 'kawtar', 'kawtar@gmail.com', '9077756576', 'kawtar', 'client', NULL, '12 Rue de Paris', NULL, 'Paris', '75001', 'France'),
+(402, 'Agent7', 'agent7@email.com', '0600000001', 'password_hash', 'agent', NULL, '123 Rue des Agents', NULL, 'Paris', '75001', 'France'),
+(403, 'Agent8', 'agent8@email.com', '0600000002', 'password_hash', 'agent', NULL, '456 Boulevard des Experts', NULL, 'Lyon', '69001', 'France');
 
 
 
