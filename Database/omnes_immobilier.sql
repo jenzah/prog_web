@@ -46,29 +46,6 @@ DROP TABLE IF EXISTS `user`;
 
 -- --------------------------------------------------------
 
--- Structure de la table `payment`
---
-
-CREATE TABLE `payment` (
-  `payment_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `property_id` int(11) NOT NULL,
-  `amount` decimal(10,2) NOT NULL,
-  `payment_status` enum('pending','completed','failed','refunded') NOT NULL DEFAULT 'pending',
-  `payment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `service_fee` decimal(10,2) NOT NULL DEFAULT '500.00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Déchargement des données de la table `payment`
---
-
-INSERT INTO `payment` (`payment_id`, `user_id`, `property_id`, `amount`, `payment_status`, `payment_date`, `service_fee`) VALUES
-(7, 3, 501, '150000.00', 'pending', '2025-03-10 10:56:50', '500.00'),
-(10, 3, 501, '500.00', 'completed', '2025-03-10 11:00:23', '500.00');
-
--- --------------------------------------------------------
-
 --
 -- Structure de la table `property`
 --
@@ -127,11 +104,11 @@ CREATE TABLE `user` (
   `utype` varchar(50) NOT NULL,
   `uimage` varchar(300) NOT NULL,
   `specialty` VARCHAR(100) DEFAULT NULL, -- residentiel,terrain,appartement,commercial
-  `address1` varchar(255) DEFAULT NULL,
-  `address2` varchar(255) DEFAULT NULL,
-  `city` varchar(100) DEFAULT NULL,
-  `postal_code` varchar(10) DEFAULT NULL,
-  `country` varchar(100) DEFAULT NULL
+  `uaddress1` varchar(255) DEFAULT NULL,
+  `uaddress2` varchar(255) DEFAULT NULL,
+  `ucity` varchar(100) DEFAULT NULL,
+  `upostal_code` varchar(10) DEFAULT NULL,
+  `ucountry` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -146,10 +123,12 @@ INSERT INTO `user` (`uid`, `uname`, `ufirstname`, `uemail`, `uphone`, `upass`, `
 (205, 'Johnson', 'Daniel', 'agent5@example.com', '1234567894', 'agent5', 'agent', 'agent5.jpg'),
 (101, 'Miller', 'Emily', 'user1@example.com', '1234567895', 'user1', 'user', 'user1.jpg'),
 (102, 'Anderson', 'James', 'user2@example.com', '1234567896', 'user2', 'user', 'user2.jpg'),
-(301, 'Thomas', 'Robert', 'admin1@example.com', '1234567897', 'admin1', 'admin', 'admin1.jpg'),
-(401, 'kawtar', 'kawtar@gmail.com', '9077756576', 'kawtar', 'client', NULL, '12 Rue de Paris', NULL, 'Paris', '75001', 'France'),
-(402, 'Agent7', 'agent7@email.com', '0600000001', 'password_hash', 'agent', NULL, '123 Rue des Agents', NULL, 'Paris', '75001', 'France'),
-(403, 'Agent8', 'agent8@email.com', '0600000002', 'password_hash', 'agent', NULL, '456 Boulevard des Experts', NULL, 'Lyon', '69001', 'France');
+(301, 'Thomas', 'Robert', 'admin1@example.com', '1234567897', 'admin1', 'admin', 'admin1.jpg');
+
+INSERT INTO `user` (`uid`, `uname`, `ufirstname`, `uemail`, `uphone`, `upass`, `utype`, `uimage`, `uaddress1`, `uaddress2`, `ucity`, `upostal_code`, `ucountry`) VALUES
+(401, 'kawtar', 'b', 'kawtar@gmail.com', '9077756576', 'kawtar', 'client', 'default.png', '12 Rue de Paris', NULL, 'Paris', '75001', 'France'),
+(402, 'Agent7', 'b7', 'agent7@email.com', '0600000001', 'password_hash', 'agent', 'default.png', '123 Rue des Agents', NULL, 'Paris', '75001', 'France'),
+(403, 'Agent8', 'b', 'agent8@email.com', '0600000002', 'password_hash', 'agent', 'default.png', '456 Boulevard des Experts', NULL, 'Lyon', '69001', 'France');
 
 
 
@@ -165,9 +144,11 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   `appointment_time` time NOT NULL,
   `place` varchar(255) NOT NULL,
   `is_paid` tinyint(1) DEFAULT 0,
+  `payment_status` enum('pending','completed','refunded') NOT NULL DEFAULT 'pending',
   `price` decimal(10,2) DEFAULT NULL,
   `comments` text DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `payment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`aid`),
   KEY `client_id` (`client_id`),
   KEY `agent_id` (`agent_id`),
@@ -195,27 +176,9 @@ INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment
 (102, 201, 510, '2025-03-03', '13:00:00', 'Sur place: 3 Boulevard Haussmann, Paris', 1, 200.00, 'Le client a apprécié les prestations haut de gamme du duplex', '2025-03-03 12:30:00'),
 (102, 202, 507, '2025-02-28', '17:00:00', 'Sur place: 8 Avenue des Champs-Élysées, Paris', 1, 200.00, 'Le client a trouvé l\'espace de travail très lumineux', '2025-02-28 16:30:00');
 
-
---
--- Déchargement des données de la table `user`
---
-
-INSERT INTO `user` (`uname`, `uemail`, `uphone`, `upass`, `utype`, `uimage`, `address1`, `address2`, `city`, `postal_code`, `country`) VALUES
-('kawtar', 'kawtar@gmail.com', '9077756576', 'kawtar', 'client', NULL, '12 Rue de Paris', NULL, 'Paris', '75001', 'France'),
-('Agent7', 'agent7@email.com', '0600000001', 'password_hash', 'agent', NULL, '123 Rue des Agents', NULL, 'Paris', '75001', 'France'),
-('Agent8', 'agent8@email.com', '0600000002', 'password_hash', 'agent', NULL, '456 Boulevard des Experts', NULL, 'Lyon', '69001', 'France');
-
 --
 -- Index pour les tables déchargées
 --
-
---
--- Index pour la table `payment`
---
-ALTER TABLE `payment`
-  ADD PRIMARY KEY (`payment_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `property_id` (`property_id`);
 
 --
 -- Index pour la table `property`
@@ -241,12 +204,6 @@ ADD CONSTRAINT `fk_appointments_property` FOREIGN KEY (`property_id`) REFERENCES
 --
 
 --
--- AUTO_INCREMENT pour la table `payment`
---
-ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
 -- AUTO_INCREMENT pour la table `property`
 --
 ALTER TABLE `property`
@@ -262,13 +219,6 @@ ALTER TABLE `user`
 --
 -- Contraintes pour les tables déchargées
 --
-
---
--- Contraintes pour la table `payment`
---
-ALTER TABLE `payment`
-  ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE,
-  ADD CONSTRAINT `payment_ibfk_2` FOREIGN KEY (`property_id`) REFERENCES `property` (`pid`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `property`
