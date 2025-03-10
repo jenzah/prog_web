@@ -40,9 +40,13 @@ DROP TABLE IF EXISTS `appointments`;
 
 DROP TABLE IF EXISTS `property`;
 
+DROP TABLE IF EXISTS `chat_messages`;
+
+DROP TABLE IF EXISTS `chat_participants`;
+
+DROP TABLE IF EXISTS `chat_rooms`;
+
 DROP TABLE IF EXISTS `user`;
-
-
 
 -- --------------------------------------------------------
 
