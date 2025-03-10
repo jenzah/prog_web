@@ -66,7 +66,10 @@
 									        	<li class="nav-item"> <a class="nav-link" href="appdetails.php">RDV details</a> </li>	
 									        </ul>
                                         </li>
-                                        <li class="nav-item"> <a class="nav-link" href="">Mes conversations</a> </li>
+                                        <li class="nav-item">
+    <a class="nav-link" href="conversations.php">Mes conversations</a>
+</li>
+
                                         <li class="nav-item dropdown">
 									        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon compte</a>
 									        <ul class="dropdown-menu">
@@ -88,7 +91,10 @@
 								        	<ul class="dropdown-menu">
 								        		<li class="nav-item"> <a class="nav-link" href="profile.php">Profil</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="appointments.php">Mes RDVs</a> </li>
-								        		<li class="nav-item"> <a class="nav-link" href="">Mes conversations</a> </li>
+								        		<li class="nav-item">
+    <a class="nav-link" href="conversations.php">Mes conversations</a>
+</li>
+
 								        		<li class="nav-item"> <a class="nav-link" href="">Paiment</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="logout.php">Déconnexion</a> </li>	
 								        	</ul>

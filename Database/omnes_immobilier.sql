@@ -207,3 +207,26 @@ ALTER TABLE `user`
 ADD COLUMN `formations` TEXT DEFAULT NULL,
 ADD COLUMN `experiences` TEXT DEFAULT NULL,
 ADD COLUMN `cv` VARCHAR(255) DEFAULT NULL;
+
+CREATE TABLE chat_rooms (
+    room_id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE chat_participants (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT,
+    user_id INT,
+    FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE
+);
+
+CREATE TABLE chat_messages (
+    message_id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT,
+    user_id INT,
+    message TEXT,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE
+);
