@@ -6,10 +6,23 @@ session_cache_limiter(false);
 session_start();
 include("config.php");
 
-if (!isset($_SESSION['uid']) || empty($_SESSION['isAdmin'])) {
+if (!isset($_SESSION['uid'])) {
     header("Location:unauthorised.php");
     exit();
 }
+
+// Vérifie si l'utilisateur est un agent ou un administrateur
+if (!isset($_SESSION['isAdmin']) && !isset($_SESSION['isAgent'])) {
+    header("Location:unauthorised.php");
+    exit();
+}
+
+// Si c'est un agent, il ne peut modifier que son propre CV
+if ($_SESSION['isAgent'] && $_SESSION['uid'] != $_GET['cv_id']) {
+    header("Location:unauthorised.php");
+    exit();
+}
+
 
 if (!isset($_GET['cv_id'])) {
     echo "<script>alert('Aucun agent sélectionné.'); window.location='admin_agent.php';</script>";

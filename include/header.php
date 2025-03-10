@@ -71,7 +71,10 @@
 									        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon compte</a>
 									        <ul class="dropdown-menu">
 									        	<li class="nav-item"> <a class="nav-link" href="profile.php">Profil</a> </li>
-									        	<li class="nav-item"> <a class="nav-link" href="">Mon CV</a> </li>
+									        	<li class="nav-item">
+    <a class="nav-link" href="admin_edit_cv.php?cv_id=<?php echo $_SESSION['uid']; ?>">Mon CV</a>
+</li>
+
 									        	<li class="nav-item"> <a class="nav-link" href="logout.php">Déconnexion</a> </li>	
 									        </ul>
                                         </li>
