@@ -210,6 +210,17 @@ while ($row = mysqli_fetch_assoc($specialtyQuery)) {
                             <td><?php echo $row['uphone']; ?></td>
                             <td><?php echo $row['specialty'] ?? 'Non spécifiée'; ?></td>
                             <td>
+                                 <!-- Remplir CV -->
+                                <a href="admin_edit_cv.php?cv_id=<?php echo $row['uid']; ?>" class="btn btn-warning btn-sm">Remplir CV</a>
+    
+                                <!-- Télécharger CV -->
+                                <?php if (!empty($row['cv']) && file_exists("images/cv/" . $row['cv'])) { ?>
+                                    <a href="images/cv/<?php echo $row['cv']; ?>" download class="btn btn-secondary">Télécharger CV</a>
+                                <?php } else { ?>
+                                    <span class="text-danger">CV non disponible</span>
+                                <?php } ?>
+
+
                                 <!-- Bouton Supprimer -->
                                 <a href="admin_agent.php?delete_id=<?php echo $row['uid']; ?>" 
                                    onclick="return confirm('Voulez-vous vraiment supprimer cet agent ?');">
