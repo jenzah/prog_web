@@ -33,7 +33,44 @@ if (isset($_GET['delete_id'])) {
     } else {
         echo "<script>alert('Agent introuvable.');</script>";
     }
-}							
+}	
+// Initialisation de la requête SQL avec filtres et tri
+$sql = "SELECT * FROM user WHERE utype='agent'";
+$conditions = [];
+$orderBy = "uname ASC"; // Tri par défaut (ordre alphabétique)
+
+// Appliquer le filtrage
+if (!empty($_GET['specialty'])) {
+    $specialty = mysqli_real_escape_string($con, $_GET['specialty']);
+    $conditions[] = "specialty = '$specialty'";
+}
+
+// Appliquer le tri
+if (!empty($_GET['sort'])) {
+    $sort = $_GET['sort'];
+    if ($sort == "name_asc") {
+        $orderBy = "uname ASC";
+    } elseif ($sort == "name_desc") {
+        $orderBy = "uname DESC";
+    }
+}
+
+if (!empty($conditions)) {
+    $sql .= " AND " . implode(" AND ", $conditions);
+}
+
+$sql .= " ORDER BY $orderBy";
+
+// Exécuter la requête SQL avec filtres et tri
+$query = mysqli_query($con, $sql);
+
+// Récupérer les spécialités existantes pour le filtre
+$specialtyQuery = mysqli_query($con, "SELECT DISTINCT specialty FROM user WHERE specialty IS NOT NULL AND specialty <> ''");
+$specialties = [];
+while ($row = mysqli_fetch_assoc($specialtyQuery)) {
+    $specialties[] = $row['specialty'];
+}
+						
 ?>
 
 <!DOCTYPE html>
@@ -99,14 +136,54 @@ if (isset($_GET['delete_id'])) {
                 </div>
             </div>
         </div>
-
         <!-- Liste des agents -->
-        <div class="full-row bg-gray">
+        <div class="full-row">
             <div class="container">
+
+             <!-- Bouton Ajouter un Agent -->
+             <div class="row mb-3">
+                    <div class="col-lg-12 text-right">
+                        <a href="admin_ajout_agent.php">
+                            <img src="images/admin/ajouter.png" class="database-icon" title="Ajouter un agent" style="width: 30px !important; height: 30px !important;">
+                        </a>
+                    </div>
+                </div>
+                
                 <div class="row mb-5">
                     <div class="col-lg-12">
-                        <h2 class="text-secondary text-center">Agents Immobiliers</h2>
+                        <h2 class="text-secondary text-center double-down-line">Agents Immobiliers</h2>
                     </div>
+                </div>
+
+                <!-- Formulaire de Filtrage et Tri -->
+                 <div class="container">
+                    <form method="GET" action="admin_agent.php" class="mb-4">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Spécialité</label>
+                                <select name="specialty" class="form-control">
+                                    <option value="">Toutes</option>
+                                    <?php foreach ($specialties as $spec) { ?>
+                                        <option value="<?php echo $spec; ?>" <?php if (!empty($_GET['specialty']) && $_GET['specialty'] == $spec) echo 'selected'; ?>>
+                                            <?php echo ucfirst($spec); ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                                    
+                            <div class="col-md-4">
+                                <label>Tri par nom</label>
+                                <select name="sort" class="form-control">
+                                    <option value="name_asc" <?php if (!empty($_GET['sort']) && $_GET['sort'] == "name_asc") echo 'selected'; ?>>A-Z</option>
+                                    <option value="name_desc" <?php if (!empty($_GET['sort']) && $_GET['sort'] == "name_desc") echo 'selected'; ?>>Z-A</option>
+                                </select>
+                            </div>
+                                    
+                            <div class="col-md-2 mt-4 text-center">
+                                <button type="submit" class="btn btn-primary">Filtrer</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
                 <table class="table table-bordered">
@@ -122,11 +199,12 @@ if (isset($_GET['delete_id'])) {
                     </thead>
                     <tbody>
                     <?php 
-                    $query = mysqli_query($con, "SELECT * FROM user WHERE utype='agent'");
                     while($row = mysqli_fetch_array($query)) {
                     ?>
                         <tr>
-                            <td><img src="images/profile_pic/<?php echo $row['uimage']; ?>" style="width: 80px !important; height: 80px !important;"></td>
+                            <td><div class="dashboard-user-image-container">
+                                    <img src="images/profile_pic/<?php echo $row['uimage']; ?>" >
+                                </div></td>
                             <td><?php echo $row['uname'] . " " . $row['ufirstname']; ?></td>
                             <td><?php echo $row['uemail']; ?></td>
                             <td><?php echo $row['uphone']; ?></td>

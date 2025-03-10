@@ -52,11 +52,20 @@
                                         <li class="nav-item"> <a class="nav-link" href="admin_property.php">Gestion Propriétés</a> </li> <!-- admin/my_rdv.php -->
                                         <li class="nav-item"> <a class="nav-link" href="admin_user.php">Gestion Utilisateurs</a> </li>
                                         <li class="nav-item"> <a class="nav-link" href="admin_agent.php">Gestion Agents Immobiliers</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="profile.php">Mon profil</a> </li>
                                     
                                         <?php } elseif($_SESSION['isAgent']) { ?>
                                         <!-- Agent specific menu items -->
                                         <li class="nav-item"> <a class="nav-link" href="property.php">Mes propriétés</a> </li>
-                                        <li class="nav-item"> <a class="nav-link" href="">Mes RDVs</a> </li> <!-- agent/my_rdv.php -->
+                                        <li class="nav-item dropdown">
+									        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon agenda</a>
+									        <ul class="dropdown-menu">
+									        	<li class="nav-item"> <a class="nav-link" href="">Disponibilités</a> </li>
+									        	<li class="nav-item"> <a class="nav-link" href="">Calendrier</a> </li>
+									        	<li class="nav-item"> <a class="nav-link" href="appointments.php">Mes RDVs</a> </li>	
+									        	<li class="nav-item"> <a class="nav-link" href="appdetails.php">RDV details</a> </li>	
+									        </ul>
+                                        </li>
                                         <li class="nav-item"> <a class="nav-link" href="">Mes conversations</a> </li>
                                         <li class="nav-item dropdown">
 									        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon compte</a>
@@ -75,7 +84,7 @@
 								        	<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon compte</a>
 								        	<ul class="dropdown-menu">
 								        		<li class="nav-item"> <a class="nav-link" href="profile.php">Profil</a> </li>
-								        		<li class="nav-item"> <a class="nav-link" href="">Mes RDVs</a> </li>
+								        		<li class="nav-item"> <a class="nav-link" href="appointments.php">Mes RDVs</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="">Mes conversations</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="">Paiment</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="logout.php">Déconnexion</a> </li>	
@@ -91,15 +100,17 @@
 							
                             <?php if(isset($_SESSION['uid'])) { 
                                 // User is logged in
-                                if($_SESSION['isAdmin']) { ?>
-                                    
-                                    <?php } elseif($_SESSION['isAgent']) { ?>
-                                    <!-- Agent specific menu items -->
-							    <a class="btn btn-primary d-none d-xl-block" href="">Consulter l'agenda</a> 
-                                    
-                                <?php } else { ?>
-							    <a class="btn btn-primary d-none d-xl-block" href="prendre_rdv.php">Prendre RDV</a> 
+                                if($_SESSION['isAgent']) { ?>
+                                <!-- Agent specific menu items -->
+							    <a class="btn btn-primary d-none d-xl-block" href="">Consulter l'agenda</a>
+
+                                <?php } elseif(!$_SESSION['isAdmin']) {?>
+                                <!-- Client specific menu items -->
+                                <a class="btn btn-primary d-none d-xl-block" href="prendre_rdv.php">Prendre RDV</a>
                                 <?php } ?>
+                                
+                            <?php } else { ?>
+							<a class="btn btn-primary d-none d-xl-block" href="prendre_rdv.php">Prendre RDV</a>
                             <?php } ?>
                         </div>
                     </nav>

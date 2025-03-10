@@ -101,11 +101,11 @@ if (isset($_GET['delete_id'])) {
         </div>
 
         <!-- Liste des utilisateurs -->
-        <div class="full-row bg-gray">
+        <div class="full-row">
             <div class="container">
                 <div class="row mb-5">
                     <div class="col-lg-12">
-                        <h2 class="text-secondary text-center">Utilisateurs Inscrits</h2>
+                        <h2 class="text-secondary text-center double-down-line">Utilisateurs Inscrits</h2>
                     </div>
                 </div>
 
@@ -125,7 +125,10 @@ if (isset($_GET['delete_id'])) {
                     while($row = mysqli_fetch_array($query)) {
                     ?>
                         <tr>
-                            <td><img src="images/profile_pic/<?php echo $row['uimage']; ?>" style="width: 80px !important; height: 80px !important;"></td>
+                            <td>
+                                <div class="dashboard-user-image-container">
+                                    <img src="images/profile_pic/<?php echo $row['uimage']; ?>" >
+                                </div></td>
                             <td><?php echo $row['uname']; ?></td>
                             <td><?php echo $row['uemail']; ?></td>
                             <td><?php echo $row['uphone']; ?></td>

@@ -425,7 +425,7 @@ hover-text-white-nav .navbar-nav .nav-link.active,
 	background-color: rgba(13,20,50,0.4);
 }
 [class*="double-down-line"]::before, [class*="double-down-line"]::after {
-	background-color: var(--theme-primary-color)
+	background-color: var(--theme-dark-primary-color)
 }
 .landing-header.fixed-top,
 .nav-logo-with-bg .navbar-brand, 
@@ -1215,6 +1215,90 @@ blockquote {
 }
 
 /*==========================================
+ Detailed RDV
+ ===========================================*/
+.property-image {
+	width: 100%;
+	max-height: 400px;
+	object-fit: cover;
+	border-radius: 5px;
+}
+
+.detail-box {
+	background-color: #f8f9fa;
+	border-radius: 5px;
+	padding: 20px;
+	margin-bottom: 20px;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.detail-title {
+	font-weight: 600;
+	color: #3c3c3c;
+	margin-bottom: 5px;
+}
+
+.detail-value {
+	margin-bottom: 15px;
+}
+
+.cancel-btn {
+	background-color: #b84853;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.cancel-btn:hover {
+	background-color: #d4606c;
+}
+
+.property-details {
+	margin-top: 20px;
+}
+
+.property-details li {
+	list-style: none;
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.property-details i {
+	font-size: 18px;
+}
+
+.badge-paid {
+	background-color: #4F6C6B;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 5px;
+	font-weight: 500;
+}
+
+.badge-payment {
+	cursor: pointer;
+	background-color: #b84853;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 5px;
+	font-weight: 500;
+}
+.badge-payment:hover {
+    background-color: #d4606c;
+	color: black
+}
+.badge-unpaid {
+    display: inline-block;
+	background-color: #b84853;
+	color: white;
+	border-radius: 5px;
+	font-weight: 500;
+}
+
+/*==========================================
  Form Styles
  ===========================================*/
 .view-category button {
@@ -1569,6 +1653,22 @@ blockquote {
 .featured-thumb .price span {
 	font-size: 13px;
 	display: block;
+}
+.featured-thumb .overlay-black {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 66.67%; /* This creates a 3:2 aspect ratio */
+    overflow: hidden;
+}
+.featured-thumb .overlay-black img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This will crop the image while maintaining aspect ratio */
+    object-position: center; /* This centers the image in the container */
 }
 .featured-thumb .starmark {
 	position: absolute;
@@ -1964,6 +2064,134 @@ sup {
 .discusion-setting label {
 	width: 180px;
 }
+.dashboard-property-image-container {
+    width: 200px;
+    height: 150px; /* 4:3 aspect ratio based on width of 100px */
+    overflow: hidden;
+    position: relative;
+}
+.dashboard-property-image-container img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.dashboard-user-image-container {
+    width: 112px;
+    height: 150px; /* 1:1 aspect ratio (square) */
+    overflow: hidden;
+    position: relative;
+}
+.dashboard-user-image-container img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center; /* Centers the image to show the middle portion */
+}
+
+/*=== Appointment dashboard ===*/
+.no-appointments {
+	text-align: center;
+	padding: 20px;
+	font-style: italic;
+	color: #6c757d;
+}
+.img-action {
+	margin: 0 5px;
+	cursor: pointer;
+}
+.auto-table {
+	width: 100%;
+}
+
+.auto-table td.comments {
+	white-space: normal;
+}
+
+.auto-table th.actions,
+.auto-table td.actions {
+	width: 1%; /* This makes the column as narrow as possible */
+	white-space: nowrap;
+}
+
+.property-link {
+	display: flex;
+	flex-direction: column;
+}
+
+.property-title {
+	margin-bottom: 5px;
+}
+
+.details-link {
+	font-size: 12px;
+	color: #4F6C6B !important;
+	text-decoration: none;
+	font-weight: 500;
+	align-self: flex-start;
+}
+
+.details-link:hover {
+	text-decoration: underline !important;
+}
+
+.details-link i {
+	margin-right: 4px;
+}
+
+.alert-info {
+    background-color: #d2e0df !important;
+    border-color: #d2e0df !important;
+}
+.payment-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+}
+
+/* .payment-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    background-color: #4F6C6B;
+    color: var(--theme-white-color);
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: var(--theme-ordinary-font);
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    width: fit-content;
+} */
+
+/* .payment-link:hover {
+    background-color: #3A5251;
+    color: var(--theme-white-color);
+} */
+
+.payment-link {
+    padding: 6px 12px;
+	font-size: 14px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+	color: #4F6C6B !important;
+	font-weight: 500;
+	align-self: flex-start;
+	text-decoration: none;
+    margin-right: 5px;
+}
+.payment-link:hover {
+	text-decoration: underline !important;
+}
+
 
 /*==========================================
  About us page

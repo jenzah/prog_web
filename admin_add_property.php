@@ -15,11 +15,16 @@ if(empty($_SESSION['isAdmin'])) {
     header("Location:unauthorised.php");
     exit();
 }
+// Récupérer les types de propriétés depuis la base de données
+$propertyTypesQuery = mysqli_query($con, "SELECT DISTINCT propertyType FROM property");
+$propertyTypes = [];
+while ($row = mysqli_fetch_assoc($propertyTypesQuery)) {
+    $propertyTypes[] = $row['propertyType'];
+}
 
 // Messages d'erreur ou de succès
 $error = "";
 $msg = "";
-
 if (isset($_POST['add'])) {
     // Récupération des champs du formulaire
     $title = mysqli_real_escape_string($con, $_POST['title']);
@@ -35,15 +40,29 @@ if (isset($_POST['add'])) {
     $status = mysqli_real_escape_string($con, $_POST['status']);
     $agentid = (int)$_SESSION['uid']; // Assigne l'ID de l'agent connecté
 
-    // Gestion des images
-    $upload_dir = "property/";  // Dossier de stockage des images
-    $pimage1 = $_FILES['pimage1']['name'] ? $upload_dir . basename($_FILES['pimage1']['name']) : "";
-    $pimage2 = $_FILES['pimage2']['name'] ? $upload_dir . basename($_FILES['pimage2']['name']) : "";
-    $pimage3 = $_FILES['pimage3']['name'] ? $upload_dir . basename($_FILES['pimage3']['name']) : "";
+    // Dossier de stockage des images
+    $upload_dir = "images/property/";
 
-    move_uploaded_file($_FILES['pimage1']['tmp_name'], $pimage1);
-    move_uploaded_file($_FILES['pimage2']['tmp_name'], $pimage2);
-    move_uploaded_file($_FILES['pimage3']['tmp_name'], $pimage3);
+    // Initialisation des variables d'image
+    $pimage1 = "";
+    $pimage2 = "";
+    $pimage3 = "";
+
+    // Vérifier et enregistrer les images
+    if(isset($_FILES['pimage1']) && $_FILES['pimage1']['error'] == 0) {
+        $pimage1 = basename($_FILES['pimage1']['name']); // Enregistre uniquement le nom du fichier
+        move_uploaded_file($_FILES['pimage1']['tmp_name'], $upload_dir . $pimage1);
+    }
+
+    if(isset($_FILES['pimage2']) && $_FILES['pimage2']['error'] == 0) {
+        $pimage2 = basename($_FILES['pimage2']['name']); // Enregistre uniquement le nom du fichier
+        move_uploaded_file($_FILES['pimage2']['tmp_name'], $upload_dir . $pimage2);
+    }
+
+    if(isset($_FILES['pimage3']) && $_FILES['pimage3']['error'] == 0) {
+        $pimage3 = basename($_FILES['pimage3']['name']); // Enregistre uniquement le nom du fichier
+        move_uploaded_file($_FILES['pimage3']['tmp_name'], $upload_dir . $pimage3);
+    }
 
     // Requête d'insertion SQL
     $sql = "INSERT INTO property (agentid, title, propertyDescription, propertyType, area, nbRooms, nbBathrooms, price, location, city, department, pimage1, pimage2, pimage3, status, date) 
@@ -56,6 +75,7 @@ if (isset($_POST['add'])) {
     } else {
         $error = "<p class='alert alert-danger'>Erreur lors de l'ajout de la propriété.</p>";
     }
+
 }
 ?>
 <!DOCTYPE html>
@@ -120,7 +140,7 @@ if (isset($_POST['add'])) {
 
 
         <div class="container mt-5">
-            <h2 class="text-center text-secondary">Ajouter une Propriété</h2>
+            <h2 class="text-center text-secondary double-down-line">Ajouter une Propriété</h2>
             <div class="col-md-8 offset-md-2">
                 <?php echo $error; ?>
                 <?php echo $msg; ?>
@@ -138,10 +158,10 @@ if (isset($_POST['add'])) {
                     <div class="form-group">
                         <label>Type de Propriété</label>
                         <select name="propertyType" class="form-control" required>
-                            <option value="appartement">Appartement</option>
-                            <option value="maison">Maison</option>
-                            <option value="villa">Villa</option>
-                            <option value="bureau">Bureau</option>
+                            <option value="">Sélectionner un type</option>
+                            <?php foreach ($propertyTypes as $type) { ?>
+                                <option value="<?php echo $type; ?>"><?php echo ucfirst($type); ?></option>
+                            <?php } ?>
                         </select>
                     </div>
 
@@ -183,8 +203,8 @@ if (isset($_POST['add'])) {
                     <div class="form-group">
                         <label>Statut</label>
                         <select name="status" class="form-control" required>
-                            <option value="disponible">Disponible</option>
-                            <option value="vendu">Vendu</option>
+                            <option value="disponible">A vendre</option>
+                            <option value="vendu">A louer</option>
                         </select>
                     </div>
 
@@ -204,7 +224,7 @@ if (isset($_POST['add'])) {
                         <input type="file" name="pimage3" class="form-control">
                     </div>
 
-                    <button type="submit" name="add" class="btn btn-primary btn-block mt-3">Ajouter</button>
+                    <button type="submit" name="add" class="btn btn-primary btn-block mt-4 mb-5">Ajouter</button>
                 </form>
             </div>
         </div>
