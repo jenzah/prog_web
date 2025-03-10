@@ -2156,26 +2156,6 @@ sup {
     margin-top: 8px;
 }
 
-/* .payment-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 12px;
-    background-color: #4F6C6B;
-    color: var(--theme-white-color);
-    border-radius: 4px;
-    text-decoration: none;
-    font-family: var(--theme-ordinary-font);
-    font-size: 0.85rem;
-    transition: all 0.3s ease;
-    width: fit-content;
-} */
-
-/* .payment-link:hover {
-    background-color: #3A5251;
-    color: var(--theme-white-color);
-} */
-
 .payment-link {
     padding: 6px 12px;
 	font-size: 14px;
@@ -2192,6 +2172,23 @@ sup {
 	text-decoration: underline !important;
 }
 
+
+/*==========================================
+ Payments dashboard
+ ===========================================*/
+.auto-table {
+	width: 100%;
+}
+.auto-table th.actions, .auto-table td.actions {
+	width: 1%;
+	white-space: nowrap;
+}
+.no-payments {
+	text-align: center;
+	padding: 20px;
+	font-style: italic;
+	color: #6c757d;
+}
 
 /*==========================================
  About us page

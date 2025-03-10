@@ -89,7 +89,7 @@
 								        		<li class="nav-item"> <a class="nav-link" href="profile.php">Profil</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="appointments.php">Mes RDVs</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="">Mes conversations</a> </li>
-								        		<li class="nav-item"> <a class="nav-link" href="payment.php">Paiment</a> </li>
+								        		<li class="nav-item"> <a class="nav-link" href="payment.php">Paiement</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="logout.php">Déconnexion</a> </li>	
 								        	</ul>
                                         </li>

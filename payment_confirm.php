@@ -17,12 +17,15 @@ if ($paymentId <= 0) {
 }
 
 $query = mysqli_query($con, "
-    SELECT p.*, pr.title AS property_title, pr.location, pr.city, p.service_fee 
-    FROM payment p
-    JOIN property pr ON p.property_id = pr.pid
-    WHERE p.payment_id = '$paymentId' 
-    AND p.user_id = '$userId' 
-    AND p.payment_status = 'pending'
+    SELECT a.*, pr.title AS property_title, pr.location, pr.city,
+        agent.uname as agent_name,
+        agent.ufirstname as agent_firstname 
+    FROM appointments a
+    LEFT JOIN property pr ON a.property_id = pr.pid
+    LEFT JOIN user agent ON a.agent_id = agent.uid
+    WHERE a.aid = '$paymentId' 
+    AND a.client_id = '$userId' 
+    AND a.payment_status = 'pending'
 ");
 
 if (!$query || mysqli_num_rows($query) == 0) {
@@ -57,15 +60,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $security_code_hash = password_hash($security_code, PASSWORD_BCRYPT);
 
             $update = mysqli_query($con, "
-                UPDATE payment 
+                UPDATE appointments 
                 SET payment_status = 'completed', payment_date = NOW()
-                WHERE payment_id = '$paymentId' AND user_id = '$userId'
+                WHERE aid = '$paymentId' AND client_id = '$userId'
             ");
 
             if ($update) {
                 echo "<script>
                     alert('Paiement confirmé avec succès !');
-                    window.location='paiement.php';
+                    window.location='payment.php';
                 </script>";
                 exit(); // Empêche l'exécution du reste du script
             } else {
@@ -79,12 +82,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Confirmation du Paiement - Omnes Immobilier</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Meta Tags -->
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<!--	Fonts
+	========================================================-->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+<!--	Css Link
+	========================================================-->
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="css/layerslider.css">
+<link rel="stylesheet" type="text/css" href="css/color.css">
+<link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/login.css">
+<title>Confirmation du Paiement - Omnes Immobilier</title>
+
+<!-- Styles -->
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
+
 <body>
     <div id="page-wrapper">
         <div class="row"> 
@@ -102,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <h4 class="text-uppercase">Détails du paiement</h4>
                         <p><strong>Propriété :</strong> <?php echo $payment['property_title']; ?></p>
                         <p><strong>Lieu :</strong> <?php echo $payment['location'] . ', ' . $payment['city']; ?></p>
-                        <p><strong>Frais de service :</strong> €<?php echo number_format($payment['service_fee'], 2); ?></p>
+                        <p><strong>Frais de service :</strong> €<?php echo number_format($payment['price'], 2); ?></p>
 
                         <h4 class="text-uppercase mt-4">Informations de paiement</h4>
                         <?php echo isset($error) ? $error : ''; ?>
