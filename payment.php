@@ -20,20 +20,20 @@ if (mysqli_num_rows($userCheckQuery) == 0) {
 
 // Paiements en attente
 $pendingPaymentsQuery = mysqli_query($con, "
-    SELECT p.*, pr.title AS property_title, pr.location, pr.city, p.service_fee
-    FROM payment p
-    JOIN property pr ON p.property_id = pr.pid
-    WHERE p.user_id = '$userId' AND p.payment_status = 'pending'
-    ORDER BY p.payment_date DESC
+    SELECT app.*, pr.title AS property_title, pr.location, pr.city, app.price
+    FROM appointments app
+    JOIN property pr ON app.property_id = pr.pid
+    WHERE app.client_id = '$userId' AND app.payment_status = 'pending'
+    ORDER BY app.payment_date DESC
 ");
 
 // Paiements complétés
 $completedPaymentsQuery = mysqli_query($con, "
-    SELECT p.*, pr.title AS property_title, pr.location, pr.city, p.service_fee
-    FROM payment p
-    JOIN property pr ON p.property_id = pr.pid
-    WHERE p.user_id = '$userId' AND p.payment_status = 'completed'
-    ORDER BY p.payment_date DESC
+    SELECT app.*, pr.title AS property_title, pr.location, pr.city, app.price
+    FROM appointments app
+    JOIN property pr ON app.property_id = pr.pid
+    WHERE app.client_id = '$userId' AND app.payment_status = 'completed'
+    ORDER BY app.payment_date DESC
 ");
 
 ?>
