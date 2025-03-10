@@ -75,8 +75,8 @@
 									        <ul class="dropdown-menu">
 									        	<li class="nav-item"> <a class="nav-link" href="profile.php">Profil</a> </li>
 									        	<li class="nav-item">
-    <a class="nav-link" href="admin_edit_cv.php?cv_id=<?php echo $_SESSION['uid']; ?>">Mon CV</a>
-</li>
+                                                    <a class="nav-link" href="admin_edit_cv.php?cv_id=<?php echo $_SESSION['uid']; ?>">Mon CV</a>
+                                                </li>
 
 									        	<li class="nav-item"> <a class="nav-link" href="logout.php">Déconnexion</a> </li>	
 									        </ul>
@@ -91,11 +91,8 @@
 								        	<ul class="dropdown-menu">
 								        		<li class="nav-item"> <a class="nav-link" href="profile.php">Profil</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="appointments.php">Mes RDVs</a> </li>
-								        		<li class="nav-item">
-    <a class="nav-link" href="conversations.php">Mes conversations</a>
-</li>
-
-								        		<li class="nav-item"> <a class="nav-link" href="">Paiment</a> </li>
+								        		<li class="nav-item"> <a class="nav-link" href="conversations.php">Mes conversations</a> </li>
+								        		<li class="nav-item"> <a class="nav-link" href="payment.php">Paiement</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="logout.php">Déconnexion</a> </li>	
 								        	</ul>
                                         </li>

@@ -213,12 +213,12 @@ while ($row = mysqli_fetch_assoc($specialtyQuery)) {
                                  <!-- Remplir CV -->
                                 <a href="admin_edit_cv.php?cv_id=<?php echo $row['uid']; ?>" class="btn btn-warning btn-sm">Remplir CV</a>
     
-                               <!-- Télécharger CV -->
-<?php if (!empty($row['cv']) && file_exists("images/cv/" . $row['cv'])) { ?>
-    <a href="images/cv/<?php echo $row['cv']; ?>" download class="btn btn-secondary">Télécharger CV</a>
-<?php } else { ?>
-    <span class="text-danger">CV non disponible</span>
-<?php } ?>
+                                <!-- Télécharger CV -->
+                                <?php if (!empty($row['cv']) && file_exists("images/cv/" . $row['cv'])) { ?>
+                                    <a href="images/cv/<?php echo $row['cv']; ?>" download class="btn btn-secondary">Télécharger CV</a>
+                                <?php } else { ?>
+                                    <span class="text-danger">CV non disponible</span>
+                                <?php } ?>
 
 
                                 <!-- Bouton Supprimer -->

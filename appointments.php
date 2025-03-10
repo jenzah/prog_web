@@ -86,11 +86,9 @@ $pastQuery = mysqli_query($con, $pastSql);
 
 <!-- Required meta tags -->
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Meta Tags -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="shortcut icon" href="images/favicon.ico">
 
 <!--	Fonts
@@ -115,34 +113,6 @@ $pastQuery = mysqli_query($con, $pastSql);
 <!-- Styles -->
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
-
-<style>
-    .auto-table {
-        width: 100%;
-    }
-    
-    .auto-table td.comments {
-        white-space: normal;
-    }
-    
-    .auto-table th.actions,
-    .auto-table td.actions {
-        width: 1%; /* This makes the column as narrow as possible */
-        white-space: nowrap;
-    }
-    
-    .img-action {
-        margin: 0 5px;
-        cursor: pointer;
-    }
-    
-    .no-appointments {
-        text-align: center;
-        padding: 20px;
-        font-style: italic;
-        color: #6c757d;
-    }
-</style>
 
 </head>
 
@@ -250,7 +220,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                     <div class="payment-container">
                                         <span class="badge-unpaid"><i class="fas fa-times-circle"></i> <?php echo number_format($app['price'], 0, ',', ' ') . ' €'; ?></span>
                                         <a href="payment.php?appointment_id=<?php echo $app['aid']; ?>" class="payment-link">
-                                            <i class="fas fa-credit-card"></i>Payer
+                                            <i class="fas fa-credit-card"></i> Payer
                                         </a>
                                     </div>
                                     <?php } ?>

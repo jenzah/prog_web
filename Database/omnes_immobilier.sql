@@ -34,6 +34,8 @@ DROP TABLE IF EXISTS `state`;
 
 DROP TABLE IF EXISTS `feedback`;
 
+DROP TABLE IF EXISTS `payment`;
+
 DROP TABLE IF EXISTS `appointments`;
 
 DROP TABLE IF EXISTS `property`;
@@ -45,7 +47,7 @@ DROP TABLE IF EXISTS `user`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `property`
+-- Structure de la table `property`
 --
 
 DROP TABLE IF EXISTS `property`;
@@ -101,7 +103,12 @@ CREATE TABLE `user` (
   `upass` varchar(255) NOT NULL,
   `utype` varchar(50) NOT NULL,
   `uimage` varchar(300) NOT NULL,
-  `specialty` VARCHAR(100) DEFAULT NULL -- residentiel,terrain,appartement,commercial
+  `specialty` VARCHAR(100) DEFAULT NULL, -- residentiel,terrain,appartement,commercial
+  `uaddress1` varchar(255) DEFAULT NULL,
+  `uaddress2` varchar(255) DEFAULT NULL,
+  `ucity` varchar(100) DEFAULT NULL,
+  `upostal_code` varchar(10) DEFAULT NULL,
+  `ucountry` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -118,6 +125,11 @@ INSERT INTO `user` (`uid`, `uname`, `ufirstname`, `uemail`, `uphone`, `upass`, `
 (102, 'Anderson', 'James', 'user2@example.com', '1234567896', 'user2', 'user', 'user2.jpg'),
 (301, 'Thomas', 'Robert', 'admin1@example.com', '1234567897', 'admin1', 'admin', 'admin1.jpg');
 
+INSERT INTO `user` (`uid`, `uname`, `ufirstname`, `uemail`, `uphone`, `upass`, `utype`, `uimage`, `uaddress1`, `uaddress2`, `ucity`, `upostal_code`, `ucountry`) VALUES
+(401, 'kawtar', 'b', 'kawtar@gmail.com', '9077756576', 'kawtar', 'client', 'default.png', '12 Rue de Paris', NULL, 'Paris', '75001', 'France'),
+(402, 'Agent7', 'b7', 'agent7@email.com', '0600000001', 'password_hash', 'agent', 'default.png', '123 Rue des Agents', NULL, 'Paris', '75001', 'France'),
+(403, 'Agent8', 'b', 'agent8@email.com', '0600000002', 'password_hash', 'agent', 'default.png', '456 Boulevard des Experts', NULL, 'Lyon', '69001', 'France');
+
 
 
 
@@ -132,9 +144,11 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   `appointment_time` time NOT NULL,
   `place` varchar(255) NOT NULL,
   `is_paid` tinyint(1) DEFAULT 0,
+  `payment_status` enum('pending','completed','refunded') NOT NULL DEFAULT 'pending',
   `price` decimal(10,2) DEFAULT NULL,
   `comments` text DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `payment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`aid`),
   KEY `client_id` (`client_id`),
   KEY `agent_id` (`agent_id`),
@@ -163,14 +177,15 @@ INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment
 (102, 202, 507, '2025-02-28', '17:00:00', 'Sur place: 8 Avenue des Champs-Élysées, Paris', 1, 200.00, 'Le client a trouvé l\'espace de travail très lumineux', '2025-02-28 16:30:00');
 
 --
--- Indexes for dumped tables
+-- Index pour les tables déchargées
 --
 
 --
--- Indexes for table `property`
+-- Index pour la table `property`
 --
 ALTER TABLE `property`
-  ADD PRIMARY KEY (`pid`);
+  ADD PRIMARY KEY (`pid`),
+  ADD KEY `fk_property_user` (`agentid`);
 
 --
 -- Indexes for table `user`
@@ -189,10 +204,10 @@ ADD CONSTRAINT `fk_appointments_property` FOREIGN KEY (`property_id`) REFERENCES
 --
 
 --
--- AUTO_INCREMENT for table `property`
+-- AUTO_INCREMENT pour la table `property`
 --
 ALTER TABLE `property`
-  MODIFY `pid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=500;
+  MODIFY `pid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=505;
 
 
 --
@@ -200,6 +215,16 @@ ALTER TABLE `property`
 --
 ALTER TABLE `user`
   MODIFY `uid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `property`
+--
+ALTER TABLE `property`
+  ADD CONSTRAINT `fk_property_user` FOREIGN KEY (`agentid`) REFERENCES `user` (`uid`) ON DELETE CASCADE;
 COMMIT;
 
 
