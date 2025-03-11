@@ -4,38 +4,8 @@ session_cache_limiter(false);
 session_start();
 include("config.php");
 
-if(!isset($_SESSION['uid'])) {
-    header("location:login.php");
-    exit();
-}
 
-// Si c'est un admin, il peut tout voir
-if (!empty($_SESSION['isAdmin'])) {
-    $sql = "SELECT * FROM user WHERE utype='agent'";
-} 
-// Si c'est un client, il ne voit que la liste des agents
-else if (!empty($_SESSION['isClient'])) {
-    $sql = "SELECT uname, ufirstname, uemail, uphone, specialty, uimage FROM user WHERE utype='agent'";
-} 
 
-// Supprimer un agent si "delete_id" est présent dans l'URL
-if (isset($_GET['delete_id'])) {
-    $agent_id = (int) $_GET['delete_id'];
-
-    // Vérifier si l'agent existe
-    $checkQuery = mysqli_query($con, "SELECT * FROM user WHERE uid='$agent_id' AND utype='agent'");
-    if (mysqli_num_rows($checkQuery) > 0) {
-        // Suppression
-        $deleteQuery = mysqli_query($con, "DELETE FROM user WHERE uid='$agent_id'");
-        if ($deleteQuery) {
-            echo "<script>alert('Agent supprimé avec succès.'); window.location='admin_agent.php';</script>";
-        } else {
-            echo "<script>alert('Erreur lors de la suppression.');</script>";
-        }
-    } else {
-        echo "<script>alert('Agent introuvable.');</script>";
-    }
-}	
 // Initialisation de la requête SQL avec filtres et tri
 $sql = "SELECT * FROM user WHERE utype='agent'";
 $conditions = [];
@@ -142,14 +112,6 @@ while ($row = mysqli_fetch_assoc($specialtyQuery)) {
         <div class="full-row">
             <div class="container">
 
-             <!-- Bouton Ajouter un Agent -->
-             <div class="row mb-3">
-                    <div class="col-lg-12 text-right">
-                        <a href="admin_ajout_agent.php">
-                            <img src="images/admin/ajouter.png" class="database-icon" title="Ajouter un agent" style="width: 30px !important; height: 30px !important;">
-                        </a>
-                    </div>
-                </div>
                 
                 <div class="row mb-5">
                     <div class="col-lg-12">
@@ -212,9 +174,7 @@ while ($row = mysqli_fetch_assoc($specialtyQuery)) {
                             <td><?php echo $row['uphone']; ?></td>
                             <td><?php echo $row['specialty'] ?? 'Non spécifiée'; ?></td>
                             <td>
-                                 <!-- Remplir CV -->
-                                <a href="admin_edit_cv.php?cv_id=<?php echo $row['uid']; ?>" class="btn btn-warning btn-sm">Remplir CV</a>
-    
+                                
                                 <!-- Télécharger CV -->
                                 <?php if (!empty($row['cv']) && file_exists("images/cv/" . $row['cv'])) { ?>
                                     <a href="images/cv/<?php echo $row['cv']; ?>" download class="btn btn-secondary">Télécharger CV</a>
@@ -222,12 +182,6 @@ while ($row = mysqli_fetch_assoc($specialtyQuery)) {
                                     <span class="text-danger">CV non disponible</span>
                                 <?php } ?>
 
-
-                                <!-- Bouton Supprimer -->
-                                <a href="admin_agent.php?delete_id=<?php echo $row['uid']; ?>" 
-                                   onclick="return confirm('Voulez-vous vraiment supprimer cet agent ?');">
-                                    <img src="images/admin/supprimer.png" class="img-action" style="width: 23px !important; height: 23px !important;" title="Supprimer">
-                                </a>
                             </td>
                         </tr>
                     <?php } ?>

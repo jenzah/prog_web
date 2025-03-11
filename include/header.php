@@ -92,7 +92,7 @@
 								        	<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon compte</a>
 								        	<ul class="dropdown-menu">
 								        		<li class="nav-item"> <a class="nav-link" href="profile.php">Profil</a> </li>
-								        		<li class="nav-item"> <a class="nav-link" href="appointments.php">Mes RDVs</a> </li>
+								        		<li class="nav-item"> <a class="nav-link" href="rdv_dashboard.php">Mes RDVs</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="conversations.php">Mes conversations</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="payment.php">Paiement</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="logout.php">Déconnexion</a> </li>	
@@ -114,11 +114,11 @@
 
                                 <?php } elseif(!$_SESSION['isAdmin']) {?>
                                 <!-- Client specific menu items -->
-                                <a class="btn btn-primary d-none d-xl-block" href="prendre_rdv.php">Prendre RDV</a>
+                                <a class="btn btn-primary d-none d-xl-block" href="liste_agents.php">Prendre RDV</a>
                                 <?php } ?>
                                 
                             <?php } else { ?>
-							<a class="btn btn-primary d-none d-xl-block" href="prendre_rdv.php">Prendre RDV</a>
+							<a class="btn btn-primary d-none d-xl-block" href="liste_agents.php">Prendre RDV</a>
                             <?php } ?>
                         </div>
                     </nav>
