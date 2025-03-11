@@ -135,17 +135,7 @@ include("config.php");
             </div>
         </div>
 
-        <!-- Section Google Maps -->
-        <div class="full-row">
-    <div class="container">
-        <h2 class="text-secondary double-down-line mb-4 text-center">Notre Localisation</h2>
-      
-        <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d41914.17561251856!2d2.287592715893688!3d48.8588446474787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66fdf8b57f75d%3A0x3b1c37c4e2e19b12!2sParis!5e0!3m2!1sfr!2sfr!4v1710098765432!5m2!1sfr!2sfr" 
-            width="100%" height="500" frameborder="0" style="border:0;" allowfullscreen="">
-        </iframe>
-        </div>
-</div>
+       
 <!-- Événements de la semaine -->
 <div class="full-row bg-light">
     <div class="container">
@@ -201,6 +191,17 @@ include("config.php");
             </div>
         </div>
     </div>
+</div>
+ <!-- Section Google Maps -->
+ <div class="full-row">
+    <div class="container">
+        <h2 class="text-secondary double-down-line mb-4 text-center">Notre Localisation</h2>
+      
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d41914.17561251856!2d2.287592715893688!3d48.8588446474787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66fdf8b57f75d%3A0x3b1c37c4e2e19b12!2sParis!5e0!3m2!1sfr!2sfr!4v1710098765432!5m2!1sfr!2sfr" 
+            width="100%" height="500" frameborder="0" style="border:0;" allowfullscreen="">
+        </iframe>
+        </div>
 </div>
 
 
