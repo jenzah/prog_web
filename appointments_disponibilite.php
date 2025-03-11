@@ -24,7 +24,7 @@ while ($row = mysqli_fetch_assoc($specialty_query)) {
 $specialty_display = !empty($specialties) ? implode(", ", $specialties) : "Non spécifié";
 
 // Récupérer les disponibilités de l'agent
-$dispo_query = mysqli_query($con, "SELECT jour_semaine, heure_debut FROM agent_disponibilite WHERE agent_id = $agent_id");
+$dispo_query = mysqli_query($con, "SELECT jour_semaine, heure_debut FROM agent_disponibilite2 WHERE agent_id = $agent_id");
 $disponibilites = [];
 while ($row = mysqli_fetch_assoc($dispo_query)) {
     $disponibilites[$row['jour_semaine']][$row['heure_debut']] = true;

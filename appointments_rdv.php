@@ -22,7 +22,7 @@ while ($row = mysqli_fetch_assoc($specialty_query)) {
 }
 $specialty_display = !empty($specialties) ? implode(", ", $specialties) : "Non spécifié";
 
-$dispo_query = mysqli_query($con, "SELECT * FROM agent_disponibilite WHERE agent_id = $agent_id");
+$dispo_query = mysqli_query($con, "SELECT * FROM agent_disponibilite3 WHERE agent_id = $agent_id");
 $dispo = mysqli_fetch_assoc($dispo_query);
 
 $jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];

@@ -38,9 +38,9 @@ DROP TABLE IF EXISTS `appointments`;
 
 DROP TABLE IF EXISTS `property`;
 
-DROP TABLE IF EXISTS `chat_message`;
+DROP TABLE IF EXISTS `chat_messages`;
 
-DROP TABLE IF EXISTS `chat_paticipant`;
+DROP TABLE IF EXISTS `chat_paticipants`;
 
 DROP TABLE IF EXISTS `chat_rooms`;
 
@@ -48,6 +48,7 @@ DROP TABLE IF EXISTS `rendez-vous`;
 
 DROP TABLE IF EXISTS `user`;
 
+DROP TABLE IF EXISTS `agent_disponibilite`;
 
 
 -- --------------------------------------------------------
@@ -261,3 +262,44 @@ CREATE TABLE chat_messages (
     FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE
 );
+
+
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------------------------------------------
+
+-- testing agent.php
+
+-- Create the agent_disponibilite (availability) table
+CREATE TABLE `agent_disponibilite` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    agent_id INT NOT NULL,
+    lundi_matin TINYINT(1) DEFAULT 0,
+    lundi_aprem TINYINT(1) DEFAULT 0,
+    mardi_matin TINYINT(1) DEFAULT 0,
+    mardi_aprem TINYINT(1) DEFAULT 0,
+    mercredi_matin TINYINT(1) DEFAULT 0,
+    mercredi_aprem TINYINT(1) DEFAULT 0,
+    jeudi_matin TINYINT(1) DEFAULT 0,
+    jeudi_aprem TINYINT(1) DEFAULT 0,
+    vendredi_matin TINYINT(1) DEFAULT 0,
+    vendredi_aprem TINYINT(1) DEFAULT 0,
+    samedi_matin TINYINT(1) DEFAULT 0,
+    samedi_aprem TINYINT(1) DEFAULT 0,
+    FOREIGN KEY (agent_id) REFERENCES user(uid)
+);
+
+-- Insert availabilities for agents 201-205 in a single statement
+INSERT INTO agent_disponibilite 
+(agent_id, lundi_matin, lundi_aprem, mardi_matin, mardi_aprem, mercredi_matin, 
+ mercredi_aprem, jeudi_matin, jeudi_aprem, vendredi_matin, vendredi_aprem, 
+ samedi_matin, samedi_aprem)
+VALUES
+(201, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0), -- Available most days, Tuesday and Friday afternoons off
+(202, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0), -- Works mornings only, Wednesday off completely
+(203, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0), -- Works full days Monday, Wednesday, Friday only
+(204, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0), -- Works afternoons only, Saturday off completely
+(205, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1); -- Full availability except for Monday (day off)

@@ -156,6 +156,9 @@ $row = mysqli_fetch_assoc($query);
             <a href="messagerie.php?agent_id=<?php echo htmlspecialchars($row['agentid']); ?>" class="btn btn-success">
                 Messagerie
             </a>
+            <a href="appointments_agent.php?agentid=<?php echo htmlspecialchars($row['agentid']); ?>" class="btn btn-success">
+                agent.php test
+            </a>
         </div>
         <?php } ?>
                                 </form>
