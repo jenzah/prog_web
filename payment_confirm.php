@@ -25,7 +25,7 @@ $query = mysqli_query($con, "
     LEFT JOIN user agent ON a.agent_id = agent.uid
     WHERE a.aid = '$paymentId' 
     AND a.client_id = '$userId' 
-    AND a.payment_status = 'pending'
+    AND a.rdv_payment_status = 'pending'
 ");
 
 if (!$query || mysqli_num_rows($query) == 0) {
@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $update = mysqli_query($con, "
                 UPDATE appointments 
-                SET payment_status = 'completed', payment_date = NOW()
+                SET rdv_payment_status = 'completed', rdv_payment_date = NOW()
                 WHERE aid = '$paymentId' AND client_id = '$userId'
             ");
 
@@ -133,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <h4 class="text-uppercase">Détails du paiement</h4>
                         <p><strong>Propriété :</strong> <?php echo $payment['property_title']; ?></p>
                         <p><strong>Lieu :</strong> <?php echo $payment['location'] . ', ' . $payment['city']; ?></p>
-                        <p><strong>Frais de service :</strong> €<?php echo number_format($payment['price'], 2); ?></p>
+                        <p><strong>Frais de service :</strong> €<?php echo number_format($payment['rdv_price'], 2); ?></p>
 
                         <h4 class="text-uppercase mt-4">Informations de paiement</h4>
                         <?php echo isset($error) ? $error : ''; ?>
