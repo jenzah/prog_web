@@ -50,7 +50,7 @@ $sql = "SELECT a.*,
                p.nbRooms,
                p.nbBathrooms,
                p.area,
-               p.price as property_price,
+               p.rdv_price as property_price,
                agent.uname as agent_name,
                agent.ufirstname as agent_firstname,
                agent.uphone as agent_phone,
@@ -80,10 +80,10 @@ if (mysqli_num_rows($query) == 0) {
 $app = mysqli_fetch_assoc($query);
 
 // Formater la date et l'heure
-$date = new DateTime($app['appointment_date']);
+$date = new DateTime($app['rdv_date']);
 $formattedDate = $date->format('d/m/Y');
 
-$time = new DateTime($app['appointment_time']);
+$time = new DateTime($app['rdv_time']);
 $formattedTime = $time->format('H:i');
 
 // Check if the appointment is in the past or future
@@ -92,11 +92,11 @@ $currentTime = date('H:i:s');
 $isPastAppointment = false;
 
 // Compare appointment date with current date
-if ($app['appointment_date'] < $currentDate) {
+if ($app['rdv_date'] < $currentDate) {
     $isPastAppointment = true;
 } 
 // If same date, check if time has passed
-elseif ($app['appointment_date'] == $currentDate && $app['appointment_time'] < $currentTime) {
+elseif ($app['rdv_date'] == $currentDate && $app['rdv_time'] < $currentTime) {
     $isPastAppointment = true;
 }
 ?>
@@ -218,7 +218,7 @@ elseif ($app['appointment_date'] == $currentDate && $app['appointment_time'] < $
                             
                             <div class="mb-4">
                                 <p class="detail-title">Lieu</p>
-                                <p class="detail-value"><i class="fas fa-map-marker-alt text-primary"></i> <?php echo $app['place']; ?></p>
+                                <p class="detail-value"><i class="fas fa-map-marker-alt text-primary"></i> <?php echo $app['rdv_place']; ?></p>
                             </div>
                             
                             <?php if ($_SESSION['isAdmin'] || $_SESSION['isAgent']) { ?>
@@ -251,17 +251,17 @@ elseif ($app['appointment_date'] == $currentDate && $app['appointment_time'] < $
                                     <span class="badge-paid"><i class="fas fa-check-circle"></i> Payé</span>
                                     <?php } else { ?>
                                     <a href="payment.php?appointment_id=<?php echo $app['aid']; ?>" class="badge-payment">
-                                        <i class="fas fa-times-circle"></i> À payer : <?php echo number_format($app['price'], 0, ',', ' ') . ' €'; ?>
+                                        <i class="fas fa-times-circle"></i> À payer : <?php echo number_format($app['rdv_price'], 0, ',', ' ') . ' €'; ?>
                                     </a>
                                     <?php } ?>
                                 </p>
                             </div>
                             <?php } ?>
                             
-                            <?php if (!empty($app['comments'])) { ?>
+                            <?php if (!empty($app['rdv_comments'])) { ?>
                             <div class="mb-4">
                                 <p class="detail-title">Commentaires</p>
-                                <p class="detail-value"><?php echo $app['comments']; ?></p>
+                                <p class="detail-value"><?php echo $app['rdv_comments']; ?></p>
                             </div>
                             <?php } ?>
                             

@@ -26,8 +26,8 @@ $pendingPaymentsQuery = mysqli_query($con, "
     FROM appointments a
     LEFT JOIN property pr ON a.property_id = pr.pid
     LEFT JOIN user agent ON a.agent_id = agent.uid
-    WHERE a.client_id = '$userId' AND a.payment_status = 'pending'
-    ORDER BY a.payment_date DESC
+    WHERE a.client_id = '$userId' AND a.rdv_payment_status = 'pending'
+    ORDER BY a.rdv_payment_date DESC
 ");
 
 // Paiements complétés
@@ -38,8 +38,8 @@ $completedPaymentsQuery = mysqli_query($con, "
     FROM appointments a
     LEFT JOIN property pr ON a.property_id = pr.pid
     LEFT JOIN user agent ON a.agent_id = agent.uid
-    WHERE a.client_id = '$userId' AND a.payment_status = 'completed'
-    ORDER BY a.payment_date DESC
+    WHERE a.client_id = '$userId' AND a.rdv_payment_status = 'completed'
+    ORDER BY a.rdv_payment_date DESC
 ");
 
 // Annuler un rendez-vous si "cancel_id" est présent dans l'URL
@@ -154,10 +154,10 @@ if (isset($_GET['cancel_id'])) {
                         <tbody>
                         <?php while($payment = mysqli_fetch_array($pendingPaymentsQuery)) { 
                             // Formater la date et l'heure
-                            $date = new DateTime($payment['appointment_date']);
+                            $date = new DateTime($payment['rdv_date']);
                             $formattedDate = $date->format('d/m/Y');
                             
-                            $time = new DateTime($payment['appointment_time']);
+                            $time = new DateTime($payment['rdv_time']);
                             $formattedTime = $time->format('H:i');
                             ?>
                             <tr id="payment-<?php echo $payment['aid']; ?>">
@@ -165,8 +165,8 @@ if (isset($_GET['cancel_id'])) {
                                 <td><?php echo $payment['agent_firstname']; ?> <?php echo strtoupper($payment['agent_name']); ?></td>
                                 <td><?php echo $formattedDate; ?></td>
                                 <td><?php echo $formattedTime; ?></td>
-                                <td>€<?php echo number_format($payment['price'], 2); ?></td>
-                                <td><span class="badge badge-warning"><?php echo ucfirst($payment['payment_status']); ?></span></td>
+                                <td>€<?php echo number_format($payment['rdv_price'], 2); ?></td>
+                                <td><span class="badge badge-warning"><?php echo ucfirst($payment['rdv_payment_status']); ?></span></td>
                                 <td class="actions text-center">
                                     <a href="payment_confirm.php?payment_id=<?php echo $payment['aid']; ?>" class="payment-link">
                                         <i class="fas fa-credit-card text-secondary" title="Payer"></i> Payer
@@ -213,9 +213,9 @@ if (isset($_GET['cancel_id'])) {
                                 <td><?php echo $payment['agent_firstname']; ?> <?php echo strtoupper($payment['agent_name']); ?></td>
                                 <td><?php echo $formattedDate; ?></td>
                                 <td><?php echo $formattedTime; ?></td>
-                                <td>€<?php echo number_format($payment['price'], 2); ?></td>
-                                <td><?php echo date('d/m/Y H:i', strtotime($payment['payment_date'])); ?></td>
-                                <td><span class="badge badge-paid"><?php echo ucfirst($payment['payment_status']); ?></span></td>
+                                <td>€<?php echo number_format($payment['rdv_price'], 2); ?></td>
+                                <td><?php echo date('d/m/Y H:i', strtotime($payment['rdv_payment_date'])); ?></td>
+                                <td><span class="badge badge-paid"><?php echo ucfirst($payment['rdv_payment_status']); ?></span></td>
                             </tr>
                         <?php } ?>
                         </tbody>
