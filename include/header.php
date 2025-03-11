@@ -7,6 +7,7 @@
                         <li><a href="#"><i class="fas fa-phone-alt text-light-primary mr-1"></i>(012) 345 678 102</a></li>
                         <li><a href="#"><i class="fas fa-envelope text-light-primary mr-1"></i>office@example.com</a></li>
                     </ul>
+                    
                 </div>
                 <div class="col-md-4">
                     <div class="top-contact float-right">
@@ -52,7 +53,9 @@
                                         <li class="nav-item"> <a class="nav-link" href="admin_property.php">Gestion Propriétés</a> </li> <!-- admin/my_rdv.php -->
                                         <li class="nav-item"> <a class="nav-link" href="admin_user.php">Gestion Utilisateurs</a> </li>
                                         <li class="nav-item"> <a class="nav-link" href="admin_agent.php">Gestion Agents Immobiliers</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="admin_disponibilite.php">Agenda Agents</a> </li>
                                         <li class="nav-item"> <a class="nav-link" href="profile.php">Mon profil</a> </li>
+                                        
                                     
                                         <?php } elseif($_SESSION['isAgent']) { ?>
                                         <!-- Agent specific menu items -->
@@ -62,13 +65,12 @@
 									        <ul class="dropdown-menu">
 									        	<li class="nav-item"> <a class="nav-link" href="">Disponibilités</a> </li>
 									        	<li class="nav-item"> <a class="nav-link" href="">Calendrier</a> </li>
-									        	<li class="nav-item"> <a class="nav-link" href="appointments.php">Mes RDVs</a> </li>	
-									        	<li class="nav-item"> <a class="nav-link" href="appdetails.php">RDV details</a> </li>	
+									        	<li class="nav-item"> <a class="nav-link" href="rdv_dashboard.php">Mes RDVs</a> </li>	
 									        </ul>
                                         </li>
                                         <li class="nav-item">
-    <a class="nav-link" href="conversations.php">Mes conversations</a>
-</li>
+                                            <a class="nav-link" href="conversations.php">Mes conversations</a>
+                                        </li>
 
                                         <li class="nav-item dropdown">
 									        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon compte</a>
@@ -86,11 +88,12 @@
                                         <!-- Client specific menu item -->
 								        <li class="nav-item"> <a class="nav-link" href="about.php">À propos</a> </li>
                                         <li class="nav-item"> <a class="nav-link" href="property.php">Propriétés</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="liste_agents.php">Nos Agents</a> </li>
 								        <li class="nav-item dropdown">
 								        	<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon compte</a>
 								        	<ul class="dropdown-menu">
 								        		<li class="nav-item"> <a class="nav-link" href="profile.php">Profil</a> </li>
-								        		<li class="nav-item"> <a class="nav-link" href="appointments.php">Mes RDVs</a> </li>
+								        		<li class="nav-item"> <a class="nav-link" href="rdv_dashboard.php">Mes RDVs</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="conversations.php">Mes conversations</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="payment.php">Paiement</a> </li>
 								        		<li class="nav-item"> <a class="nav-link" href="logout.php">Déconnexion</a> </li>	
@@ -112,11 +115,11 @@
 
                                 <?php } elseif(!$_SESSION['isAdmin']) {?>
                                 <!-- Client specific menu items -->
-                                <a class="btn btn-primary d-none d-xl-block" href="prendre_rdv.php">Prendre RDV</a>
+                                <a class="btn btn-primary d-none d-xl-block" href="liste_agents.php">Prendre RDV</a>
                                 <?php } ?>
                                 
                             <?php } else { ?>
-							<a class="btn btn-primary d-none d-xl-block" href="prendre_rdv.php">Prendre RDV</a>
+							<a class="btn btn-primary d-none d-xl-block" href="liste_agents.php">Prendre RDV</a>
                             <?php } ?>
                         </div>
                     </nav>

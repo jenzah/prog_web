@@ -13,7 +13,7 @@ $userId = $_SESSION['uid'];
 
 // Check if appointment ID is provided
 if(!isset($_GET['id'])) {
-    header("location:appointments.php");
+    header("location:rdv_dashboard.php");
     exit;
 }
 
@@ -31,7 +31,7 @@ if (isset($_GET['cancel'])) {
         // Annulation
         $cancelQuery = mysqli_query($con, "DELETE FROM appointments WHERE aid='$appointmentId'");
         if ($cancelQuery) {
-            echo "<script>alert('RDV annulé avec succès.'); window.location='appointments.php';</script>";
+            echo "<script>alert('RDV annulé avec succès.'); window.location='rdv_dashboard.php';</script>";
         } else {
             echo "<script>alert('Erreur lors de l\'annulation.');</script>";
         }
@@ -73,17 +73,17 @@ if (!$_SESSION['isAdmin']) {
 $query = mysqli_query($con, $sql);
 
 if (mysqli_num_rows($query) == 0) {
-    echo "<script>alert('Rendez-vous introuvable ou accès non autorisé.'); window.location='appointments.php';</script>";
+    echo "<script>alert('Rendez-vous introuvable ou accès non autorisé.'); window.location='rdv_dashboard.php';</script>";
     exit;
 }
 
 $app = mysqli_fetch_assoc($query);
 
 // Formater la date et l'heure
-$date = new DateTime($app['appointment_date']);
+$date = new DateTime($app['rdv_date']);
 $formattedDate = $date->format('d/m/Y');
 
-$time = new DateTime($app['appointment_time']);
+$time = new DateTime($app['rdv_time']);
 $formattedTime = $time->format('H:i');
 
 // Check if the appointment is in the past or future
@@ -92,11 +92,11 @@ $currentTime = date('H:i:s');
 $isPastAppointment = false;
 
 // Compare appointment date with current date
-if ($app['appointment_date'] < $currentDate) {
+if ($app['rdv_date'] < $currentDate) {
     $isPastAppointment = true;
 } 
 // If same date, check if time has passed
-elseif ($app['appointment_date'] == $currentDate && $app['appointment_time'] < $currentTime) {
+elseif ($app['rdv_date'] == $currentDate && $app['rdv_time'] < $currentTime) {
     $isPastAppointment = true;
 }
 ?>
@@ -154,7 +154,7 @@ elseif ($app['appointment_date'] == $currentDate && $app['appointment_time'] < $
                         <nav aria-label="breadcrumb" class="float-md-right">
                             <ol class="breadcrumb bg-transparent m-0 p-0">
                                 <li class="breadcrumb-item text-white"><a href="home.php">Accueil</a></li>
-                                <li class="breadcrumb-item text-white"><a href="appointments.php">Mes RDVs</a></li>
+                                <li class="breadcrumb-item text-white"><a href="rdv_dashboard.php">Mes RDVs</a></li>
                                 <li class="breadcrumb-item active">Détail du RDV</li>
                             </ol>
                         </nav>
@@ -218,7 +218,7 @@ elseif ($app['appointment_date'] == $currentDate && $app['appointment_time'] < $
                             
                             <div class="mb-4">
                                 <p class="detail-title">Lieu</p>
-                                <p class="detail-value"><i class="fas fa-map-marker-alt text-primary"></i> <?php echo $app['place']; ?></p>
+                                <p class="detail-value"><i class="fas fa-map-marker-alt text-primary"></i> <?php echo $app['rdv_place']; ?></p>
                             </div>
                             
                             <?php if ($_SESSION['isAdmin'] || $_SESSION['isAgent']) { ?>
@@ -250,18 +250,21 @@ elseif ($app['appointment_date'] == $currentDate && $app['appointment_time'] < $
                                     <?php if ($app['is_paid']) { ?>
                                     <span class="badge-paid"><i class="fas fa-check-circle"></i> Payé</span>
                                     <?php } else { ?>
-                                    <a href="payment.php?appointment_id=<?php echo $app['aid']; ?>" class="badge-payment">
-                                        <i class="fas fa-times-circle"></i> À payer : <?php echo number_format($app['price'], 0, ',', ' ') . ' €'; ?>
-                                    </a>
+                                    <div class="payment-container" style="flex-direction: row; align-items: center; width: fit-content;">
+                                        <span class="badge-unpaid"><i class="fas fa-times-circle" ></i> À payer : <?php echo number_format($app['rdv_price'], 0, ',', ' ') . ' €'; ?></span>
+                                        <a href="payment.php?appointment_id=<?php echo $app['aid']; ?>" class="payment-link">
+                                            <i class="fas fa-credit-card" style="margin-right: 5px;"></i> Payer
+                                        </a>
+                                    </div>
                                     <?php } ?>
                                 </p>
                             </div>
                             <?php } ?>
                             
-                            <?php if (!empty($app['comments'])) { ?>
+                            <?php if (!empty($app['rdv_comments'])) { ?>
                             <div class="mb-4">
                                 <p class="detail-title">Commentaires</p>
-                                <p class="detail-value"><?php echo $app['comments']; ?></p>
+                                <p class="detail-value"><?php echo $app['rdv_comments']; ?></p>
                             </div>
                             <?php } ?>
                             

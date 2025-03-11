@@ -34,20 +34,37 @@ DROP TABLE IF EXISTS `state`;
 
 DROP TABLE IF EXISTS `feedback`;
 
-DROP TABLE IF EXISTS `payment`;
-
 DROP TABLE IF EXISTS `appointments`;
 
+DROP TABLE IF EXISTS `chat_messages`;
+
+DROP TABLE IF EXISTS `chat_participants`;
+
+DROP TABLE IF EXISTS `chat_rooms`;
+
+DROP TABLE IF EXISTS `rendez_vous`;
+DROP TABLE IF EXISTS `rendez_vous2`;
+
+DROP TABLE IF EXISTS `agent_disponibilite`;
+
+DROP TABLE IF EXISTS `agent_disponibilite2`;
+DROP TABLE IF EXISTS `agent_disponibilite3`;
+
+DROP TABLE IF EXISTS `agent_schedules`;
 DROP TABLE IF EXISTS `property`;
 
+DROP TABLE IF EXISTS `chat_messages`;
+
+DROP TABLE IF EXISTS `chat_participants`;
+
+DROP TABLE IF EXISTS `chat_rooms`;
+
 DROP TABLE IF EXISTS `user`;
-
-
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `property`
+-- Table structure for table `property`
 --
 
 DROP TABLE IF EXISTS `property`;
@@ -108,7 +125,10 @@ CREATE TABLE `user` (
   `uaddress2` varchar(255) DEFAULT NULL,
   `ucity` varchar(100) DEFAULT NULL,
   `upostal_code` varchar(10) DEFAULT NULL,
-  `ucountry` varchar(100) DEFAULT NULL
+  `ucountry` varchar(100) DEFAULT NULL,
+  `formations` TEXT DEFAULT NULL,
+  `experiences` TEXT DEFAULT NULL,
+  `cv` VARCHAR(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -131,24 +151,29 @@ INSERT INTO `user` (`uid`, `uname`, `ufirstname`, `uemail`, `uphone`, `upass`, `
 (403, 'Agent8', 'b', 'agent8@email.com', '0600000002', 'password_hash', 'agent', 'default.png', '456 Boulevard des Experts', NULL, 'Lyon', '69001', 'France');
 
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `appointments`
+--
 
-
--- Création de la table appointments en utilisant la table user existante
 CREATE TABLE IF NOT EXISTS `appointments` (
   `aid` int(50) NOT NULL AUTO_INCREMENT,
   `client_id` int(50) NOT NULL,
   `agent_id` int(50) NOT NULL,
-  `property_id` int(50) NOT NULL,
-  `appointment_date` date NOT NULL,
-  `appointment_time` time NOT NULL,
-  `place` varchar(255) NOT NULL,
+  `property_id` int(50) DEFAULT NULL,
+  `rdv_date` date NOT NULL,
+  `rdv_time` time NOT NULL,
+  `rdv_place` varchar(255) DEFAULT NULL,
+  `rdv_status` enum('confirmé','annulé','terminé') NOT NULL DEFAULT 'confirmé', -- delete after managing it
+  `rdv_motivation` varchar(255) DEFAULT NULL,
+  `rdv_comments` text DEFAULT NULL,
+  `rdv_created_at` datetime NOT NULL DEFAULT current_timestamp(),
+
+  `rdv_price` decimal(10,2) DEFAULT NULL,
   `is_paid` tinyint(1) DEFAULT 0,
-  `payment_status` enum('pending','completed','refunded') NOT NULL DEFAULT 'pending',
-  `price` decimal(10,2) DEFAULT NULL,
-  `comments` text DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `payment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `rdv_payment_status` enum('pending','completed','refunded') NOT NULL DEFAULT 'pending',
+  `rdv_payment_date` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`aid`),
   KEY `client_id` (`client_id`),
   KEY `agent_id` (`agent_id`),
@@ -157,17 +182,17 @@ CREATE TABLE IF NOT EXISTS `appointments` (
 
 -- Current appointments (future dates)
 -- Thursday is apparently presentation day, so we'll set some appointments for future dates after that
-INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment_date`, `appointment_time`, `place`, `is_paid`, `price`, `comments`, `created_at`) VALUES
+INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `rdv_date`, `rdv_time`, `rdv_place`, `is_paid`, `rdv_price`, `rdv_comments`, `rdv_created_at`) VALUES
 -- Client 101 future appointments
-(101, 201, 501, '2025-03-15', '10:00:00', 'Sur place: 12 Avenue Montaigne, Paris', 0, 150.00, 'Premier rendez-vous pour visiter cet appartement haussmannien', CURRENT_TIMESTAMP()),
-(101, 202, 503, '2025-03-16', '14:00:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 200.00, 'Visite du local commercial pour possible restaurant', CURRENT_TIMESTAMP()),
+(101, 203, 501, '2025-03-11', '10:00:00', 'Sur place: 12 Avenue Montaigne, Paris', 0, 150.00, 'Premier rendez-vous pour visiter cet appartement haussmannien', CURRENT_TIMESTAMP()),
+(101, 203, 503, '2025-03-14', '14:00:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 200.00, 'Visite du local commercial pour possible restaurant', CURRENT_TIMESTAMP()),
 
 -- Client 102 future appointments
 (102, 201, 502, '2025-03-14', '11:00:00', 'Sur place: 5 Rue des Entrepreneurs, Boulogne-Billancourt', 0, 150.00, 'Visite du loft industriel', CURRENT_TIMESTAMP()),
 (102, 202, 504, '2025-03-17', '16:00:00', 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 0, 150.00, 'Visite du terrain constructible', CURRENT_TIMESTAMP());
 
 -- Past appointments
-INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment_date`, `appointment_time`, `place`, `is_paid`, `price`, `comments`, `created_at`) VALUES
+INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `rdv_date`, `rdv_time`, `rdv_place`, `is_paid`, `rdv_price`, `rdv_comments`, `rdv_created_at`) VALUES
 -- Client 101 past appointments
 (101, 201, 506, '2025-03-05', '09:00:00', 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 1, 150.00, 'Le client a beaucoup aimé cette maison de ville', '2025-03-05 08:30:00'),
 (101, 202, 509, '2025-03-01', '15:00:00', 'Sur place: Route de la Forêt, Évry', 1, 150.00, 'Le client s\'est montré intéressé par le terrain avec vue', '2025-03-01 14:30:00'),
@@ -176,12 +201,100 @@ INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment
 (102, 201, 510, '2025-03-03', '13:00:00', 'Sur place: 3 Boulevard Haussmann, Paris', 1, 200.00, 'Le client a apprécié les prestations haut de gamme du duplex', '2025-03-03 12:30:00'),
 (102, 202, 507, '2025-02-28', '17:00:00', 'Sur place: 8 Avenue des Champs-Élysées, Paris', 1, 200.00, 'Le client a trouvé l\'espace de travail très lumineux', '2025-02-28 16:30:00');
 
+
+-- --------------------------------------------------------
+
 --
--- Index pour les tables déchargées
+-- Table structure for tables for the messaging system
+--
+
+CREATE TABLE IF NOT EXISTS `chat_rooms` (
+    room_id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS `chat_participants` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT,
+    user_id INT
+);
+
+CREATE TABLE IF NOT EXISTS `chat_messages` (
+    message_id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT,
+    user_id INT,
+    message TEXT,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for tables for the messaging system
+--
+
+CREATE TABLE IF NOT EXISTS `agent_schedules` (
+  `schedule_id` int(50) NOT NULL AUTO_INCREMENT,
+  `agent_id` int(50) NOT NULL,
+  `day_of_week` varchar(10) NOT NULL, -- 0=Monday through 6=Sunday
+  `workday_start` time DEFAULT '09:00:00',
+  `workday_end` time DEFAULT '18:00:00',
+  `is_working_day` tinyint(1) NOT NULL DEFAULT 1,
+  `morning_slots` int(11) NOT NULL DEFAULT 3, -- Number of available morning slots
+  `afternoon_slots` int(11) NOT NULL DEFAULT 5, -- Number of available afternoon slots
+  PRIMARY KEY (`schedule_id`),
+  UNIQUE KEY `agent_day` (`agent_id`, `day_of_week`),
+  KEY `agent_id` (`agent_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `agent_schedules` (`agent_id`, `day_of_week`, `workday_start`, `workday_end`, `is_working_day`, `morning_slots`, `afternoon_slots`) VALUES
+-- Agent 201 (works 4 days a week, starts early at 8:00, no Wednesday)
+(201, 'Monday', '08:00:00', '17:00:00', 1, 4, 4),
+(201, 'Tuesday', '08:00:00', '17:00:00', 1, 4, 4),
+(201, 'Wednesday', '00:00:00', '00:00:00', 0, 0, 0),
+(201, 'Thursday', '08:00:00', '17:00:00', 1, 4, 4),
+(201, 'Friday', '08:00:00', '17:00:00', 1, 4, 4),
+(201, 'Saturday', '10:00:00', '15:00:00', 0, 0, 0),
+
+-- Agent 202 (works 5 days, doesn't work Wednesday morning)
+(202, 'Monday', '09:00:00', '18:00:00', 1, 3, 5),
+(202, 'Tuesday', '09:00:00', '18:00:00', 1, 3, 5),
+(202, 'Wednesday', '13:00:00', '18:00:00', 1, 0, 5),
+(202, 'Thursday', '09:00:00', '18:00:00', 1, 3, 5),
+(202, 'Friday', '09:00:00', '18:00:00', 1, 3, 5),
+(202, 'Saturday', '10:00:00', '15:00:00', 1, 2, 2),
+
+-- Agent 203 (works 5 days, doesn't work Wednesday morning)
+(203, 'Monday', '09:00:00', '18:00:00', 1, 3, 5),
+(203, 'Tuesday', '09:00:00', '18:00:00', 1, 3, 5),
+(203, 'Wednesday', '13:00:00', '18:00:00', 1, 0, 5),
+(203, 'Thursday', '09:00:00', '18:00:00', 1, 3, 5),
+(203, 'Friday', '09:00:00', '18:00:00', 1, 3, 5),
+(203, 'Saturday', '10:00:00', '15:00:00', 0, 0, 0),
+
+-- Agent 204 (works 4 days a week, doesn't work Wednesday afternoon)
+(204, 'Monday', '09:00:00', '18:00:00', 1, 3, 5),
+(204, 'Tuesday', '09:00:00', '18:00:00', 1, 3, 5),
+(204, 'Wednesday', '09:00:00', '12:00:00', 1, 3, 0),
+(204, 'Thursday', '00:00:00', '00:00:00', 0, 0, 0),
+(204, 'Friday', '09:00:00', '18:00:00', 1, 3, 5),
+(204, 'Saturday', '10:00:00', '15:00:00', 1, 2, 2),
+
+-- Agent 205 (works 5 days, doesn't work Wednesday afternoon)
+(205, 'Monday', '10:00:00', '19:00:00', 1, 2, 5),
+(205, 'Tuesday', '10:00:00', '19:00:00', 1, 2, 5),
+(205, 'Wednesday', '10:00:00', '12:00:00', 1, 2, 0),
+(205, 'Thursday', '10:00:00', '19:00:00', 1, 2, 5),
+(205, 'Friday', '10:00:00', '19:00:00', 1, 2, 5),
+(205, 'Saturday', '10:00:00', '15:00:00', 0, 0, 0);
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Index pour la table `property`
+-- Indexes for table `property`
 --
 ALTER TABLE `property`
   ADD PRIMARY KEY (`pid`),
@@ -196,15 +309,24 @@ ALTER TABLE `user`
 
 
 ALTER TABLE `appointments`
-ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`),
-ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`),
-ADD CONSTRAINT `fk_appointments_property` FOREIGN KEY (`property_id`) REFERENCES `property` (`pid`);
+  ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`),
+  ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`),
+  ADD CONSTRAINT `fk_appointments_property` FOREIGN KEY (`property_id`) REFERENCES `property` (`pid`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+
+ALTER TABLE `chat_participants`
+    ADD CONSTRAINT `fk_participant_rooms` FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
+    ADD CONSTRAINT `fk_chat_user` FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE;
+
+ALTER TABLE `chat_messages`
+    ADD CONSTRAINT `fk_messages_rooms` FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
+    ADD CONSTRAINT `fk_messages_user` FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE;
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT pour la table `property`
+-- AUTO_INCREMENT for table `property`
 --
 ALTER TABLE `property`
   MODIFY `pid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=505;
@@ -216,42 +338,7 @@ ALTER TABLE `property`
 ALTER TABLE `user`
   MODIFY `uid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
+
 --
 -- Contraintes pour les tables déchargées
 --
-
---
--- Contraintes pour la table `property`
---
-ALTER TABLE `property`
-  ADD CONSTRAINT `fk_property_user` FOREIGN KEY (`agentid`) REFERENCES `user` (`uid`) ON DELETE CASCADE;
-COMMIT;
-
-
-ALTER TABLE `user`
-ADD COLUMN `formations` TEXT DEFAULT NULL,
-ADD COLUMN `experiences` TEXT DEFAULT NULL,
-ADD COLUMN `cv` VARCHAR(255) DEFAULT NULL;
-
-CREATE TABLE chat_rooms (
-    room_id INT AUTO_INCREMENT PRIMARY KEY,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE chat_participants (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    room_id INT,
-    user_id INT,
-    FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE
-);
-
-CREATE TABLE chat_messages (
-    message_id INT AUTO_INCREMENT PRIMARY KEY,
-    room_id INT,
-    user_id INT,
-    message TEXT,
-    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE
-);
