@@ -7,6 +7,7 @@
                         <li><a href="#"><i class="fas fa-phone-alt text-light-primary mr-1"></i>(012) 345 678 102</a></li>
                         <li><a href="#"><i class="fas fa-envelope text-light-primary mr-1"></i>office@example.com</a></li>
                     </ul>
+                    
                 </div>
                 <div class="col-md-4">
                     <div class="top-contact float-right">
@@ -86,6 +87,7 @@
                                         <!-- Client specific menu item -->
 								        <li class="nav-item"> <a class="nav-link" href="about.php">À propos</a> </li>
                                         <li class="nav-item"> <a class="nav-link" href="property.php">Propriétés</a> </li>
+                                        <li class="nav-item"> <a class="nav-link" href="liste_agents.php">Nos Agents</a> </li>
 								        <li class="nav-item dropdown">
 								        	<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon compte</a>
 								        	<ul class="dropdown-menu">

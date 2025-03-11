@@ -243,6 +243,47 @@ CREATE TABLE IF NOT EXISTS `agent_schedules` (
   KEY `agent_id` (`agent_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `agent_schedules` (`agent_id`, `day_of_week`, `workday_start`, `workday_end`, `is_working_day`, `morning_slots`, `afternoon_slots`) VALUES
+-- Agent 201 (works 4 days a week, starts early at 8:00, no Wednesday)
+(201, 'Monday', '08:00:00', '17:00:00', 1, 4, 4),
+(201, 'Tuesday', '08:00:00', '17:00:00', 1, 4, 4),
+(201, 'Wednesday', '00:00:00', '00:00:00', 0, 0, 0),
+(201, 'Thursday', '08:00:00', '17:00:00', 1, 4, 4),
+(201, 'Friday', '08:00:00', '17:00:00', 1, 4, 4),
+(201, 'Saturday', '10:00:00', '15:00:00', 0, 0, 0),
+
+-- Agent 202 (works 5 days, doesn't work Wednesday morning)
+(202, 'Monday', '09:00:00', '18:00:00', 1, 3, 5),
+(202, 'Tuesday', '09:00:00', '18:00:00', 1, 3, 5),
+(202, 'Wednesday', '13:00:00', '18:00:00', 1, 0, 5),
+(202, 'Thursday', '09:00:00', '18:00:00', 1, 3, 5),
+(202, 'Friday', '09:00:00', '18:00:00', 1, 3, 5),
+(202, 'Saturday', '10:00:00', '15:00:00', 1, 2, 2),
+
+-- Agent 203 (works 5 days, doesn't work Wednesday morning)
+(203, 'Monday', '09:00:00', '18:00:00', 1, 3, 5),
+(203, 'Tuesday', '09:00:00', '18:00:00', 1, 3, 5),
+(203, 'Wednesday', '13:00:00', '18:00:00', 1, 0, 5),
+(203, 'Thursday', '09:00:00', '18:00:00', 1, 3, 5),
+(203, 'Friday', '09:00:00', '18:00:00', 1, 3, 5),
+(203, 'Saturday', '10:00:00', '15:00:00', 0, 0, 0),
+
+-- Agent 204 (works 4 days a week, doesn't work Wednesday afternoon)
+(204, 'Monday', '09:00:00', '18:00:00', 1, 3, 5),
+(204, 'Tuesday', '09:00:00', '18:00:00', 1, 3, 5),
+(204, 'Wednesday', '09:00:00', '12:00:00', 1, 3, 0),
+(204, 'Thursday', '00:00:00', '00:00:00', 0, 0, 0),
+(204, 'Friday', '09:00:00', '18:00:00', 1, 3, 5),
+(204, 'Saturday', '10:00:00', '15:00:00', 1, 2, 2),
+
+-- Agent 205 (works 5 days, doesn't work Wednesday afternoon)
+(205, 'Monday', '10:00:00', '19:00:00', 1, 2, 5),
+(205, 'Tuesday', '10:00:00', '19:00:00', 1, 2, 5),
+(205, 'Wednesday', '10:00:00', '12:00:00', 1, 2, 0),
+(205, 'Thursday', '10:00:00', '19:00:00', 1, 2, 5),
+(205, 'Friday', '10:00:00', '19:00:00', 1, 2, 5),
+(205, 'Saturday', '10:00:00', '15:00:00', 0, 0, 0);
+
 --
 -- Indexes for dumped tables
 --
