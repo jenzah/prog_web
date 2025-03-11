@@ -74,26 +74,14 @@ include("config.php");
                         <div class="text-white">
                             <h1 class="mb-4"><span class="text-light-primary">Trouvez</span><br>la maison de vos rêves</h1>
                             
-                            <form method="post" action="property.php">
-    <div class="row">
+                            <form method="get" action="property.php">
+    <div class="row justify-content-center">
         <div class="col-md-4">
-            <div class="form-group">
-                <input type="text" class="form-control" name="city" placeholder="Ville / Commune">
-            </div>
-        </div>
-        <div class="col-md-3">
-            <select class="form-control" name="propertyType">
-                <option value="">Type de bien</option>
-                <option value="résidentiel">Résidentiel</option>
-                <option value="commercial">Commercial</option>
-                <option value="terrain">Terrain</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <button type="submit" class="btn btn-primary w-100">Rechercher</button>
+            <button type="submit" class="btn btn-primary w-100">Trouver votre futur bien</button>
         </div>
     </div>
 </form>
+
 
 
 
