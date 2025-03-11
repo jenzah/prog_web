@@ -182,6 +182,8 @@ while ($row = mysqli_fetch_assoc($specialtyQuery)) {
                                     <span class="text-danger">CV non disponible</span>
                                 <?php } ?>
 
+                                <!-- Prendre RDV -->
+                                 <a href="appointments_agent.php?agent_id=<?php echo $row['id']; ?>" class="btn btn-primary mt-2">Prendre RDV</a>
                             </td>
                         </tr>
                     <?php } ?>
