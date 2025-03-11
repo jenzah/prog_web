@@ -99,7 +99,7 @@ if(isset($_POST['confirm'])) {
             // Envoyer un email de confirmation (à implémenter)
             
             // Rediriger vers la page des rendez-vous
-            header("Location: appointments.php?success=1");
+            header("Location: rdv_dashboard.php?success=1");
             exit();
         } else {
             $message = '<div class="alert alert-danger">Une erreur est survenue. Veuillez réessayer.</div>';

@@ -9,7 +9,7 @@ if(!isset($_SESSION['uid'])) {
 }
 
 if (!isset($_GET['agent_id'])) {
-    header("location:appointments.php");
+    header("location:rdv_dashboard.php");
     exit();
 }
 
@@ -411,7 +411,7 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
                 
                 if (confirm(`Voulez-vous prendre rendez-vous le ${jour_fr} ${date_fr} à ${heure.substring(0, 5)} ?`)) {
                     // Rediriger vers la page de prise de rendez-vous
-                    window.location.href = `app_confirmation.php?agent_id=<?= $agent_id ?>&date=${date}&heure=${heure}`;
+                    window.location.href = `rdv_confirmation.php?agent_id=<?= $agent_id ?>&date=${date}&heure=${heure}`;
                 }
             <?php } else { ?>
                 alert('Veuillez vous connecter pour prendre rendez-vous.');
