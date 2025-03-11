@@ -133,95 +133,6 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
 <link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/login.css">
-
-<style>
-    .schedule-table th, .schedule-table td { 
-        text-align: center; 
-        padding: 10px; 
-        border: 1px solid #dee2e6;
-    }
-    .schedule-table th { 
-        background-color: #3D73D7; 
-        color: white; 
-        font-weight: 600;
-    }
-    .dispo { 
-        background-color: #3CAC85; 
-        color: white; 
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-    .dispo:hover {
-        background-color: #2e8b67;
-        transform: scale(1.05);
-    }
-    .indispo { 
-        background-color: #D25A58; 
-        color: white; 
-    }
-    .rdv { 
-        background-color: #F5A623; 
-        color: white; 
-    }
-    .legende { 
-        display: flex; 
-        gap: 20px; 
-        margin-bottom: 20px; 
-        justify-content: center;
-    }
-    .legende-item { 
-        display: flex; 
-        align-items: center; 
-        gap: 5px; 
-    }
-    .legende-color { 
-        width: 20px; 
-        height: 20px;
-        border-radius: 3px; 
-    }
-    .agent-info {
-        background-color: #f8f9fa;
-        border-radius: 5px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .agent-photo {
-        width: 160px;
-        height: 160px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-bottom: 15px;
-    }
-    .horaire-cell {
-        font-weight: 500;
-        background-color: #f8f9fa;
-    }
-    .date-subheader {
-        font-size: 12px;
-        display: block;
-        color: rgba(255,255,255,0.7);
-    }
-    .agent-contact-btn {
-        margin-bottom: 10px;
-        width: 100%;
-    }
-    .agent-info-sidebar {
-        background-color: #f8f9fa;
-        border-radius: 5px;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        height: 100%;
-    }
-    .agent-stat {
-        margin-bottom: 10px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #eee;
-    }
-    .agent-stat:last-child {
-        border-bottom: none;
-    }
-</style>
 </head>
 
 <body>
@@ -273,9 +184,15 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
                         
                         <div class="agent-stat">
                             <strong><i class="fa fa-envelope"></i> Email:</strong>
+                            <?php if (!$_SESSION['isAgent'] && !$_SESSION['isAdmin']) { ?>
                             <div class="float-right text-truncate" style="max-width: 65%; font-size: 13px;">
                                 <a href="mailto:<?php echo htmlspecialchars($agent['uemail']); ?>"><?php echo htmlspecialchars($agent['uemail']); ?></a>
                             </div>
+                            <?php }else{?>
+                            <span class="float-right" style="max-width: 65%; font-size: 13px;"><?= htmlspecialchars($agent['uemail']) ?></span>
+                            <?php }?>
+
+
                         </div>
                         
                         <div class="agent-stat">
@@ -288,6 +205,7 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
                             <span class="float-right"><?= $properties_count ?></span>
                         </div>
                         
+                        <?php if (!$_SESSION['isAgent'] && !$_SESSION['isAdmin']) { ?>
                         <!-- Boutons actions -->
                         <div class="mt-4 d-flex flex-column align-items-center">
                             <!-- Bouton "Prendre Rendez-vous" -->
@@ -311,29 +229,15 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
                                 <i class="fa fa-comments"></i> Messagerie
                             </a>
                         </div>
+                        <?php }?>
                     </div>
                 </div>
                 
                 <!-- Colonne de droite - Calendrier -->
                 <div class="col-lg-9 col-md-8">
-                    <div class="legende">
-                        <div class="legende-item">
-                            <div class="legende-color dispo"></div>
-                            <span>Disponible</span>
-                        </div>
-                        <div class="legende-item">
-                            <div class="legende-color indispo"></div>
-                            <span>Indisponible</span>
-                        </div>
-                        <div class="legende-item">
-                            <div class="legende-color rdv"></div>
-                            <span>Rendez-vous pris</span>
-                        </div>
-                    </div>
-                    
                     <div class="table-responsive">
-                        <table class="table schedule-table">
-                            <thead>
+                        <table class="table table-bordered auto-table text-center content-center <?php echo (!$_SESSION['isAgent'] && !$_SESSION['isAdmin']) ? 'client-calendar' : 'staff-calendar'; ?>">
+                            <thead class="bg-primary text-white">
                                 <tr>
                                     <th>Heure</th>
                                     <?php foreach ($jours_fr as $index => $jour) { 
@@ -346,42 +250,95 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
                             </thead>
                             <tbody>
                                 <?php foreach ($horaires as $heure) { 
-                                    // Formater l'heure pour l'affichage
-                                    $heure_affichage = substr($heure, 0, 5);
+                                // Formater l'heure pour l'affichage
+                                $heure_affichage = substr($heure, 0, 5);
                                 ?>
                                     <tr>
                                         <td class="horaire-cell"><?= $heure_affichage ?></td>
+                                        
                                         <?php foreach ($jours as $index => $jour) { 
                                             $date_rdv = $dates[$index];
                                             $est_jour_travail = isset($schedules[$jour]) && $schedules[$jour]['is_working_day'] == 1;
                                             $heure_debut = isset($schedules[$jour]) ? $schedules[$jour]['workday_start'] : '09:00:00';
                                             $heure_fin = isset($schedules[$jour]) ? $schedules[$jour]['workday_end'] : '18:00:00';
-                                            
+
                                             $est_dans_plage_horaire = $heure >= $heure_debut && $heure <= $heure_fin;
                                             $est_reserve = isset($rendez_vous[$date_rdv][$heure]);
                                             
+                                            // Check if time slot is in the past
+                                            $appointment_time = new DateTime($date_rdv . ' ' . $heure);
+                                            $current_time = new DateTime();
+                                            $est_dans_le_passe = $appointment_time < $current_time;
+
                                             // Déterminer la classe et le texte de la cellule
                                             if ($est_reserve) {
-                                                $classe = "rdv";
-                                                $texte = "RDV";
+                                                // Vérifier si le RDV appartient à l'utilisateur connecté
+                                                $rdv_query = mysqli_query($con, "SELECT aid FROM appointments 
+                                                                               WHERE agent_id = $agent_id 
+                                                                               AND rdv_date = '$date_rdv' 
+                                                                               AND rdv_time = '$heure' 
+                                                                               AND client_id = " . $_SESSION['uid']);
+
+                                                if (mysqli_num_rows($rdv_query) > 0) {
+                                                    // C'est le RDV de l'utilisateur connecté
+                                                    $rdv_row = mysqli_fetch_assoc($rdv_query);
+
+                                                    // Utilisez la bonne colonne 'aid' comme dans votre requête
+                                                    $rdv_id = $rdv_row['aid'];
+
+                                                    // Définir la classe et le texte
+                                                    $classe = "rdv-user rdv-clickable";
+                                                    $texte = "RDV";
+
+                                                    // Ajouter des attributs data pour JavaScript
+                                                    echo '<td class="' . $classe . '" data-rdv-id="' . $rdv_id . '" data-jour="' . $jour . '" data-date="' . $date_rdv . '" data-heure="' . $heure . '">' . $texte . '</td>';
+                                                } else {
+                                                    // C'est le RDV de quelqu'un d'autre
+                                                    $classe = "indispo";
+                                                    $texte = "✗";
+                                                    echo '<td class="' . $classe . '" data-jour="' . $jour . '" data-date="' . $date_rdv . '" data-heure="' . $heure . '">' . $texte . '</td>';
+                                                }
+                                            } elseif ($est_dans_le_passe) {
+                                                // Past time slots
+                                                $classe = "passe";
+                                                $texte = "✗";
+                                                echo '<td class="' . $classe . '" data-jour="' . $jour . '" data-date="' . $date_rdv . '" data-heure="' . $heure . '">' . $texte . '</td>';
+                                            
+                                            
                                             } elseif ($est_jour_travail && $est_dans_plage_horaire) {
                                                 $classe = "dispo";
                                                 $texte = "✓";
+                                                echo '<td class="' . $classe . '" data-jour="' . $jour . '" data-date="' . $date_rdv . '" data-heure="' . $heure . '">' . $texte . '</td>';
                                             } else {
                                                 $classe = "indispo";
                                                 $texte = "✗";
+                                                echo '<td class="' . $classe . '" data-jour="' . $jour . '" data-date="' . $date_rdv . '" data-heure="' . $heure . '">' . $texte . '</td>';
                                             }
-                                        ?>
-                                            <td class="<?= $classe ?>" data-jour="<?= $jour ?>" data-date="<?= $date_rdv ?>" data-heure="<?= $heure ?>">
-                                                <?= $texte ?>
-                                            </td>
-                                        <?php } ?>
+                                        } ?>
                                     </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
                     </div>
                     
+                    <div class="legende">
+                        <div class="legende-item">
+                            <div class="legende-color dispo"></div>
+                            <span>✓ Disponible</span>
+                        </div>
+                        <div class="legende-item">
+                            <div class="legende-color indispo"></div>
+                            <span>Indisponible</span>
+                        </div>
+
+                        <?php if (!$_SESSION['isAgent'] && !$_SESSION['isAdmin']) { ?>
+                        <div class="legende-item">
+                            <div class="legende-color rdv-user"></div>
+                            <span>Mes rendez-vous</span>
+                        </div>
+                        <?php } ?>
+                    </div>
+
                     <?php if(!isset($_SESSION['uid'])) { ?>
                     <div class="mt-4">
                         <div class="alert alert-info text-center">
@@ -404,30 +361,47 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
     // Script pour permettre la prise de rendez-vous en cliquant sur une cellule disponible
     $(document).ready(function() {
         $('.dispo').click(function() {
-            <?php if(isset($_SESSION['uid'])) { ?>
-                const jour = $(this).data('jour');
-                const date = $(this).data('date');
-                const heure = $(this).data('heure');
-                const jour_fr = {
-                    'Monday': 'Lundi',
-                    'Tuesday': 'Mardi',
-                    'Wednesday': 'Mercredi',
-                    'Thursday': 'Jeudi',
-                    'Friday': 'Vendredi',
-                    'Saturday': 'Samedi'
-                }[jour];
+            <?php if(isset($_SESSION['uid'])) { 
+                if(!$_SESSION['isAgent'] && !$_SESSION['isAdmin']) { ?>
+                    const jour = $(this).data('jour');
+                    const date = $(this).data('date');
+                    const heure = $(this).data('heure');
+
+                    // Check if the appointment time is in the past
+                    const now = new Date();
+                    const appointmentTime = new Date(date + 'T' + heure);
+
+                    if (appointmentTime < now) {
+                        alert('Impossible de prendre un rendez-vous dans le passé.');
+                        return false;
+                    }
+
+                    const jour_fr = {
+                        'Monday': 'Lundi',
+                        'Tuesday': 'Mardi',
+                        'Wednesday': 'Mercredi',
+                        'Thursday': 'Jeudi',
+                        'Friday': 'Vendredi',
+                        'Saturday': 'Samedi'
+                    }[jour];
                 
-                const date_fr = new Date(date).toLocaleDateString('fr-FR');
-                
-                if (confirm(`Voulez-vous prendre rendez-vous le ${jour_fr} ${date_fr} à ${heure.substring(0, 5)} ?`)) {
-                    // Rediriger vers la page de prise de rendez-vous
-                    window.location.href = `rdv_confirmation.php?agent_id=<?= $agent_id ?>&date=${date}&heure=${heure}`;
-                }
-            <?php } else { ?>
+                    const date_fr = new Date(date).toLocaleDateString('fr-FR');
+                    
+                    if (confirm(`Voulez-vous prendre rendez-vous le ${jour_fr} ${date_fr} à ${heure.substring(0, 5)} ?`)) {
+                        // Rediriger vers la page de prise de rendez-vous
+                        window.location.href = `rdv_confirmation.php?agent_id=<?= $agent_id ?>&date=${date}&heure=${heure}`;
+                    }
+            <?php }
+            } else { ?>
                 alert('Veuillez vous connecter pour prendre rendez-vous.');
                 window.location.href = 'login.php';
             <?php } ?>
         });
+        // Gestionnaire pour les RDV de l'utilisateur
+        $('.rdv-clickable').click(function() {
+        const rdvId = $(this).data('rdv-id');
+        window.location.href = 'rdv_details.php?id=' + rdvId;
+    });
     });
     </script>
 </body>

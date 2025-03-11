@@ -243,7 +243,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                     <?php } else { ?>
                                     <div class="payment-container">
                                         <span class="badge-unpaid"><i class="fas fa-times-circle"></i> <?php echo number_format($app['rdv_price'], 0, ',', ' ') . ' €'; ?></span>
-                                        <a href="payment.php?appointment_id=<?php echo $app['aid']; ?>" class="payment-link">
+                                        <a href="payment_confirm.php?appointment_id=<?php echo $app['aid']; ?>" class="payment-link">
                                             <i class="fas fa-credit-card" style="margin-right: 5px;"></i> Payer
                                         </a>
                                     </div>

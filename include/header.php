@@ -61,8 +61,7 @@
                                         <li class="nav-item dropdown">
 									        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon agenda</a>
 									        <ul class="dropdown-menu">
-									        	<li class="nav-item"> <a class="nav-link" href="">Disponibilités</a> </li>
-									        	<li class="nav-item"> <a class="nav-link" href="">Calendrier</a> </li>
+									        	<li class="nav-item"> <a class="nav-link" href="rdv_disponibilite.php?agent_id=<?php echo htmlspecialchars($_SESSION['uid'])?>">Calendrier</a> </li>
 									        	<li class="nav-item"> <a class="nav-link" href="rdv_dashboard.php">Mes RDVs</a> </li>	
 									        </ul>
                                         </li>

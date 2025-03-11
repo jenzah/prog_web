@@ -120,7 +120,7 @@ CREATE TABLE `user` (
   `upass` varchar(255) NOT NULL,
   `utype` varchar(50) NOT NULL,
   `uimage` varchar(300) NOT NULL,
-  `specialty` VARCHAR(100) DEFAULT NULL, -- residentiel,terrain,appartement,commercial
+  `specialty` VARCHAR(100) DEFAULT NULL, -- residentiel, terrain, appartement, commercial
   `uaddress1` varchar(255) DEFAULT NULL,
   `uaddress2` varchar(255) DEFAULT NULL,
   `ucity` varchar(100) DEFAULT NULL,
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   `property_id` int(50) DEFAULT NULL,
   `rdv_date` date NOT NULL,
   `rdv_time` time NOT NULL,
-  `rdv_place` varchar(255) DEFAULT NULL,
+  `rdv_place` varchar(255) DEFAULT 'Sur place: 12 Rue de Paris, 75001 Paris',
   `rdv_status` enum('confirmé','annulé','terminé') NOT NULL DEFAULT 'confirmé', -- delete after managing it
   `rdv_motivation` varchar(255) DEFAULT NULL,
   `rdv_comments` text DEFAULT NULL,
