@@ -36,19 +36,25 @@ DROP TABLE IF EXISTS `feedback`;
 
 DROP TABLE IF EXISTS `appointments`;
 
-DROP TABLE IF EXISTS `property`;
-
 DROP TABLE IF EXISTS `chat_messages`;
 
-DROP TABLE IF EXISTS `chat_paticipants`;
+DROP TABLE IF EXISTS `chat_participants`;
 
 DROP TABLE IF EXISTS `chat_rooms`;
 
-DROP TABLE IF EXISTS `rendez-vous`;
-
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `rendez_vous`;
+DROP TABLE IF EXISTS `rendez_vous2`;
 
 DROP TABLE IF EXISTS `agent_disponibilite`;
+
+DROP TABLE IF EXISTS `agent_disponibilite2`;
+DROP TABLE IF EXISTS `agent_disponibilite3`;
+
+
+DROP TABLE IF EXISTS `property`;
+DROP TABLE IF EXISTS `user`;
+
+
 
 
 -- --------------------------------------------------------
@@ -115,7 +121,10 @@ CREATE TABLE `user` (
   `uaddress2` varchar(255) DEFAULT NULL,
   `ucity` varchar(100) DEFAULT NULL,
   `upostal_code` varchar(10) DEFAULT NULL,
-  `ucountry` varchar(100) DEFAULT NULL
+  `ucountry` varchar(100) DEFAULT NULL,
+  `formations` TEXT DEFAULT NULL,
+  `experiences` TEXT DEFAULT NULL,
+  `cv` VARCHAR(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -138,24 +147,28 @@ INSERT INTO `user` (`uid`, `uname`, `ufirstname`, `uemail`, `uphone`, `upass`, `
 (403, 'Agent8', 'b', 'agent8@email.com', '0600000002', 'password_hash', 'agent', 'default.png', '456 Boulevard des Experts', NULL, 'Lyon', '69001', 'France');
 
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `appointments`
+--
 
-
--- Création de la table appointments en utilisant la table user existante
 CREATE TABLE IF NOT EXISTS `appointments` (
   `aid` int(50) NOT NULL AUTO_INCREMENT,
   `client_id` int(50) NOT NULL,
   `agent_id` int(50) NOT NULL,
   `property_id` int(50) NOT NULL,
-  `appointment_date` date NOT NULL,
-  `appointment_time` time NOT NULL,
-  `place` varchar(255) NOT NULL,
+  `rdv_date` date NOT NULL,
+  `rdv_time` time NOT NULL,
+  `rdv_place` varchar(255) NOT NULL,
+  `rdv_status` enum('confirmé','annulé','terminé') NOT NULL DEFAULT 'confirmé',
+  `rdv_comments` text DEFAULT NULL,
+  `rdv_created_at` datetime NOT NULL DEFAULT current_timestamp(),
+
+  `rdv_price` decimal(10,2) DEFAULT NULL,
   `is_paid` tinyint(1) DEFAULT 0,
-  `payment_status` enum('pending','completed','refunded') NOT NULL DEFAULT 'pending',
-  `price` decimal(10,2) DEFAULT NULL,
-  `comments` text DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `payment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `rdv_payment_status` enum('pending','completed','refunded') NOT NULL DEFAULT 'pending',
+  `rdv_payment_date` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`aid`),
   KEY `client_id` (`client_id`),
   KEY `agent_id` (`agent_id`),
@@ -164,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `appointments` (
 
 -- Current appointments (future dates)
 -- Thursday is apparently presentation day, so we'll set some appointments for future dates after that
-INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment_date`, `appointment_time`, `place`, `is_paid`, `price`, `comments`, `created_at`) VALUES
+INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `rdv_date`, `rdv_time`, `rdv_place`, `is_paid`, `rdv_price`, `rdv_comments`, `rdv_created_at`) VALUES
 -- Client 101 future appointments
 (101, 201, 501, '2025-03-15', '10:00:00', 'Sur place: 12 Avenue Montaigne, Paris', 0, 150.00, 'Premier rendez-vous pour visiter cet appartement haussmannien', CURRENT_TIMESTAMP()),
 (101, 202, 503, '2025-03-16', '14:00:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 200.00, 'Visite du local commercial pour possible restaurant', CURRENT_TIMESTAMP()),
@@ -174,7 +187,7 @@ INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment
 (102, 202, 504, '2025-03-17', '16:00:00', 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 0, 150.00, 'Visite du terrain constructible', CURRENT_TIMESTAMP());
 
 -- Past appointments
-INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment_date`, `appointment_time`, `place`, `is_paid`, `price`, `comments`, `created_at`) VALUES
+INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `rdv_date`, `rdv_time`, `rdv_place`, `is_paid`, `rdv_price`, `rdv_comments`, `rdv_created_at`) VALUES
 -- Client 101 past appointments
 (101, 201, 506, '2025-03-05', '09:00:00', 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 1, 150.00, 'Le client a beaucoup aimé cette maison de ville', '2025-03-05 08:30:00'),
 (101, 202, 509, '2025-03-01', '15:00:00', 'Sur place: Route de la Forêt, Évry', 1, 150.00, 'Le client s\'est montré intéressé par le terrain avec vue', '2025-03-01 14:30:00'),
@@ -182,6 +195,53 @@ INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `appointment
 -- Client 102 past appointments
 (102, 201, 510, '2025-03-03', '13:00:00', 'Sur place: 3 Boulevard Haussmann, Paris', 1, 200.00, 'Le client a apprécié les prestations haut de gamme du duplex', '2025-03-03 12:30:00'),
 (102, 202, 507, '2025-02-28', '17:00:00', 'Sur place: 8 Avenue des Champs-Élysées, Paris', 1, 200.00, 'Le client a trouvé l\'espace de travail très lumineux', '2025-02-28 16:30:00');
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for tables for the messaging system
+--
+
+CREATE TABLE IF NOT EXISTS `chat_rooms` (
+    room_id INT AUTO_INCREMENT PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS `chat_participants` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT,
+    user_id INT
+);
+
+CREATE TABLE IF NOT EXISTS `chat_messages` (
+    message_id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT,
+    user_id INT,
+    message TEXT,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for tables for the messaging system
+--
+
+CREATE TABLE IF NOT EXISTS `agent_schedules` (
+  `schedule_id` int(50) NOT NULL AUTO_INCREMENT,
+  `agent_id` int(50) NOT NULL,
+  `day_of_week` varchar(10) NOT NULL, -- 0=Monday through 6=Sunday
+  `workday_start` time DEFAULT '09:00:00',
+  `workday_end` time DEFAULT '18:00:00',
+  `is_working_day` tinyint(1) NOT NULL DEFAULT 1,
+  `morning_slots` int(11) NOT NULL DEFAULT 3, -- Number of available morning slots
+  `afternoon_slots` int(11) NOT NULL DEFAULT 5, -- Number of available afternoon slots
+  PRIMARY KEY (`schedule_id`),
+  UNIQUE KEY `agent_day` (`agent_id`, `day_of_week`),
+  KEY `agent_id` (`agent_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -203,9 +263,18 @@ ALTER TABLE `user`
 
 
 ALTER TABLE `appointments`
-ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`),
-ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`),
-ADD CONSTRAINT `fk_appointments_property` FOREIGN KEY (`property_id`) REFERENCES `property` (`pid`);
+  ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`),
+  ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`),
+  ADD CONSTRAINT `fk_appointments_property` FOREIGN KEY (`property_id`) REFERENCES `property` (`pid`);
+
+
+ALTER TABLE `chat_participants`
+    ADD CONSTRAINT `fk_participant_rooms` FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
+    ADD CONSTRAINT `fk_chat_user` FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE;
+
+ALTER TABLE `chat_messages`
+    ADD CONSTRAINT `fk_messages_rooms` FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
+    ADD CONSTRAINT `fk_messages_user` FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE;
 --
 -- AUTO_INCREMENT for dumped tables
 --
@@ -223,6 +292,7 @@ ALTER TABLE `property`
 ALTER TABLE `user`
   MODIFY `uid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
+
 --
 -- Contraintes pour les tables déchargées
 --
@@ -235,36 +305,6 @@ ALTER TABLE `property`
 COMMIT;
 
 
-ALTER TABLE `user`
-ADD COLUMN `formations` TEXT DEFAULT NULL,
-ADD COLUMN `experiences` TEXT DEFAULT NULL,
-ADD COLUMN `cv` VARCHAR(255) DEFAULT NULL;
-
-CREATE TABLE chat_rooms (
-    room_id INT AUTO_INCREMENT PRIMARY KEY,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE chat_participants (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    room_id INT,
-    user_id INT,
-    FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE
-);
-
-CREATE TABLE chat_messages (
-    message_id INT AUTO_INCREMENT PRIMARY KEY,
-    room_id INT,
-    user_id INT,
-    message TEXT,
-    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE
-);
-
-
-
 -- -------------------------------------------------------------------------------------------------------------------
 -- -------------------------------------------------------------------------------------------------------------------
 -- -------------------------------------------------------------------------------------------------------------------
@@ -274,7 +314,7 @@ CREATE TABLE chat_messages (
 -- testing agent.php
 
 -- Create the agent_disponibilite (availability) table
-CREATE TABLE `agent_disponibilite` (
+CREATE TABLE IF NOT EXISTS `agent_disponibilite` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     agent_id INT NOT NULL,
     lundi_matin TINYINT(1) DEFAULT 0,
@@ -303,3 +343,265 @@ VALUES
 (203, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0), -- Works full days Monday, Wednesday, Friday only
 (204, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0), -- Works afternoons only, Saturday off completely
 (205, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1); -- Full availability except for Monday (day off)
+
+
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------------------------------------------
+
+-- testing disponibilite.php
+
+-- Create the agent_disponibilite table (agent availability schedule)
+CREATE TABLE IF NOT EXISTS `agent_disponibilite2` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `agent_id` int(50) NOT NULL,
+  `jour_semaine` varchar(20) NOT NULL,  -- lundi, mardi, mercredi, etc.
+  `heure_debut` time NOT NULL,          -- Format: HH:MM:SS
+  PRIMARY KEY (`id`),
+  KEY `agent_id` (`agent_id`),
+  CONSTRAINT `fk_dispo_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Insert availability for agent 201 (John Doe)
+INSERT INTO `agent_disponibilite2` (`agent_id`, `jour_semaine`, `heure_debut`) VALUES
+-- Monday (Lundi) availability
+(201, 'lundi', '09:00:00'),
+(201, 'lundi', '09:30:00'),
+(201, 'lundi', '10:00:00'),
+(201, 'lundi', '10:30:00'),
+(201, 'lundi', '11:00:00'),
+(201, 'lundi', '11:30:00'),
+(201, 'lundi', '14:00:00'),
+(201, 'lundi', '14:30:00'),
+(201, 'lundi', '15:00:00'),
+(201, 'lundi', '15:30:00'),
+(201, 'lundi', '16:00:00'),
+
+-- Tuesday (Mardi) availability
+(201, 'mardi', '09:00:00'),
+(201, 'mardi', '09:30:00'),
+(201, 'mardi', '10:00:00'),
+(201, 'mardi', '10:30:00'),
+(201, 'mardi', '11:00:00'),
+(201, 'mardi', '11:30:00'),
+
+-- Wednesday (Mercredi) availability
+(201, 'mercredi', '09:00:00'),
+(201, 'mercredi', '09:30:00'),
+(201, 'mercredi', '10:00:00'),
+(201, 'mercredi', '10:30:00'),
+(201, 'mercredi', '11:00:00'),
+(201, 'mercredi', '11:30:00'),
+(201, 'mercredi', '14:00:00'),
+(201, 'mercredi', '14:30:00'),
+(201, 'mercredi', '15:00:00'),
+(201, 'mercredi', '15:30:00'),
+(201, 'mercredi', '16:00:00'),
+(201, 'mercredi', '16:30:00'),
+(201, 'mercredi', '17:00:00'),
+(201, 'mercredi', '17:30:00');
+
+-- Insert availability for agent 202 (Alice Williams)
+INSERT INTO `agent_disponibilite2` (`agent_id`, `jour_semaine`, `heure_debut`) VALUES
+-- Thursday (Jeudi) availability
+(202, 'jeudi', '09:00:00'),
+(202, 'jeudi', '09:30:00'),
+(202, 'jeudi', '10:00:00'),
+(202, 'jeudi', '10:30:00'),
+(202, 'jeudi', '11:00:00'),
+(202, 'jeudi', '11:30:00'),
+(202, 'jeudi', '14:00:00'),
+(202, 'jeudi', '14:30:00'),
+(202, 'jeudi', '15:00:00'),
+(202, 'jeudi', '15:30:00'),
+
+-- Friday (Vendredi) availability
+(202, 'vendredi', '09:00:00'),
+(202, 'vendredi', '09:30:00'),
+(202, 'vendredi', '10:00:00'),
+(202, 'vendredi', '10:30:00'),
+(202, 'vendredi', '11:00:00'),
+(202, 'vendredi', '11:30:00');
+
+-- -- Insert some example appointments
+-- INSERT INTO `rendez_vous` (`client_id`, `agent_id`, `property_id`, `date_rdv`, `heure_debut`, `heure_fin`, `statut`, `commentaire`) VALUES
+-- (101, 201, 501, CURRENT_DATE(), '10:00:00', '10:30:00', 'confirmé', "Visite de l\'appartement haussmannien"),
+-- (102, 201, 502, DATE_ADD(CURRENT_DATE(), INTERVAL 1 DAY), '11:00:00', '11:30:00', 'confirmé', 'Visite du loft industriel'),
+-- (101, 202, 503, DATE_ADD(CURRENT_DATE(), INTERVAL 2 DAY), '14:00:00', '14:30:00', 'confirmé', 'Visite du local commercial');
+
+
+
+-- -------------------------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------------------------------------------
+
+-- mes_rdv utilise la table appointments en gros, and ca c'est pour rdv.php, mais c'est trop long comme table
+
+-- -- Create the agent_disponibilite (availability) table
+-- CREATE TABLE IF NOT EXISTS `agent_disponibilite3` (
+--   `id` int(11) NOT NULL AUTO_INCREMENT,
+--   `agent_id` int(50) NOT NULL,
+  
+--   -- Monday (Lundi) time slots
+--   `lundi_900` tinyint(1) DEFAULT 0,
+--   `lundi_930` tinyint(1) DEFAULT 0,
+--   `lundi_1000` tinyint(1) DEFAULT 0,
+--   `lundi_1030` tinyint(1) DEFAULT 0,
+--   `lundi_1100` tinyint(1) DEFAULT 0,
+--   `lundi_1130` tinyint(1) DEFAULT 0,
+--   `lundi_1200` tinyint(1) DEFAULT 0,
+--   `lundi_1230` tinyint(1) DEFAULT 0,
+--   `lundi_1300` tinyint(1) DEFAULT 0,
+--   `lundi_1330` tinyint(1) DEFAULT 0,
+--   `lundi_1400` tinyint(1) DEFAULT 0,
+--   `lundi_1430` tinyint(1) DEFAULT 0,
+--   `lundi_1500` tinyint(1) DEFAULT 0,
+--   `lundi_1530` tinyint(1) DEFAULT 0,
+--   `lundi_1600` tinyint(1) DEFAULT 0,
+--   `lundi_1630` tinyint(1) DEFAULT 0,
+--   `lundi_1700` tinyint(1) DEFAULT 0,
+--   `lundi_1730` tinyint(1) DEFAULT 0,
+--   `lundi_1800` tinyint(1) DEFAULT 0,
+  
+--   -- Tuesday (Mardi) time slots
+--   `mardi_900` tinyint(1) DEFAULT 0,
+--   `mardi_930` tinyint(1) DEFAULT 0,
+--   `mardi_1000` tinyint(1) DEFAULT 0,
+--   `mardi_1030` tinyint(1) DEFAULT 0,
+--   `mardi_1100` tinyint(1) DEFAULT 0,
+--   `mardi_1130` tinyint(1) DEFAULT 0,
+--   `mardi_1200` tinyint(1) DEFAULT 0,
+--   `mardi_1230` tinyint(1) DEFAULT 0,
+--   `mardi_1300` tinyint(1) DEFAULT 0,
+--   `mardi_1330` tinyint(1) DEFAULT 0,
+--   `mardi_1400` tinyint(1) DEFAULT 0,
+--   `mardi_1430` tinyint(1) DEFAULT 0,
+--   `mardi_1500` tinyint(1) DEFAULT 0,
+--   `mardi_1530` tinyint(1) DEFAULT 0,
+--   `mardi_1600` tinyint(1) DEFAULT 0,
+--   `mardi_1630` tinyint(1) DEFAULT 0,
+--   `mardi_1700` tinyint(1) DEFAULT 0,
+--   `mardi_1730` tinyint(1) DEFAULT 0,
+--   `mardi_1800` tinyint(1) DEFAULT 0,
+  
+--   -- Wednesday (Mercredi) time slots
+--   `mercredi_900` tinyint(1) DEFAULT 0,
+--   `mercredi_930` tinyint(1) DEFAULT 0,
+--   `mercredi_1000` tinyint(1) DEFAULT 0,
+--   `mercredi_1030` tinyint(1) DEFAULT 0,
+--   `mercredi_1100` tinyint(1) DEFAULT 0,
+--   `mercredi_1130` tinyint(1) DEFAULT 0,
+--   `mercredi_1200` tinyint(1) DEFAULT 0,
+--   `mercredi_1230` tinyint(1) DEFAULT 0,
+--   `mercredi_1300` tinyint(1) DEFAULT 0,
+--   `mercredi_1330` tinyint(1) DEFAULT 0,
+--   `mercredi_1400` tinyint(1) DEFAULT 0,
+--   `mercredi_1430` tinyint(1) DEFAULT 0,
+--   `mercredi_1500` tinyint(1) DEFAULT 0,
+--   `mercredi_1530` tinyint(1) DEFAULT 0,
+--   `mercredi_1600` tinyint(1) DEFAULT 0,
+--   `mercredi_1630` tinyint(1) DEFAULT 0,
+--   `mercredi_1700` tinyint(1) DEFAULT 0,
+--   `mercredi_1730` tinyint(1) DEFAULT 0,
+--   `mercredi_1800` tinyint(1) DEFAULT 0,
+  
+--   -- Thursday (Jeudi) time slots
+--   `jeudi_900` tinyint(1) DEFAULT 0,
+--   `jeudi_930` tinyint(1) DEFAULT 0,
+--   `jeudi_1000` tinyint(1) DEFAULT 0,
+--   `jeudi_1030` tinyint(1) DEFAULT 0,
+--   `jeudi_1100` tinyint(1) DEFAULT 0,
+--   `jeudi_1130` tinyint(1) DEFAULT 0,
+--   `jeudi_1200` tinyint(1) DEFAULT 0,
+--   `jeudi_1230` tinyint(1) DEFAULT 0,
+--   `jeudi_1300` tinyint(1) DEFAULT 0,
+--   `jeudi_1330` tinyint(1) DEFAULT 0,
+--   `jeudi_1400` tinyint(1) DEFAULT 0,
+--   `jeudi_1430` tinyint(1) DEFAULT 0,
+--   `jeudi_1500` tinyint(1) DEFAULT 0,
+--   `jeudi_1530` tinyint(1) DEFAULT 0,
+--   `jeudi_1600` tinyint(1) DEFAULT 0,
+--   `jeudi_1630` tinyint(1) DEFAULT 0,
+--   `jeudi_1700` tinyint(1) DEFAULT 0,
+--   `jeudi_1730` tinyint(1) DEFAULT 0,
+--   `jeudi_1800` tinyint(1) DEFAULT 0,
+  
+--   -- Friday (Vendredi) time slots
+--   `vendredi_900` tinyint(1) DEFAULT 0,
+--   `vendredi_930` tinyint(1) DEFAULT 0,
+--   `vendredi_1000` tinyint(1) DEFAULT 0,
+--   `vendredi_1030` tinyint(1) DEFAULT 0,
+--   `vendredi_1100` tinyint(1) DEFAULT 0,
+--   `vendredi_1130` tinyint(1) DEFAULT 0,
+--   `vendredi_1200` tinyint(1) DEFAULT 0,
+--   `vendredi_1230` tinyint(1) DEFAULT 0,
+--   `vendredi_1300` tinyint(1) DEFAULT 0,
+--   `vendredi_1330` tinyint(1) DEFAULT 0,
+--   `vendredi_1400` tinyint(1) DEFAULT 0,
+--   `vendredi_1430` tinyint(1) DEFAULT 0,
+--   `vendredi_1500` tinyint(1) DEFAULT 0,
+--   `vendredi_1530` tinyint(1) DEFAULT 0,
+--   `vendredi_1600` tinyint(1) DEFAULT 0,
+--   `vendredi_1630` tinyint(1) DEFAULT 0,
+--   `vendredi_1700` tinyint(1) DEFAULT 0,
+--   `vendredi_1730` tinyint(1) DEFAULT 0,
+--   `vendredi_1800` tinyint(1) DEFAULT 0,
+  
+--   -- Saturday (Samedi) time slots
+--   `samedi_900` tinyint(1) DEFAULT 0,
+--   `samedi_930` tinyint(1) DEFAULT 0,
+--   `samedi_1000` tinyint(1) DEFAULT 0,
+--   `samedi_1030` tinyint(1) DEFAULT 0,
+--   `samedi_1100` tinyint(1) DEFAULT 0,
+--   `samedi_1130` tinyint(1) DEFAULT 0,
+--   `samedi_1200` tinyint(1) DEFAULT 0,
+--   `samedi_1230` tinyint(1) DEFAULT 0,
+--   `samedi_1300` tinyint(1) DEFAULT 0,
+--   `samedi_1330` tinyint(1) DEFAULT 0,
+--   `samedi_1400` tinyint(1) DEFAULT 0,
+--   `samedi_1430` tinyint(1) DEFAULT 0,
+--   `samedi_1500` tinyint(1) DEFAULT 0,
+--   `samedi_1530` tinyint(1) DEFAULT 0,
+--   `samedi_1600` tinyint(1) DEFAULT 0,
+--   `samedi_1630` tinyint(1) DEFAULT 0,
+--   `samedi_1700` tinyint(1) DEFAULT 0,
+--   `samedi_1730` tinyint(1) DEFAULT 0,
+--   `samedi_1800` tinyint(1) DEFAULT 0,
+  
+--   PRIMARY KEY (`id`),
+--   UNIQUE KEY `agent_id` (`agent_id`),
+--   CONSTRAINT `fk_disponibilite_agent3` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+
+
+
+
+-- -- Insert sample data for agent 201
+-- INSERT INTO `agent_disponibilite3` (
+--   `agent_id`,
+--   -- Monday morning slots
+--   `lundi_900`, `lundi_930`, `lundi_1000`, `lundi_1030`, `lundi_1100`, `lundi_1130`,
+--   -- Monday afternoon slots
+--   `lundi_1400`, `lundi_1430`, `lundi_1500`, `lundi_1530`,
+--   -- Tuesday morning slots
+--   `mardi_1000`, `mardi_1030`, `mardi_1100`, `mardi_1130`,
+--   -- Wednesday full day
+--   `mercredi_900`, `mercredi_930`, `mercredi_1000`, `mercredi_1030`, `mercredi_1100`, `mercredi_1130`,
+--   `mercredi_1400`, `mercredi_1430`, `mercredi_1500`, `mercredi_1530`, `mercredi_1600`, `mercredi_1630`,
+--   -- Friday morning
+--   `vendredi_900`, `vendredi_930`, `vendredi_1000`, `vendredi_1030`
+-- ) VALUES (
+--   201,
+--   -- Monday morning slots (available)
+--   1, 1, 1, 1, 1, 1,
+--   -- Monday afternoon slots (available)
+--   1, 1, 1, 1,
+--   -- Tuesday morning slots (available)
+--   1, 1, 1, 1,
+--   -- Wednesday full day (available)
+--   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+--   -- Friday morning (available)
+--   1, 1, 1, 1
+-- );
