@@ -63,16 +63,16 @@ if ($_SESSION['isAgent']) {
 
 // Récupérer les rendez-vous à venir
 $upcomingSql = $baseSql . $userFilter . ($userFilter ? " AND " : " WHERE ") . 
-               "(a.appointment_date > '$currentDate' OR 
-                (a.appointment_date = '$currentDate' AND a.appointment_time > '$currentTime')) 
-                ORDER BY a.appointment_date ASC, a.appointment_time ASC";
+               "(a.rdv_date > '$currentDate' OR 
+                (a.rdv_date = '$currentDate' AND a.rdv_time > '$currentTime')) 
+                ORDER BY a.rdv_date ASC, a.rdv_time ASC";
 $upcomingQuery = mysqli_query($con, $upcomingSql);
 
 // Récupérer les rendez-vous passés
 $pastSql = $baseSql . $userFilter . ($userFilter ? " AND " : " WHERE ") . 
-           "(a.appointment_date < '$currentDate' OR 
-            (a.appointment_date = '$currentDate' AND a.appointment_time <= '$currentTime')) 
-            ORDER BY a.appointment_date DESC, a.appointment_time DESC";
+           "(a.rdv_date < '$currentDate' OR 
+            (a.rdv_date = '$currentDate' AND a.rdv_time <= '$currentTime')) 
+            ORDER BY a.rdv_date DESC, a.rdv_time DESC";
 $pastQuery = mysqli_query($con, $pastSql);
 ?>
 
@@ -182,10 +182,10 @@ $pastQuery = mysqli_query($con, $pastSql);
                         <?php 
                         while($app = mysqli_fetch_array($upcomingQuery)) {
                             // Formater la date et l'heure
-                            $date = new DateTime($app['appointment_date']);
+                            $date = new DateTime($app['rdv_date']);
                             $formattedDate = $date->format('d/m/Y');
                             
-                            $time = new DateTime($app['appointment_time']);
+                            $time = new DateTime($app['rdv_time']);
                             $formattedTime = $time->format('H:i');
                         ?>
                             <tr>
@@ -197,7 +197,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                         </a>
                                     </div>
                                 </td>
-                                <td><?php echo $app['place']; ?></td>
+                                <td><?php echo $app['rdv_place']; ?></td>
                                 <td><?php echo $formattedDate; ?></td>
                                 <td><?php echo $formattedTime; ?></td>
 
@@ -218,7 +218,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                     <span class="badge-paid"><i class="fas fa-check-circle"></i> Payé</span>
                                     <?php } else { ?>
                                     <div class="payment-container">
-                                        <span class="badge-unpaid"><i class="fas fa-times-circle"></i> <?php echo number_format($app['price'], 0, ',', ' ') . ' €'; ?></span>
+                                        <span class="badge-unpaid"><i class="fas fa-times-circle"></i> <?php echo number_format($app['rdv_price'], 0, ',', ' ') . ' €'; ?></span>
                                         <a href="payment.php?appointment_id=<?php echo $app['aid']; ?>" class="payment-link">
                                             <i class="fas fa-credit-card"></i> Payer
                                         </a>
@@ -226,7 +226,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                     <?php } ?>
                                 </td>
                                 <?php } ?>
-                                <td class="comments"><?php echo $app['comments']; ?></td>
+                                <td class="comments"><?php echo $app['rdv_comments']; ?></td>
                                 <td class="actions text-center">
                                     <a href="appointments.php?cancel_id=<?php echo $app['aid']; ?>" onclick="return confirm('Voulez-vous annuler ce RDV ?');">
                                         <img src="images/admin/delete.png" class="img-action" style="width: 23px !important; height: 23px !important;" title="Annuler">
@@ -276,10 +276,10 @@ $pastQuery = mysqli_query($con, $pastSql);
                         <?php 
                         while($app = mysqli_fetch_array($pastQuery)) {
                             // Formater la date et l'heure
-                            $date = new DateTime($app['appointment_date']);
+                            $date = new DateTime($app['rdv_date']);
                             $formattedDate = $date->format('d/m/Y');
                             
-                            $time = new DateTime($app['appointment_time']);
+                            $time = new DateTime($app['rdv_time']);
                             $formattedTime = $time->format('H:i');
                         ?>
                             <tr>
@@ -291,7 +291,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                         </a>
                                     </div>
                                 </td>
-                                <td><?php echo $app['place']; ?></td>
+                                <td><?php echo $app['rdv_place']; ?></td>
                                 <td><?php echo $formattedDate; ?></td>
                                 <td><?php echo $formattedTime; ?></td>
 
@@ -312,7 +312,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                         <span class="badge-paid"><i class="fas fa-check-circle"></i> Payé</span>
                                     <?php } else { ?>
                                     <div class="payment-container">
-                                        <span class="badge-unpaid"><i class="fas fa-times-circle"></i> <?php echo number_format($app['price'], 0, ',', ' ') . ' €'; ?></span>
+                                        <span class="badge-unpaid"><i class="fas fa-times-circle"></i> <?php echo number_format($app['rdv_price'], 0, ',', ' ') . ' €'; ?></span>
                                         <a href="payment.php?appointment_id=<?php echo $app['aid']; ?>" class="payment-link">
                                             <i class="fas fa-credit-card"></i>Payer
                                         </a>
@@ -320,7 +320,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                     <?php } ?>
                                 </td>
                                 <?php } ?>
-                                <td class="comments"><?php echo $app['comments']; ?></td>
+                                <td class="comments"><?php echo $app['rdv_comments']; ?></td>
                             </tr>
                         <?php } ?>
                         </tbody>

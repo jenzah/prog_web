@@ -6,7 +6,7 @@ if (!isset($_GET['id'])) {
     exit();
 }
 
-$agent_id = intval($_GET['id']); 
+$agent_id = '204'; 
 
 $query = mysqli_query($con, "SELECT * FROM user WHERE uid = $agent_id AND utype = 'agent'");
 $agent = mysqli_fetch_assoc($query);
@@ -214,8 +214,8 @@ $has_cv = file_exists($cv_path);
         }
     </style>
 </head>
-<body>
 
+<body>
 <div class="agent-card">
     <img src="<?= htmlspecialchars($agent['uimage']) ?>" alt="Photo de <?= htmlspecialchars(' ' . $agent['uname']) ?>" class="agent-photo">
     <h2><?= htmlspecialchars(' ' . $agent['uname']) ?></h2>

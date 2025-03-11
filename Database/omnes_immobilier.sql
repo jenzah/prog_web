@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS `agent_disponibilite`;
 DROP TABLE IF EXISTS `agent_disponibilite2`;
 DROP TABLE IF EXISTS `agent_disponibilite3`;
 
-
+DROP TABLE IF EXISTS `agent_schedules`;
 DROP TABLE IF EXISTS `property`;
 DROP TABLE IF EXISTS `user`;
 
@@ -157,11 +157,12 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   `aid` int(50) NOT NULL AUTO_INCREMENT,
   `client_id` int(50) NOT NULL,
   `agent_id` int(50) NOT NULL,
-  `property_id` int(50) NOT NULL,
+  `property_id` int(50) DEFAULT NULL,
   `rdv_date` date NOT NULL,
   `rdv_time` time NOT NULL,
-  `rdv_place` varchar(255) NOT NULL,
+  `rdv_place` varchar(255) DEFAULT NULL,
   `rdv_status` enum('confirmé','annulé','terminé') NOT NULL DEFAULT 'confirmé',
+  `rdv_motivation` varchar(255) DEFAULT NULL,
   `rdv_comments` text DEFAULT NULL,
   `rdv_created_at` datetime NOT NULL DEFAULT current_timestamp(),
 
@@ -179,8 +180,8 @@ CREATE TABLE IF NOT EXISTS `appointments` (
 -- Thursday is apparently presentation day, so we'll set some appointments for future dates after that
 INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `rdv_date`, `rdv_time`, `rdv_place`, `is_paid`, `rdv_price`, `rdv_comments`, `rdv_created_at`) VALUES
 -- Client 101 future appointments
-(101, 201, 501, '2025-03-15', '10:00:00', 'Sur place: 12 Avenue Montaigne, Paris', 0, 150.00, 'Premier rendez-vous pour visiter cet appartement haussmannien', CURRENT_TIMESTAMP()),
-(101, 202, 503, '2025-03-16', '14:00:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 200.00, 'Visite du local commercial pour possible restaurant', CURRENT_TIMESTAMP()),
+(101, 203, 501, '2025-03-11', '10:00:00', 'Sur place: 12 Avenue Montaigne, Paris', 0, 150.00, 'Premier rendez-vous pour visiter cet appartement haussmannien', CURRENT_TIMESTAMP()),
+(101, 203, 503, '2025-03-14', '14:00:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 200.00, 'Visite du local commercial pour possible restaurant', CURRENT_TIMESTAMP()),
 
 -- Client 102 future appointments
 (102, 201, 502, '2025-03-14', '11:00:00', 'Sur place: 5 Rue des Entrepreneurs, Boulogne-Billancourt', 0, 150.00, 'Visite du loft industriel', CURRENT_TIMESTAMP()),
@@ -306,7 +307,7 @@ ALTER TABLE `user`
 ALTER TABLE `appointments`
   ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`),
   ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`),
-  ADD CONSTRAINT `fk_appointments_property` FOREIGN KEY (`property_id`) REFERENCES `property` (`pid`);
+  ADD CONSTRAINT `fk_appointments_property` FOREIGN KEY (`property_id`) REFERENCES `property` (`pid`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 
 ALTER TABLE `chat_participants`
@@ -337,13 +338,6 @@ ALTER TABLE `user`
 --
 -- Contraintes pour les tables déchargées
 --
-
---
--- Contraintes pour la table `property`
---
-ALTER TABLE `property`
-  ADD CONSTRAINT `fk_property_user` FOREIGN KEY (`agentid`) REFERENCES `user` (`uid`) ON DELETE CASCADE;
-COMMIT;
 
 
 -- -------------------------------------------------------------------------------------------------------------------
