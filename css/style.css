@@ -495,6 +495,12 @@ hover-text-white-nav .navbar-nav .nav-link.active,
 	border-color: var(--theme-dark-primary-color);
 	border-radius: 50px;
 }
+.btn-secondary, .btn-secondary:hover, .btn-ordinary:hover {
+	color: var(--theme-white-color);
+	background-color: var(--theme-secondary-color);
+	border-color: var(--theme-secondary-color);
+	border-radius: 50px;
+}
 .btn-white {
 	color: var(--theme-secondary-color);
 	background-color: var(--theme-white-color);
@@ -1247,7 +1253,7 @@ blockquote {
 	color: white;
 	padding: 10px 20px;
 	border: none;
-	border-radius: 5px;
+	border-radius: 50px;
 	font-weight: 600;
 	cursor: pointer;
 }
@@ -1296,6 +1302,7 @@ blockquote {
 	color: white;
 	border-radius: 5px;
 	font-weight: 500;
+	padding: 5px 10px !important;
 }
 
 /*==========================================

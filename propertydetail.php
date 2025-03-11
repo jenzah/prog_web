@@ -128,40 +128,49 @@ $row = mysqli_fetch_assoc($query);
                         </div>
 
                         <!-- Informations sur l'agent -->
-                        <div class="col-lg-4">
-                            <div class="agent-box p-3 border rounded">
-                                <h5 class="text-secondary">Agent Responsable</h5>
+                        <div class="col-lg-4 ">
+                            <div class="agent-info-sidebar p-3 border rounded">
+                                <h4 class="text-secondary text-center mb-4">Agent Responsable</h4>
                                 <img src="images/profile_pic/<?php echo htmlspecialchars($row['uimage']); ?>" class="img-fluid rounded-circle mb-3" alt="Agent">
-                                <h6><?php echo htmlspecialchars($row['ufirstname']) . " " . htmlspecialchars($row['uname']); ?></h6>
-                                <p>Email : <a href="mailto:<?php echo htmlspecialchars($row['uemail']); ?>"><?php echo htmlspecialchars($row['uemail']); ?></a></p>
-                                <p>Téléphone : <?php echo htmlspecialchars($row['uphone']); ?></p>
+                                
+                                <h5 class="text-center mb-4"><?= htmlspecialchars($row['ufirstname']) . " " . htmlspecialchars(strtoupper($row['uname'])); ?></h5>
+                                
+                                <div class="agent-stat">
+                                    <strong><i class="fa fa-envelope"></i> Email:</strong> 
+                                    <span class="float-right"><a href="mailto:<?php echo htmlspecialchars($row['uemail']); ?>"><?php echo htmlspecialchars($row['uemail']); ?></a></span>
+                                </div>
+                                
+                                <div class="agent-stat">
+                                    <strong><i class="fa fa-phone"></i> Téléphone:</strong> 
+                                    <span class="float-right"><?php echo htmlspecialchars($row['uphone']); ?></span>
+                                </div>
 
-                                <?php if ($_SESSION['utype'] != 'agent') { ?>
-                                  <!-- Boutons actions -->
-        <div class="d-grid gap-2">
-            <!-- Bouton "Prendre Rendez-vous" -->
-            <a href="rendezvous.php?agent_id=<?php echo htmlspecialchars($row['agentid']); ?>" class="btn btn-primary mb-2">
-                Prendre Rendez-vous
-            </a>
+                                <?php if (!$_SESSION['isAgent']) { ?>
+                                <!-- Boutons actions -->
+                                <div class="mt-4 d-flex flex-column align-items-center">
+                                    <!-- Bouton "Prendre Rendez-vous" -->
+                                    <a href="rdv_disponibilite.php?agent_id=<?php echo htmlspecialchars($row['agentid']); ?>" class="btn btn-primary btn-block w-75">
+                                        <i class="fa fa-calendar"></i> Prendre Rendez-vous
+                                    </a>
 
-            <!-- Bouton "Télécharger le CV" -->
-            <?php if (!empty($row['cv']) && file_exists("images/cv/" . $row['cv'])) { ?>
-    <a href="images/cv/<?php echo $row['cv']; ?>" download class="btn btn-secondary">Télécharger CV</a>
-<?php } else { ?>
-    <span class="text-danger">CV non disponible</span>
-<?php } ?>
-
-
-            <!-- Bouton "Messagerie" -->
-            <a href="messagerie.php?agent_id=<?php echo htmlspecialchars($row['agentid']); ?>" class="btn btn-success">
-                Messagerie
-            </a>
-            <a href="appointments_agent.php?agentid=<?php echo htmlspecialchars($row['agentid']); ?>" class="btn btn-success">
-                agent.php test
-            </a>
-        </div>
-        <?php } ?>
-                                </form>
+                                    <!-- Bouton "Télécharger le CV" -->
+                                    <?php if (!empty($row['cv']) && file_exists("images/cv/" . $row['cv'])) { ?>
+                                        <a href="images/cv/<?php echo $row['cv']; ?>" download class="btn btn-secondary btn-block w-75">
+                                            <i class="fa fa-file-text"></i> Télécharger CV
+                                        </a>
+                                    <?php } else { ?>
+                                        <button class="btn btn-secondary btn-block w-75 disabled" disabled>
+                                            <i class="fa fa-file-text"></i> CV non disponible
+                                        </button>
+                                    <?php } ?>
+                                    
+                                    
+                                    <!-- Bouton "Messagerie" -->
+                                    <a href="messagerie.php?agent_id=<?php echo htmlspecialchars($row['agentid']); ?>" class="btn btn-secondary btn-block w-75">
+                                        <i class="fa fa-comments"></i> Messagerie
+                                    </a>
+                                </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

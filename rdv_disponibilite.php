@@ -258,8 +258,8 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
             
             <div class="row">
                 <!-- Colonne de gauche - Profil de l'agent -->
-                <div class="col-lg-3 col-md-4">
-                    <div class="agent-info-sidebar">
+                <div class="col-lg-3">
+                    <div class="agent-info-sidebar p-3">
                         <div class="text-center mb-4">
                             <img src="images/profile_pic/<?= $agent['uimage'] ?>" class="agent-photo" alt="Photo de l'agent">
                             <h4 class="text-secondary"><?= htmlspecialchars($agent['ufirstname']) ?> <?= htmlspecialchars(strtoupper($agent['uname'])) ?></h4>
@@ -272,8 +272,10 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
                         </div>
                         
                         <div class="agent-stat">
-                            <strong><i class="fa fa-envelope"></i> Email:</strong> 
-                            <span class="float-right text-truncate"><?= htmlspecialchars($agent['uemail']) ?></span>
+                            <strong><i class="fa fa-envelope"></i> Email:</strong>
+                            <div class="float-right text-truncate" style="max-width: 65%; font-size: 13px;">
+                                <a href="mailto:<?php echo htmlspecialchars($agent['uemail']); ?>"><?php echo htmlspecialchars($agent['uemail']); ?></a>
+                            </div>
                         </div>
                         
                         <div class="agent-stat">
@@ -286,20 +288,28 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
                             <span class="float-right"><?= $properties_count ?></span>
                         </div>
                         
-                        <div class="mt-4">
-                            <a href="agent_profile.php?id=<?= $agent_id ?>" class="btn btn-primary agent-contact-btn">
-                                <i class="fa fa-user"></i> Voir le profil complet
+                        <!-- Boutons actions -->
+                        <div class="mt-4 d-flex flex-column align-items-center">
+                            <!-- Bouton "Prendre Rendez-vous" -->
+                            <a href="rdv_disponibilite.php?agent_id=<?php echo htmlspecialchars($row['agentid']); ?>" class="btn btn-primary btn-block w-75" style="font-size: 13px;">
+                                <i class="fa fa-calendar"></i> Prendre RDV
                             </a>
-                            
-                            <?php if(isset($_SESSION['uid'])) { ?>
-                            <a href="chat.php?agent_id=<?= $agent_id ?>" class="btn btn-info agent-contact-btn">
-                                <i class="fa fa-comments"></i> Contacter par message
-                            </a>
-                            
-                            <a href="agent_cv.php?id=<?= $agent_id ?>" class="btn btn-secondary agent-contact-btn">
-                                <i class="fa fa-file-text"></i> Consulter le CV
-                            </a>
+
+                            <!-- Bouton "Télécharger le CV" -->
+                            <?php if (!empty($row['cv']) && file_exists("images/cv/" . $row['cv'])) { ?>
+                                <a href="images/cv/<?php echo $row['cv']; ?>" download class="btn btn-secondary btn-block w-75" style="font-size: 13px;">
+                                    <i class="fa fa-file-text"></i> Télécharger CV
+                                </a>
+                            <?php } else { ?>
+                                <button class="btn btn-secondary btn-block w-75 disabled" disabled style="font-size: 13px;">
+                                    <i class="fa fa-file-text"></i> CV non disponible
+                                </button>
                             <?php } ?>
+                            
+                            <!-- Bouton "Messagerie" -->
+                            <a href="messagerie.php?agent_id=<?php echo htmlspecialchars($row['agentid']); ?>" class="btn btn-secondary btn-block w-75">
+                                <i class="fa fa-comments"></i> Messagerie
+                            </a>
                         </div>
                     </div>
                 </div>

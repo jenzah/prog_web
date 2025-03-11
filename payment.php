@@ -118,7 +118,7 @@ if (isset($_GET['cancel_id'])) {
                         <nav aria-label="breadcrumb" class="float-md-right">
                             <ol class="breadcrumb bg-transparent m-0 p-0">
                                 <li class="breadcrumb-item text-white"><a href="home.php">Accueil</a></li>
-                                <li class="breadcrumb-item text-white"><a href="appointments.php">Mes RDVs</a></li>
+                                <li class="breadcrumb-item text-white"><a href="rdv_dashboard.php">Mes RDVs</a></li>
                                 <li class="breadcrumb-item active">Détail du RDV</li>
                             </ol>
                         </nav>
