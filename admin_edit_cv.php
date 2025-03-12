@@ -243,7 +243,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <button type="submit" class="btn btn-primary mb-5">Enregistrer</button>
-    <a href="admin_agent.php" class="btn btn-secondary mb-5">Annuler</a>
+    <a href="profile.php" class="btn btn-secondary mb-5">Annuler</a>
 </form>
 
 </div>
