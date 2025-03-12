@@ -189,11 +189,11 @@ INSERT INTO `user` (`uid`, `uname`, `ufirstname`, `uemail`, `uphone`, `upass`, `
 (313, 'Huet', 'Laurent', 'client13@example.com', '0600000021', 'client13', 'client', 'default.jpg', NULL, '130 Rue de Vannes', NULL, 'Vannes', '56000', 'France', NULL, NULL),
 (314, 'Joly', 'Sandrine', 'client14@example.com', '0600000022', 'client14', 'client', 'default.jpg', NULL, '140 Rue de Saint-Malo', NULL, 'Saint-Malo', '35400', 'France', NULL, NULL),
 (315, 'Klein', 'Éric', 'client15@example.com', '0600000023', 'client15', 'client', 'default.jpg', NULL, '150 Rue de Bayonne', NULL, 'Bayonne', '64100', 'France', NULL, NULL),
-(316, 'Lacroix', 'Caroline', 'client16@example.com', '0600000024', 'client16', 'default', 'client16.jpg', NULL, '160 Rue de Pau', NULL, 'Pau', '64000', 'France', NULL, NULL),
-(317, 'Lefort', 'Olivier', 'client17@example.com', '0600000025', 'client17', 'default', 'client17.jpg', NULL, '170 Rue de Tarbes', NULL, 'Tarbes', '65000', 'France', NULL, NULL),
-(318, 'Lemaitre', 'Sophie', 'client18@example.com', '0600000026', 'client18', 'default', 'client18.jpg', NULL, '180 Rue d Auch', NULL, 'Auch', '32000', 'France', NULL, NULL),
-(319, 'Leroux', 'Gérard', 'client19@example.com', '0600000027', 'client19', 'default', 'client19.jpg', NULL, '190 Rue de Castres', NULL, 'Castres', '81100', 'France', NULL, NULL),
-(320, 'Lévêque', 'Isabelle', 'client20@example.com', '0600000028', 'client20', 'default', 'client20.jpg', NULL, '200 Rue d Albi', NULL, 'Albi', '81000', 'France', NULL, NULL),
+(316, 'Lacroix', 'Caroline', 'client16@example.com', '0600000024', 'client16', 'client', 'default.jpg', NULL, '160 Rue de Pau', NULL, 'Pau', '64000', 'France', NULL, NULL),
+(317, 'Lefort', 'Olivier', 'client17@example.com', '0600000025', 'client17', 'client', 'default.jpg', NULL, '170 Rue de Tarbes', NULL, 'Tarbes', '65000', 'France', NULL, NULL),
+(318, 'Lemaitre', 'Sophie', 'client18@example.com', '0600000026', 'client18', 'client', 'default.jpg', NULL, '180 Rue d Auch', NULL, 'Auch', '32000', 'France', NULL, NULL),
+(319, 'Leroux', 'Gérard', 'client19@example.com', '0600000027', 'client19', 'client', 'default.jpg', NULL, '190 Rue de Castres', NULL, 'Castres', '81100', 'France', NULL, NULL),
+(320, 'Lévêque', 'Isabelle', 'client20@example.com', '0600000028', 'client20', 'client', 'default.jpg', NULL, '200 Rue d Albi', NULL, 'Albi', '81000', 'France', NULL, NULL),
 
 -- Admins
 (401, 'Bourgeois', 'Pierre', 'admin1@example.com', '0600000029', 'admin1', 'admin', 'admin1.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -235,22 +235,104 @@ CREATE TABLE IF NOT EXISTS `appointments` (
 -- Thursday is apparently presentation day, so we'll set some appointments for future dates after that
 INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `rdv_date`, `rdv_time`, `rdv_place`, `is_paid`, `rdv_price`, `rdv_comments`, `rdv_created_at`) VALUES
 -- Client 101 future appointments
-(101, 203, 501, '2025-03-11', '10:00:00', 'Sur place: 12 Avenue Montaigne, Paris', 0, 150.00, 'Premier rendez-vous pour visiter cet appartement haussmannien', CURRENT_TIMESTAMP()),
-(101, 203, 503, '2025-03-14', '14:00:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 200.00, 'Visite du local commercial pour possible restaurant', CURRENT_TIMESTAMP()),
+(301, 203, 501, '2025-03-11', '10:00:00', 'Sur place: 12 Avenue Montaigne, Paris', 0, 150.00, 'Premier rendez-vous pour visiter cet appartement haussmannien', CURRENT_TIMESTAMP()),
+(301, 203, 503, '2025-03-14', '14:00:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 200.00, 'Visite du local commercial pour possible restaurant', CURRENT_TIMESTAMP()),
 
 -- Client 102 future appointments
-(102, 201, 502, '2025-03-14', '11:00:00', 'Sur place: 5 Rue des Entrepreneurs, Boulogne-Billancourt', 0, 150.00, 'Visite du loft industriel', CURRENT_TIMESTAMP()),
-(102, 202, 504, '2025-03-17', '16:00:00', 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 0, 150.00, 'Visite du terrain constructible', CURRENT_TIMESTAMP());
+(302, 201, 502, '2025-03-14', '11:00:00', 'Sur place: 5 Rue des Entrepreneurs, Boulogne-Billancourt', 0, 150.00, 'Visite du loft industriel', CURRENT_TIMESTAMP()),
+(302, 202, 504, '2025-03-17', '16:00:00', 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 0, 150.00, 'Visite du terrain constructible', CURRENT_TIMESTAMP());
 
 -- Past appointments
 INSERT INTO `appointments` (`client_id`, `agent_id`, `property_id`, `rdv_date`, `rdv_time`, `rdv_place`, `is_paid`, `rdv_price`, `rdv_comments`, `rdv_created_at`) VALUES
 -- Client 101 past appointments
-(101, 201, 506, '2025-03-05', '09:00:00', 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 1, 150.00, 'Le client a beaucoup aimé cette maison de ville', '2025-03-05 08:30:00'),
-(101, 202, 509, '2025-03-01', '15:00:00', 'Sur place: Route de la Forêt, Évry', 1, 150.00, 'Le client s\'est montré intéressé par le terrain avec vue', '2025-03-01 14:30:00'),
+(303, 201, 506, '2025-03-05', '09:00:00', 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 1, 150.00, 'Le client a beaucoup aimé cette maison de ville', '2025-03-05 08:30:00'),
+(303, 202, 509, '2025-03-01', '15:00:00', 'Sur place: Route de la Forêt, Évry', 1, 150.00, 'Le client s\'est montré intéressé par le terrain avec vue', '2025-03-01 14:30:00'),
 
 -- Client 102 past appointments
-(102, 201, 510, '2025-03-03', '13:00:00', 'Sur place: 3 Boulevard Haussmann, Paris', 1, 200.00, 'Le client a apprécié les prestations haut de gamme du duplex', '2025-03-03 12:30:00'),
-(102, 202, 507, '2025-02-28', '17:00:00', 'Sur place: 8 Avenue des Champs-Élysées, Paris', 1, 200.00, 'Le client a trouvé l\'espace de travail très lumineux', '2025-02-28 16:30:00');
+(304, 201, 510, '2025-03-03', '13:00:00', 'Sur place: 3 Boulevard Haussmann, Paris', 1, 200.00, 'Le client a apprécié les prestations haut de gamme du duplex', '2025-03-03 12:30:00'),
+(304, 202, 507, '2025-02-28', '17:00:00', 'Sur place: 8 Avenue des Champs-Élysées, Paris', 1, 200.00, 'Le client a trouvé l\'espace de travail très lumineux', '2025-02-28 16:30:00');
+
+
+-- Insert appointments for last week
+INSERT INTO appointments (client_id, agent_id, property_id, rdv_date, rdv_time, rdv_place, is_paid, rdv_price, rdv_comments) VALUES
+(301, 201, 501, '2025-03-04', '09:00:00', 'Sur place: 12 Avenue Montaigne, Paris', 0, 150.00, 'Visite de l appartement'),
+(302, 201, 502, '2025-03-05', '10:00:00', 'Sur place: 5 Rue des Entrepreneurs, Boulogne-Billancourt', 0, 150.00, 'Visite du loft'),
+(303, 201, 503, '2025-03-06', '11:00:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 150.00, 'Visite du local commercial'),
+(304, 201, 504, '2025-03-07', '14:00:00', 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 0, 150.00, 'Visite du terrain'),
+(305, 201, 505, '2025-03-08', '15:00:00', 'Sur place: 45 Rue Mouffetard, Paris', 0, 150.00, 'Visite du studio'),
+(306, 201, 506, '2025-03-09', '16:00:00', 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 0, 150.00, 'Visite de la maison de ville'),
+
+(301, 202, 507, '2025-03-04', '09:00:00', 'Sur place: 8 Avenue des Champs-Élysées, Paris', 0, 150.00, 'Visite des bureaux'),
+(302, 202, 508, '2025-03-05', '10:00:00', 'Sur place: 25 Rue des Écoles, Créteil', 0, 150.00, 'Visite de l appartement familial'),
+(303, 202, 509, '2025-03-06', '11:00:00', 'Sur place: Route de la Forêt, Évry', 0, 150.00, 'Visite du terrain avec vue'),
+(304, 202, 510, '2025-03-07', '14:00:00', 'Sur place: 3 Boulevard Haussmann, Paris', 0, 150.00, 'Visite du duplex'),
+(305, 202, 511, '2025-03-08', '15:00:00', 'Sur place: 15 Quai d Orsay, Paris', 0, 150.00, 'Visite de l appartement vue Seine'),
+(306, 202, 512, '2025-03-09', '16:00:00', 'Sur place: 20 Chemin des Fleurs, Fontainebleau', 0, 150.00, 'Visite de la maison de campagne'),
+
+(301, 203, 501, '2025-03-04', '09:00:00', 'Sur place: 12 Avenue Montaigne, Paris', 0, 150.00, 'Visite de l appartement'),
+(302, 203, 502, '2025-03-05', '10:00:00', 'Sur place: 5 Rue des Entrepreneurs, Boulogne-Billancourt', 0, 150.00, 'Visite du loft'),
+(303, 203, 503, '2025-03-06', '11:00:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 150.00, 'Visite du local commercial'),
+(304, 203, 504, '2025-03-07', '14:00:00', 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 0, 150.00, 'Visite du terrain'),
+(305, 203, 505, '2025-03-08', '15:00:00', 'Sur place: 45 Rue Mouffetard, Paris', 0, 150.00, 'Visite du studio'),
+(306, 203, 506, '2025-03-09', '16:00:00', 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 0, 150.00, 'Visite de la maison de ville'),
+
+(301, 204, 507, '2025-03-04', '09:00:00', 'Sur place: 8 Avenue des Champs-Élysées, Paris', 0, 150.00, 'Visite des bureaux'),
+(302, 204, 508, '2025-03-05', '10:00:00', 'Sur place: 25 Rue des Écoles, Créteil', 0, 150.00, 'Visite de l appartement familial'),
+(303, 204, 509, '2025-03-06', '11:00:00', 'Sur place: Route de la Forêt, Évry', 0, 150.00, 'Visite du terrain avec vue'),
+(304, 204, 510, '2025-03-07', '14:00:00', 'Sur place: 3 Boulevard Haussmann, Paris', 0, 150.00, 'Visite du duplex'),
+(305, 204, 511, '2025-03-08', '15:00:00', 'Sur place: 15 Quai d Orsay, Paris', 0, 150.00, 'Visite de l appartement vue Seine'),
+(306, 204, 512, '2025-03-09', '16:00:00', 'Sur place: 20 Chemin des Fleurs, Fontainebleau', 0, 150.00, 'Visite de la maison de campagne'),
+
+(301, 205, 501, '2025-03-04', '09:00:00', 'Sur place: 12 Avenue Montaigne, Paris', 0, 150.00, 'Visite de l appartement'),
+(302, 205, 502, '2025-03-05', '10:00:00', 'Sur place: 5 Rue des Entrepreneurs, Boulogne-Billancourt', 0, 150.00, 'Visite du loft'),
+(303, 205, 503, '2025-03-06', '11:00:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 150.00, 'Visite du local commercial'),
+(304, 205, 504, '2025-03-07', '14:00:00', 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 0, 150.00, 'Visite du terrain'),
+(305, 205, 505, '2025-03-08', '15:00:00', 'Sur place: 45 Rue Mouffetard, Paris', 0, 150.00, 'Visite du studio'),
+(306, 205, 506, '2025-03-09', '16:00:00', 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 0, 150.00, 'Visite de la maison de ville'),
+
+(301, 206, 507, '2025-03-04', '09:00:00', 'Sur place: 8 Avenue des Champs-Élysées, Paris', 0, 150.00, 'Visite des bureaux'),
+(302, 206, 508, '2025-03-05', '10:00:00', 'Sur place: 25 Rue des Écoles, Créteil', 0, 150.00, 'Visite de l appartement familial'),
+(303, 206, 509, '2025-03-06', '11:00:00', 'Sur place: Route de la Forêt, Évry', 0, 150.00, 'Visite du terrain avec vue'),
+(304, 206, 510, '2025-03-07', '14:00:00', 'Sur place: 3 Boulevard Haussmann, Paris', 0, 150.00, 'Visite du duplex'),
+(305, 206, 511, '2025-03-08', '15:00:00', 'Sur place: 15 Quai d Orsay, Paris', 0, 150.00, 'Visite de l appartement vue Seine'),
+(306, 206, 512, '2025-03-09', '16:00:00', 'Sur place: 20 Chemin des Fleurs, Fontainebleau', 0, 150.00, 'Visite de la maison de campagne'),
+
+(301, 207, 501, '2025-03-04', '09:00:00', 'Sur place: 12 Avenue Montaigne, Paris', 0, 150.00, 'Visite de l appartement'),
+(302, 207, 502, '2025-03-05', '10:00:00', 'Sur place: 5 Rue des Entrepreneurs, Boulogne-Billancourt', 0, 150.00, 'Visite du loft'),
+(303, 207, 503, '2025-03-06', '11:00:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 150.00, 'Visite du local commercial'),
+(304, 207, 504, '2025-03-07', '14:00:00', 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 0, 150.00, 'Visite du terrain'),
+(305, 207, 505, '2025-03-08', '15:00:00', 'Sur place: 45 Rue Mouffetard, Paris', 0, 150.00, 'Visite du studio'),
+(306, 207, 506, '2025-03-09', '16:00:00', 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 0, 150.00, 'Visite de la maison de ville'),
+
+(301, 208, 507, '2025-03-04', '09:00:00', 'Sur place: 8 Avenue des Champs-Élysées, Paris', 0, 150.00, 'Visite des bureaux'),
+(302, 208, 508, '2025-03-05', '10:00:00', 'Sur place: 25 Rue des Écoles, Créteil', 0, 150.00, 'Visite de l appartement familial'),
+(303, 208, 509, '2025-03-06', '11:00:00', 'Sur place: Route de la Forêt, Évry', 0, 150.00, 'Visite du terrain avec vue'),
+(304, 208, 510, '2025-03-07', '14:00:00', 'Sur place: 3 Boulevard Haussmann, Paris', 0, 150.00, 'Visite du duplex'),
+(305, 208, 511, '2025-03-08', '15:00:00', 'Sur place: 15 Quai d Orsay, Paris', 0, 150.00, 'Visite de l appartement vue Seine'),
+(306, 208, 512, '2025-03-09', '16:00:00', 'Sur place: 20 Chemin des Fleurs, Fontainebleau', 0, 150.00, 'Visite de la maison de campagne');
+
+-- Insert appointments for this week
+INSERT INTO appointments (client_id, agent_id, property_id, rdv_date, rdv_time, rdv_place, is_paid, rdv_price, rdv_comments) VALUES
+(301, 201, 501, '2025-03-11', '09:00:00', 'Sur place: 12 Avenue Montaigne, Paris', 0, 150.00, 'Visite de l appartement'),
+(302, 201, 502, '2025-03-12', '10:00:00', 'Sur place: 5 Rue des Entrepreneurs, Boulogne-Billancourt', 0, 150.00, 'Visite du loft'),
+(303, 201, 503, '2025-03-13', '11:00:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 150.00, 'Visite du local commercial'),
+(304, 201, 504, '2025-03-14', '14:00:00', 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 0, 150.00, 'Visite du terrain'),
+(305, 201, 505, '2025-03-15', '15:00:00', 'Sur place: 45 Rue Mouffetard, Paris', 0, 150.00, 'Visite du studio'),
+(306, 201, 506, '2025-03-16', '16:00:00', 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 0, 150.00, 'Visite de la maison de ville'),
+
+(301, 202, 507, '2025-03-11', '09:00:00', 'Sur place: 8 Avenue des Champs-Élysées, Paris', 0, 150.00, 'Visite des bureaux'),
+(302, 202, 508, '2025-03-12', '10:00:00', 'Sur place: 25 Rue des Écoles, Créteil', 0, 150.00, 'Visite de l appartement familial'),
+(303, 202, 509, '2025-03-13', '11:00:00', 'Sur place: Route de la Forêt, Évry', 0, 150.00, 'Visite du terrain avec vue'),
+(304, 202, 510, '2025-03-14', '14:00:00', 'Sur place: 3 Boulevard Haussmann, Paris', 0, 150.00, 'Visite du duplex'),
+(305, 202, 511, '2025-03-15', '15:00:00', 'Sur place: 15 Quai d Orsay, Paris', 0, 150.00, 'Visite de l appartement vue Seine'),
+(306, 202, 512, '2025-03-16', '16:00:00', 'Sur place: 20 Chemin des Fleurs, Fontainebleau', 0, 150.00, 'Visite de la maison de campagne'),
+
+(301, 203, 501, '2025-03-11', '09:00:00', 'Sur place: 12 Avenue Montaigne, Paris', 0, 150.00, 'Visite de l appartement'),
+(302, 203, 502, '2025-03-12', '10:00:00', 'Sur place: 5 Rue des Entrepreneurs, Boulogne-Billancourt', 0, 150.00, 'Visite du loft'),
+(303, 203, 503, '2025-03-13', '11:00:00', 'Sur place: 28 Rue du Commerce, Versailles', 0, 150.00, 'Visite du local commercial'),
+(304, 203, 504, '2025-03-14', '14:00:00', 'Sur place: Chemin des Vignes, Saint-Germain-en-Laye', 0, 150.00, 'Visite du terrain'),
+(305, 203, 505, '2025-03-15', '15:00:00', 'Sur place: 45 Rue Mouffetard, Paris', 0, 150.00, 'Visite du studio'),
+(306, 203, 506, '2025-03-16', '16:00:00', 'Sur place: 17 Rue des Rosiers, Neuilly-sur-Seine', 0, 150.00, 'Visite du local commercial');
 
 
 -- --------------------------------------------------------
