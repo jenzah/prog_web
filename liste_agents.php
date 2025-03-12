@@ -4,8 +4,6 @@ session_cache_limiter(false);
 session_start();
 include("config.php");
 
-
-
 // Initialisation de la requête SQL avec filtres et tri
 $sql = "SELECT * FROM user WHERE utype='agent'";
 $conditions = [];
@@ -183,7 +181,7 @@ while ($row = mysqli_fetch_assoc($specialtyQuery)) {
                                 <?php } ?>
 
                                 <!-- Prendre RDV -->
-                                 <a href="appointments_agent.php?agent_id=<?php echo $row['id']; ?>" class="btn btn-primary mt-2">Prendre RDV</a>
+                                <a class="btn btn-primary d-none d-xl-block" href="rdv_disponibilite.php?agent_id=<?php echo htmlspecialchars($row['uid'])?>">Prendre RDV</a>
                             </td>
                         </tr>
                     <?php } ?>

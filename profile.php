@@ -104,7 +104,7 @@ if(!isset($_SESSION['uid'])) {
                                     <!-- si l'agent, affiche un bouton pour voir son CV -->
                                     <?php if($_SESSION['isAgent']) { ?>
                                     <div class="mt-4">
-                                        <a href="edit-profile.php" class="btn btn-primary">Voir mon CV</a>
+                                        <a href="admin_edit_cv.php?cv_id=<?php echo htmlspecialchars($_SESSION['uid'])?>" class="btn btn-primary">Voir mon CV</a>
                                     </div>
                                     <?php } ?>
                                     <?php } else { ?>

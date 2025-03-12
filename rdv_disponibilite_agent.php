@@ -4,14 +4,13 @@ session_cache_limiter(false);
 session_start();
 include("config.php");
 
-if(!isset($_SESSION['uid'])) {
+// Verify agent is logged in
+if(!isset($_SESSION['uid']) || !$_SESSION['isAgent']) {
     header("location:login.php");
-}
-
-if (!isset($_GET['agent_id'])) {
-    header("location:rdv_dashboard.php");
     exit();
 }
+
+$agent_id = $_SESSION['uid']; // Agent's own ID
 
 function getAgentDetail($con, $agent_id) {
     $query = mysqli_query($con, "SELECT * FROM user WHERE uid = $agent_id AND utype = 'agent'");
@@ -32,7 +31,7 @@ function getAppointments($con, $agent_id) {
     // Récupérer les rendez-vous existants pour la semaine en cours
     $date_debut = date('Y-m-d', strtotime('monday this week'));
     $date_fin = date('Y-m-d', strtotime('saturday this week'));
-    $rdv_query = mysqli_query($con, "SELECT rdv_date, rdv_time FROM appointments 
+    $rdv_query = mysqli_query($con, "SELECT aid, client_id, rdv_date, rdv_time FROM appointments 
                                     WHERE agent_id = $agent_id 
                                     AND rdv_date BETWEEN '$date_debut' AND '$date_fin'
                                     AND rdv_status != 'annulé'");
@@ -40,9 +39,21 @@ function getAppointments($con, $agent_id) {
     while ($row = mysqli_fetch_assoc($rdv_query)) {
         $date = $row['rdv_date'];
         $time = $row['rdv_time'];
-        $rendez_vous[$date][$time] = true;
+        $rendez_vous[$date][$time] = [
+            'aid' => $row['aid'],
+            'client_id' => $row['client_id']
+        ];
     }
     return $rendez_vous;
+}
+
+function getClientName($con, $client_id) {
+    $query = mysqli_query($con, "SELECT ufirstname, uname FROM user WHERE uid = $client_id");
+    $client = mysqli_fetch_assoc($query);
+    if ($client) {
+        return $client['ufirstname'] . ' ' . $client['uname'];
+    }
+    return "Client inconnu";
 }
 
 function getWorkdayBoundaries($schedules) {
@@ -89,15 +100,13 @@ function getAgentPropertiesCount($con, $agent_id) {
     return mysqli_fetch_assoc($properties_query)['count'];
 }
 
-$agent_id = intval($_GET['agent_id']); 
-
 // Récupérer les spécialités de l'agent
+$agent = getAgentDetail($con, $agent_id);
 $specialty = $agent['specialty'] ?? "Non spécifié";
 
 $jours = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 $jours_fr = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
 
-$agent = getAgentDetail($con, $agent_id);
 $schedules = getWeeklySchedule($con, $agent_id);
 $rendez_vous = getAppointments($con, $agent_id);
 $boundaries = getWorkdayBoundaries($schedules);
@@ -106,20 +115,19 @@ $dates = getCurrentWeekDates();
 $properties_count = getAgentPropertiesCount($con, $agent_id);
 ?>
 
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Disponibilité - <?= htmlspecialchars($agent['uname']) ?></title>
+<title>Mon Agenda - <?= htmlspecialchars($agent['uname']) ?></title>
 
 <!-- Meta Tags -->
 <link rel="shortcut icon" href="images/favicon.ico">
 
 <!--	Fonts
 	========================================================-->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
 <!-- Bootstrap & styles -->
@@ -133,6 +141,76 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
 <link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/login.css">
+
+<style>
+    /* Custom calendar styles */
+    .client-calendar .dispo { 
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .client-calendar .dispo:hover {
+        background-color: #6c8f8d;
+    }
+    .staff-calendar .dispo {
+        cursor: default;
+    }
+
+    .staff-calendar .dispo:hover {
+        /* Override any hover effects */
+        background-color: white !important;
+    }
+    .passe {
+        background-color: #b4b4b4;
+        color: white; 
+        cursor: default;
+    }
+    .indispo { 
+        background-color: #b4b4b4; 
+        color: white; 
+    }
+    .legende { 
+        display: flex; 
+        gap: 20px; 
+        margin-bottom: 20px; 
+        justify-content: center;
+    }
+    .legende-item { 
+        display: flex; 
+        align-items: center; 
+        gap: 5px; 
+    }
+    .legende-color { 
+        width: 20px; 
+        height: 20px;
+        border-radius: 3px; 
+    }
+    .rdv-user {
+        background-color: #4F6C6B !important; /* Green background */
+        color: white !important;
+    }
+    .rdv-clickable {
+        cursor: pointer !important; /* Change cursor to indicate clickable */
+    }
+    .rdv-clickable:hover {
+        background-color: #314b4a !important; /* Darker green on hover */
+    }
+    .date-subheader {
+        display: block;
+        font-size: 80%;
+        font-weight: normal;
+    }
+    .horaire-cell {
+        font-weight: bold;
+    }
+    .rdv-info {
+        font-size: 10px;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100px;
+    }
+</style>
 </head>
 
 <body>
@@ -143,13 +221,13 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h2 class="page-name text-white text-uppercase"><b>Disponibilité de l'agent</b></h2>
+                    <h2 class="page-name text-white text-uppercase"><b>Mon Agenda</b></h2>
                 </div>
                 <div class="col-md-6">
                     <nav aria-label="breadcrumb" class="float-md-right">
                         <ol class="breadcrumb bg-transparent m-0 p-0">
                             <li class="breadcrumb-item text-white"><a href="index.php">Accueil</a></li>
-                            <li class="breadcrumb-item active">Disponibilité</li>
+                            <li class="breadcrumb-item active">Agenda</li>
                         </ol>
                     </nav>
                 </div>
@@ -161,7 +239,7 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
         <div class="container">
             <div class="row mb-4">
                 <div class="col-lg-12">
-                    <h2 class="text-secondary double-down-line text-center">Calendrier de Disponibilité</h2>
+                    <h2 class="text-secondary double-down-line text-center">Mon Calendrier</h2>
                     <p class="text-center">Semaine du <?= date('d/m/Y', strtotime('monday this week')) ?> au <?= date('d/m/Y', strtotime('saturday this week')) ?></p>
                 </div>
             </div>
@@ -171,66 +249,37 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
                 <div class="col-lg-3">
                     <div class="agent-info-sidebar p-3">
                         <div class="text-center mb-4">
-                            <img src="images/profile_pic/<?= $agent['uimage'] ?>" class="agent-photo" alt="Photo de l'agent">
-                            <h4 class="text-secondary"><?= htmlspecialchars($agent['ufirstname']) ?> <?= htmlspecialchars(strtoupper($agent['uname'])) ?></h4>
-                            <p class="text-muted mb-3">Agent Immobilier</p>
+                            <img src="images/profile_pic/<?= $agent['uimage'] ?>" class="agent-photo" alt="Photo de l'agent" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;">
+                            <h4 class="text-secondary mt-3"><?= htmlspecialchars($agent['ufirstname']) ?> <?= htmlspecialchars(strtoupper($agent['uname'])) ?></h4>
+                            <p class="text-muted">Agent Immobilier</p>
                         </div>
                         
-                        <div class="agent-stat">
+                        <div class="agent-stat mb-2">
                             <strong><i class="fa fa-briefcase"></i> Spécialité:</strong> 
                             <span class="float-right"><?= htmlspecialchars($specialty) ?></span>
                         </div>
                         
-                        <div class="agent-stat">
+                        <div class="agent-stat mb-2">
                             <strong><i class="fa fa-envelope"></i> Email:</strong>
-                            <?php if (!$_SESSION['isAgent'] && !$_SESSION['isAdmin']) { ?>
-                            <div class="float-right text-truncate" style="max-width: 65%; font-size: 13px;">
-                                <a href="mailto:<?php echo htmlspecialchars($agent['uemail']); ?>"><?php echo htmlspecialchars($agent['uemail']); ?></a>
-                            </div>
-                            <?php }else{?>
                             <span class="float-right" style="max-width: 65%; font-size: 13px;"><?= htmlspecialchars($agent['uemail']) ?></span>
-                            <?php }?>
-
-
                         </div>
                         
-                        <div class="agent-stat">
+                        <div class="agent-stat mb-2">
                             <strong><i class="fa fa-phone"></i> Téléphone:</strong> 
                             <span class="float-right"><?= htmlspecialchars($agent['uphone']) ?></span>
                         </div>
                         
-                        <div class="agent-stat">
+                        <div class="agent-stat mb-2">
                             <strong><i class="fa fa-building"></i> Propriétés:</strong> 
                             <span class="float-right"><?= $properties_count ?></span>
                         </div>
-                        
-                        <?php if (!$_SESSION['isAgent'] && !$_SESSION['isAdmin']) { ?>
-                        <!-- Boutons actions -->
-                        <div class="mt-4 d-flex flex-column align-items-center">
-                            <!-- Bouton "Télécharger le CV" -->
-                            <?php if (!empty($row['cv']) && file_exists("images/cv/" . $agent['cv'])) { ?>
-                                <a href="images/cv/<?php echo $agent['cv']; ?>" download class="btn btn-secondary btn-block w-75" style="font-size: 13px;">
-                                    <i class="fa fa-file-text"></i> Télécharger CV
-                                </a>
-                            <?php } else { ?>
-                                <button class="btn btn-secondary btn-block w-75 disabled" disabled style="font-size: 13px;">
-                                    <i class="fa fa-file-text"></i> CV non disponible
-                                </button>
-                            <?php } ?>
-                            
-                            <!-- Bouton "Messagerie" -->
-                            <a href="messagerie.php?agent_id=<?php echo htmlspecialchars($agent['uid']); ?>" class="btn btn-secondary btn-block w-75">
-                                <i class="fa fa-comments"></i> Messagerie
-                            </a>
-                        </div>
-                        <?php }?>
                     </div>
                 </div>
                 
                 <!-- Colonne de droite - Calendrier -->
                 <div class="col-lg-9 col-md-8">
                     <div class="table-responsive">
-                        <table class="table table-bordered auto-table text-center content-center <?php echo (!$_SESSION['isAgent'] && !$_SESSION['isAdmin']) ? 'client-calendar' : 'staff-calendar'; ?>">
+                        <table class="table table-bordered auto-table text-center content-center staff-calendar">
                             <thead class="bg-primary text-white">
                                 <tr>
                                     <th>Heure</th>
@@ -259,46 +308,26 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
                                             $est_dans_plage_horaire = $heure >= $heure_debut && $heure <= $heure_fin;
                                             $est_reserve = isset($rendez_vous[$date_rdv][$heure]);
                                             
-                                            // Check if time slot is in the past
-                                            $appointment_time = new DateTime($date_rdv . ' ' . $heure);
-                                            $current_time = new DateTime();
-                                            $est_dans_le_passe = $appointment_time < $current_time;
+                                            // Pour un agent, on n'a pas besoin de vérifier si le RDV est passé
+                                            $est_dans_le_passe = false; // Désactiver la vérification du passé
 
                                             // Déterminer la classe et le texte de la cellule
                                             if ($est_reserve) {
-                                                // Vérifier si le RDV appartient à l'utilisateur connecté
-                                                $rdv_query = mysqli_query($con, "SELECT aid FROM appointments 
-                                                                               WHERE agent_id = $agent_id 
-                                                                               AND rdv_date = '$date_rdv' 
-                                                                               AND rdv_time = '$heure' 
-                                                                               AND client_id = " . $_SESSION['uid']);
-
-                                                if (mysqli_num_rows($rdv_query) > 0) {
-                                                    // C'est le RDV de l'utilisateur connecté
-                                                    $rdv_row = mysqli_fetch_assoc($rdv_query);
-
-                                                    // Utilisez la bonne colonne 'aid' comme dans votre requête
-                                                    $rdv_id = $rdv_row['aid'];
-
-                                                    // Définir la classe et le texte
-                                                    $classe = "rdv-user rdv-clickable";
-                                                    $texte = "RDV";
-
-                                                    // Ajouter des attributs data pour JavaScript
-                                                    echo '<td class="' . $classe . '" data-rdv-id="' . $rdv_id . '" data-jour="' . $jour . '" data-date="' . $date_rdv . '" data-heure="' . $heure . '">' . $texte . '</td>';
-                                                } else {
-                                                    // C'est le RDV de quelqu'un d'autre
-                                                    $classe = "indispo";
-                                                    $texte = "✗";
-                                                    echo '<td class="' . $classe . '" data-jour="' . $jour . '" data-date="' . $date_rdv . '" data-heure="' . $heure . '">' . $texte . '</td>';
-                                                }
+                                                // Récupérer les informations du RDV
+                                                $rdv_info = $rendez_vous[$date_rdv][$heure];
+                                                $rdv_id = $rdv_info['aid'];
+                                                $client_id = $rdv_info['client_id'];
+                                                $client_name = getClientName($con, $client_id);
+                                                
+                                                $classe = "rdv-user rdv-clickable";
+                                                $texte = "RDV<span class='rdv-info'>" . htmlspecialchars($client_name) . "</span>";
+                                                
+                                                echo '<td class="' . $classe . '" data-rdv-id="' . $rdv_id . '" data-jour="' . $jour . '" data-date="' . $date_rdv . '" data-heure="' . $heure . '">' . $texte . '</td>';
                                             } elseif ($est_dans_le_passe) {
                                                 // Past time slots
                                                 $classe = "passe";
                                                 $texte = "✗";
                                                 echo '<td class="' . $classe . '" data-jour="' . $jour . '" data-date="' . $date_rdv . '" data-heure="' . $heure . '">' . $texte . '</td>';
-                                            
-                                            
                                             } elseif ($est_jour_travail && $est_dans_plage_horaire) {
                                                 $classe = "dispo";
                                                 $texte = "✓";
@@ -324,23 +353,12 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
                             <div class="legende-color indispo"></div>
                             <span>Indisponible</span>
                         </div>
-
-                        <?php if (!$_SESSION['isAgent'] && !$_SESSION['isAdmin']) { ?>
                         <div class="legende-item">
                             <div class="legende-color rdv-user"></div>
-                            <span>Mes rendez-vous</span>
+                            <span>Rendez-vous</span>
                         </div>
-                        <?php } ?>
+                        <!-- Légende du passé supprimée car non utilisée pour l'agent -->
                     </div>
-
-                    <?php if(!isset($_SESSION['uid'])) { ?>
-                    <div class="mt-4">
-                        <div class="alert alert-info text-center">
-                            Connectez-vous pour prendre rendez-vous avec cet agent.
-                            <a href="login.php" class="btn btn-primary btn-sm ml-3">Se connecter</a>
-                        </div>
-                    </div>
-                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -352,50 +370,12 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
     <script src="js/bootstrap.min.js"></script>
     
     <script>
-    // Script pour permettre la prise de rendez-vous en cliquant sur une cellule disponible
     $(document).ready(function() {
-        $('.dispo').click(function() {
-            <?php if(isset($_SESSION['uid'])) { 
-                if(!$_SESSION['isAgent'] && !$_SESSION['isAdmin']) { ?>
-                    const jour = $(this).data('jour');
-                    const date = $(this).data('date');
-                    const heure = $(this).data('heure');
-
-                    // Check if the appointment time is in the past
-                    const now = new Date();
-                    const appointmentTime = new Date(date + 'T' + heure);
-
-                    if (appointmentTime < now) {
-                        alert('Impossible de prendre un rendez-vous dans le passé.');
-                        return false;
-                    }
-
-                    const jour_fr = {
-                        'Monday': 'Lundi',
-                        'Tuesday': 'Mardi',
-                        'Wednesday': 'Mercredi',
-                        'Thursday': 'Jeudi',
-                        'Friday': 'Vendredi',
-                        'Saturday': 'Samedi'
-                    }[jour];
-                
-                    const date_fr = new Date(date).toLocaleDateString('fr-FR');
-                    
-                    if (confirm(`Voulez-vous prendre rendez-vous le ${jour_fr} ${date_fr} à ${heure.substring(0, 5)} ?`)) {
-                        // Rediriger vers la page de prise de rendez-vous
-                        window.location.href = `rdv_confirmation.php?agent_id=<?= $agent_id ?>&date=${date}&heure=${heure}`;
-                    }
-            <?php }
-            } else { ?>
-                alert('Veuillez vous connecter pour prendre rendez-vous.');
-                window.location.href = 'login.php';
-            <?php } ?>
-        });
-        // Gestionnaire pour les RDV de l'utilisateur
+        // Gestionnaire pour les RDV
         $('.rdv-clickable').click(function() {
-        const rdvId = $(this).data('rdv-id');
-        window.location.href = 'rdv_details.php?id=' + rdvId;
-    });
+            const rdvId = $(this).data('rdv-id');
+            window.location.href = 'rdv_details.php?id=' + rdvId;
+        });
     });
     </script>
 </body>
