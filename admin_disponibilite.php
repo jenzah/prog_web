@@ -140,14 +140,13 @@ $jours = ["Monday" => "Lundi", "Tuesday" => "Mardi", "Wednesday" => "Mercredi", 
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h2 class="page-name text-white text-uppercase"><b>Disponibilité de l'agent</b></h2>
+                    <h2 class="page-name text-white text-uppercase"><b>Agenda Agents</b></h2>
                 </div>
                 <div class="col-md-6">
                     <nav aria-label="breadcrumb" class="float-md-right">
                         <ol class="breadcrumb bg-transparent m-0 p-0">
                             <li class="breadcrumb-item text-white"><a href="index.php">Accueil</a></li>
-                            <li class="breadcrumb-item text-white"><a href="agents.php">Agents</a></li>
-                            <li class="breadcrumb-item active">Disponibilité</li>
+                            <li class="breadcrumb-item active">Agenda Agents</li>
                         </ol>
                     </nav>
                 </div>

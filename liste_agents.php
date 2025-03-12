@@ -119,7 +119,7 @@ while ($row = mysqli_fetch_assoc($specialtyQuery)) {
 
                 <!-- Formulaire de Filtrage et Tri -->
                  <div class="container">
-                    <form method="GET" action="admin_agent.php" class="mb-4">
+                    <form method="GET" action="liste_agents.php" class="mb-4">
                         <div class="row">
                             <div class="col-md-4">
                                 <label>Spécialité</label>

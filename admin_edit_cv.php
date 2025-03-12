@@ -131,15 +131,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 🔹 Mise à jour de la base de données
     $updateQuery = "UPDATE user SET formations='$formations', experiences='$experiences', cv='$filename' WHERE uid='$agent_id'";
     if (mysqli_query($con, $updateQuery)) {
-        echo "<script>alert('CV mis à jour avec succès.'); window.location='admin_agent.php';</script>";
+        echo "<script>alert('CV mis à jour avec succès.'); </script>";
     } else {
         echo "<script>alert('Erreur lors de la mise à jour du CV dans la base de données.');</script>";
     }
 }
 ?>
-
-
-
 
 
 
@@ -193,13 +190,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <h2 class="page-name text-white text-uppercase"><b>Liste des Agents</b></h2>
+                        <h2 class="page-name text-white text-uppercase"><b>CV</b></h2>
                     </div>
                     <div class="col-md-6">
                         <nav aria-label="breadcrumb" class="float-md-right">
                             <ol class="breadcrumb bg-transparent m-0 p-0">
                                 <li class="breadcrumb-item text-white"><a href="index.php">Accueil</a></li>
-                                <li class="breadcrumb-item active">Liste des Agents</li>
+                                <li class="breadcrumb-item active">CV</li>
                             </ol>
                         </nav>
                     </div>

@@ -9,8 +9,9 @@ if (!isset($_SESSION['uid'])) {
 }
 
 $user_id = $_SESSION['uid']; // ID de l'utilisateur connecté
+$user_type = $_SESSION['utype']; // Type de l'utilisateur (agent ou client)
 
-// Récupérer les conversations où l'utilisateur est un participant
+// Récupérer les conversations existantes
 $query = "
     SELECT DISTINCT cr.room_id, u.uid, u.uname, u.ufirstname, u.uimage 
     FROM chat_rooms cr
@@ -19,8 +20,48 @@ $query = "
     JOIN user u ON u.uid = cp2.user_id
     WHERE cp.user_id = $user_id AND cp2.user_id != $user_id
 ";
-
 $result = mysqli_query($con, $query);
+
+// Si l'utilisateur est un agent, récupérer la liste des utilisateurs (seulement `utype=user`)
+$users = [];
+if ($user_type === 'agent') {
+    $users_query = mysqli_query($con, "SELECT uid, uname, ufirstname FROM user WHERE utype = 'user'");
+    while ($user = mysqli_fetch_assoc($users_query)) {
+        $users[] = $user;
+    }
+}
+
+// Vérifier si un agent veut démarrer une nouvelle conversation
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected_user_id'])) {
+    $selected_user_id = intval($_POST['selected_user_id']);
+
+    // Vérifier si une conversation existe déjà
+    $check_query = mysqli_query($con, "
+        SELECT cr.room_id FROM chat_rooms cr
+        JOIN chat_participants cp1 ON cr.room_id = cp1.room_id
+        JOIN chat_participants cp2 ON cr.room_id = cp2.room_id
+        WHERE (cp1.user_id = $user_id AND cp2.user_id = $selected_user_id) 
+        OR (cp1.user_id = $selected_user_id AND cp2.user_id = $user_id)
+    ");
+
+    if (mysqli_num_rows($check_query) > 0) {
+        // La conversation existe déjà
+        $row = mysqli_fetch_assoc($check_query);
+        $room_id = $row['room_id'];
+    } else {
+        // Créer une nouvelle salle de chat
+        mysqli_query($con, "INSERT INTO chat_rooms () VALUES ()");
+        $room_id = mysqli_insert_id($con);
+
+        // Ajouter les deux participants
+        mysqli_query($con, "INSERT INTO chat_participants (room_id, user_id) VALUES ($room_id, $user_id)");
+        mysqli_query($con, "INSERT INTO chat_participants (room_id, user_id) VALUES ($room_id, $selected_user_id)");
+    }
+
+    // Rediriger vers la messagerie
+    header("Location: messagerie.php?room_id=" . $room_id);
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -117,6 +158,22 @@ $result = mysqli_query($con, $query);
                 <h2 class="text-secondary text-center double-down-line">Mes Conversations</h2>
             </div>
         </div>
+
+        <?php if ($user_type === 'agent') { ?>
+    <hr>
+    <h4 class="text-center">Sélectionner un utilisateur</h4>
+    <form method="POST" action="conversations.php" class="text-center">
+        <select name="selected_user_id" class="form-control mb-3">
+            <?php foreach ($users as $user) { ?>
+                <option value="<?php echo $user['uid']; ?>">
+                    <?php echo htmlspecialchars($user['ufirstname']) . " " . htmlspecialchars($user['uname']); ?>
+                </option>
+            <?php } ?>
+        </select>
+        <button type="submit" class="btn btn-primary">Démarrer une conversation</button>
+    </form>
+<?php } ?>
+
 
         <div class="conversation-list">
             <?php while ($row = mysqli_fetch_assoc($result)) { ?>
