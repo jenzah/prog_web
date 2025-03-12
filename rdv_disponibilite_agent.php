@@ -71,6 +71,15 @@ function getWorkdayBoundaries($schedules) {
             }
         }
     }
+
+    // If no working days found, set defaults
+    if ($earliest_start == "23:59:59") {
+        $earliest_start = "09:00:00";
+    }
+    if ($latest_end == "00:00:00") {
+        $latest_end = "18:00:00";
+    }
+    
     return ['earliest' => $earliest_start,
             'latest' => $latest_end];
 }
