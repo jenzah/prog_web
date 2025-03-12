@@ -38,13 +38,63 @@ $messages = mysqli_query($con, "SELECT * FROM chat_messages WHERE room_id = $roo
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Messagerie</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Disponibilité - <?= htmlspecialchars($agent['uname']) ?></title>
+
+<!-- Meta Tags -->
+<link rel="shortcut icon" href="images/favicon.ico">
+
+<!--	Fonts
+	========================================================-->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+<!-- Bootstrap & styles -->
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="css/layerslider.css">
+<link rel="stylesheet" type="text/css" href="css/color.css">
+<link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/login.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+<?php include("include/header.php"); ?>
+    
+    <!-- Page Title -->
+    <div class="banner-full-row page-banner" style="background-image:url('images/breadcrumb.jpg');">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 class="page-name text-white text-uppercase"><b>Messagerie</b></h2>
+                </div>
+                <div class="col-md-6">
+                    <nav aria-label="breadcrumb" class="float-md-right">
+                        <ol class="breadcrumb bg-transparent m-0 p-0">
+                            <li class="breadcrumb-item text-white"><a href="home.php">Accueil</a></li>
+                            <li class="breadcrumb-item text-white"><a href="agents.php">Mon compte</a></li>
+                            <li class="breadcrumb-item active">Messagerie</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="full-row">
+            <div class="container">
+
+                
+                <div class="row mb-5">
+                    <div class="col-lg-12">
+                        <h2 class="text-secondary text-center double-down-line">Messagerie</h2>
+                    </div>
+                </div>
 
 <div class="container mt-4">
     <h4>Messagerie</h4>
@@ -75,6 +125,8 @@ $messages = mysqli_query($con, "SELECT * FROM chat_messages WHERE room_id = $roo
         <button type="submit" class="btn btn-primary">Envoyer</button>
     </form>
 </div>
+</div>
+                </div>
 
 <script>
     $(document).ready(function() {
@@ -99,6 +151,9 @@ $messages = mysqli_query($con, "SELECT * FROM chat_messages WHERE room_id = $roo
         }, 2000);
     });
 </script>
-
+<?php include("include/footer.php"); ?>
+    
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
