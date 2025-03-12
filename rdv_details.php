@@ -354,9 +354,9 @@ $agentSpecialty = isset($specialtyLabels[$app['agent_specialty']]) ? $specialtyL
                                 <!-- Boutons pour l'agent qui consulte un client -->
                                 <div class="mt-4 d-flex flex-column align-items-center">
                                     <!-- Bouton "Messagerie" pour contacter le client -->
-                                    <a href="messagerie.php?client_id=<?php echo htmlspecialchars($app['client_id']); ?>" class="btn btn-secondary btn-block w-75">
+                                    <!-- <a href="messagerie.php?client_id=<?php echo htmlspecialchars($app['client_id']); ?>" class="btn btn-secondary btn-block w-75">
                                         <i class="fa fa-comments"></i> Contacter le client
-                                    </a>
+                                    </a> -->
                                 </div>
                                 <?php } ?>
                             </div>

@@ -172,7 +172,6 @@ CREATE TABLE IF NOT EXISTS `appointments` (
 
   `rdv_price` decimal(10,2) DEFAULT NULL,
   `is_paid` tinyint(1) DEFAULT 0,
-  `rdv_payment_status` enum('pending','completed','refunded') NOT NULL DEFAULT 'pending',
   `rdv_payment_date` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`aid`),
   KEY `client_id` (`client_id`),
