@@ -249,8 +249,8 @@ if (isset($_POST['add']) && !empty($_POST['agentid'])) {
                         <div class="form-group">
                             <label>Statut</label>
                             <select name="status" class="form-control" required>
-                                <option value="disponible">A vendre</option>
-                                <option value="vendu">A louer</option>
+                                <option value="A vendre">A vendre</option>
+                                <option value="A louer">A louer</option>
                             </select>
                         </div>
 
