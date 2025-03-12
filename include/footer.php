@@ -24,9 +24,8 @@
                                         <h4 class="widget-title text-white double-down-line-left position-relative">Services</h4>
                                         <ul class="hover-text-primary">
                                             <li><a href="#" class="text-white">Nos Agents</a></li>
-                                            <li><a href="#" class="text-white">Propriétés</a></li>
-                                            <li><a href="#" class="text-white">Événements</a></li>
-                                            <li><a href="#" class="text-white">Contact</a></li>
+                                            <li><a href="property.php" class="text-white">Propriétés</a></li>
+                                            
                                         </ul>
                                     </div>
                                 </div>
@@ -34,9 +33,9 @@
                                     <div class="footer-widget footer-nav mb-4">
                                         <h4 class="widget-title text-white double-down-line-left position-relative">À propos</h4>
                                         <ul class="hover-text-primary">
-                                            <li><a href="#" class="text-white">Qui sommes-nous ?</a></li>
-                                            <li><a href="#" class="text-white">Notre mission</a></li>
-                                            <li><a href="#" class="text-white">Blog & Actualités</a></li>
+                                            <li><a href="about.php" class="text-white">Qui sommes-nous ?</a></li>
+                                            <li><a href="about.php" class="text-white">Notre mission</a></li>
+                                            
                                         </ul>
                                     </div>
                                 </div>
@@ -51,12 +50,7 @@
                                             <li><i class="fas fa-envelope text-white mr-2"></i> contact@omnes-immobilier.com</li>
                                         </ul>
                                     </div>
-                                    <div class="footer-widget media-widget mt-4 text-white">
-                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

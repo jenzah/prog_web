@@ -64,7 +64,7 @@
 									        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mon agenda</a>
 									        <ul class="dropdown-menu">
 									        	<!--<li class="nav-item"> <a class="nav-link" href="">Disponibilités</a> </li>-->
-									        	<li class="nav-item"> <a href="rdv_disponibilite.php?agent_id=<?= $_SESSION['uid']; ?>" class="nav-link">Calendrier</a></li>
+									        	<li class="nav-item"> <a class="nav-link" href="">Calendrier</a> </li>
 									        	<li class="nav-item"> <a class="nav-link" href="rdv_dashboard.php">Mes RDVs</a> </li>	
 									        </ul>
                                         </li>
@@ -111,7 +111,7 @@
                                 // User is logged in
                                 if($_SESSION['isAgent']) { ?>
                                 <!-- Agent specific menu items -->
-							    <!--<a class="btn btn-primary d-none d-xl-block" href="">Consulter l'agenda</a>-->
+							    <a class="btn btn-primary d-none d-xl-block" href="rdv_disponibilite_agent.php?agent_id=<?php echo htmlspecialchars($_SESSION['uid'])?>">Consulter l'agenda</a>
 
                                 <?php } elseif(!$_SESSION['isAdmin']) {?>
                                 <!-- Client specific menu items -->

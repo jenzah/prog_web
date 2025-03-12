@@ -73,26 +73,18 @@ include("config.php");
                     <div class="col-lg-12">
                         <div class="text-white">
                             <h1 class="mb-4"><span class="text-light-primary">Trouvez</span><br>la maison de vos rêves</h1>
-                            <form method="post" id="propertySearchForm">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" name="city" placeholder="Ville / Commune" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <select class="form-control" name="propertyType">
-                                            <option value="">Type de bien</option>
-                                            <option value="résidentiel">Résidentiel</option>
-                                            <option value="commercial">Commercial</option>
-                                            <option value="terrain">Terrain</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <button type="submit" class="btn btn-primary w-100">Rechercher</button>
-                                    </div>
-                                </div>
-                            </form>
+                            
+                            <form method="get" action="property.php">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary w-100">Trouver votre futur bien</button>
+        </div>
+    </div>
+</form>
+
+
+
+
                         </div>
                     </div>
                 </div>
@@ -135,11 +127,75 @@ include("config.php");
             </div>
         </div>
 
-        <!-- Section Google Maps -->
+       
+<!-- Événements de la semaine -->
+<div class="full-row bg-light">
+    <div class="container">
+        <h2 class="text-secondary double-down-line mb-4 text-center">Événements de la semaine</h2>
+        <div class="owl-carousel events-slider">
+            <div class="item bg-white p-4 shadow-sm rounded">
+                <h5 class="text-primary">Journée portes ouvertes</h5>
+                <p class="text-muted"><i class="fas fa-calendar-alt"></i> Samedi 15 Mars 2025</p>
+                <p>Venez découvrir nos nouvelles propriétés lors de notre journée portes ouvertes à Paris.</p>
+            </div>
+            <div class="item bg-white p-4 shadow-sm rounded">
+                <h5 class="text-primary">Séminaire sur la gestion immobilière</h5>
+                <p class="text-muted"><i class="fas fa-calendar-alt"></i> Lundi 18 Mars 2025</p>
+                <p>Un expert en immobilier partagera les meilleures pratiques pour investir en 2025.</p>
+            </div>
+            <div class="item bg-white p-4 shadow-sm rounded">
+                <h5 class="text-primary">Visite d’une maison à vendre</h5>
+                <p class="text-muted"><i class="fas fa-calendar-alt"></i> Dimanche 17 Mars 2025</p>
+                <p>Rejoignez-nous pour une visite exclusive d'une maison exceptionnelle à Neuilly-sur-Seine.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bulletin Immobilier -->
+<div class="full-row">
+    <div class="container">
+        <h2 class="text-secondary double-down-line mb-4 text-center">Bulletin immobilier de la semaine</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="bg-white p-4 shadow-sm rounded">
+                    <h5 class="text-primary">Tendance du marché immobilier</h5>
+                    <p class="text-muted"><i class="fas fa-calendar-alt"></i> 08 Mars 2025</p>
+                    <p>Les prix de l'immobilier à Paris continuent d'augmenter, selon une récente étude.</p>
+                    <a href="#" class="text-primary">Lire plus...</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="bg-white p-4 shadow-sm rounded">
+                    <h5 class="text-primary">Nouvelles réglementations locatives</h5>
+                    <p class="text-muted"><i class="fas fa-calendar-alt"></i> 07 Mars 2025</p>
+                    <p>Découvrez les nouvelles lois sur la location qui entreront en vigueur dès l'été 2025.</p>
+                    <a href="#" class="text-primary">Lire plus...</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="bg-white p-4 shadow-sm rounded">
+                    <h5 class="text-primary">Top 5 des quartiers en vogue</h5>
+                    <p class="text-muted"><i class="fas fa-calendar-alt"></i> 06 Mars 2025</p>
+                    <p>Découvrez les quartiers les plus prisés pour investir en Île-de-France cette année.</p>
+                    <a href="#" class="text-primary">Lire plus...</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ <!-- Section Google Maps -->
+ <div class="full-row">
+    <div class="container">
+        <h2 class="text-secondary double-down-line mb-4 text-center">Notre Localisation</h2>
+      
         <iframe 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d41914.17561251856!2d2.287592715893688!3d48.8588446474787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66fdf8b57f75d%3A0x3b1c37c4e2e19b12!2sParis!5e0!3m2!1sfr!2sfr!4v1710098765432!5m2!1sfr!2sfr" 
-            width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="">
+            width="100%" height="500" frameborder="0" style="border:0;" allowfullscreen="">
         </iframe>
+        </div>
+</div>
+
 
         <!-- Section Contactez-nous -->
         <div class="full-row bg-light">
@@ -226,5 +282,20 @@ $(document).ready(function() {
     });
 });
 </script>
+<script>
+$(document).ready(function() {
+    $(".events-slider").owlCarousel({
+        loop: true,
+        margin: 15,
+        nav: true,
+        dots: false,
+        autoplay: true,
+        autoplayTimeout: 4000,
+        navText: ["<i class='fas fa-chevron-left'></i>", "<i class='fas fa-chevron-right'></i>"],
+        responsive: { 0: { items:1 }, 600: { items:2 }, 1000: { items:3 } }
+    });
+});
+</script>
+
 </body>
 </html>
