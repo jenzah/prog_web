@@ -49,17 +49,24 @@ function getWorkdayBoundaries($schedules) {
     $earliest_start = "23:59:59"; // Start with latest possible time
     $latest_end = "00:00:00";     // Start with earliest possible time
     
-    foreach ($schedules as $schedule) {
-        // Only consider working days
-        if ($schedule['is_working_day'] == 1) {
-            if ($schedule['workday_start'] < $earliest_start) {
-                $earliest_start = $schedule['workday_start'];
-            }
-            if ($schedule['workday_end'] > $latest_end) {
-                $latest_end = $schedule['workday_end'];
+    if (empty($schedules)) {
+        // Set default values for boundaries to show a full calendar
+        $earliest_start = '09:00:00';
+        $latest_end = '18:00:00';
+    } else {
+        foreach ($schedules as $schedule) {
+            // Only consider working days
+            if ($schedule['is_working_day'] == 1) {
+                if ($schedule['workday_start'] < $earliest_start) {
+                    $earliest_start = $schedule['workday_start'];
+                }
+                if ($schedule['workday_end'] > $latest_end) {
+                    $latest_end = $schedule['workday_end'];
+                }
             }
         }
     }
+    
     return ['earliest' => $earliest_start,
             'latest' => $latest_end];
 }

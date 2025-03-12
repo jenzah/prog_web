@@ -221,7 +221,15 @@ if (isset($_GET['cancel_id'])) {
                                 <td><?php echo $formattedDate; ?></td>
                                 <td><?php echo $formattedTime; ?></td>
                                 <td>€<?php echo number_format($payment['rdv_price'], 2); ?></td>
-                                <td><?php echo date('d/m/Y H:i', strtotime($payment['rdv_payment_date'])); ?></td>
+                                <td>
+                                <?php 
+                                    if ($payment['rdv_payment_date'] !== NULL) {
+                                      echo date('d/m/Y H:i', strtotime($payment['rdv_payment_date']));
+                                    } else {
+                                      // Use the RDV date and time instead
+                                      echo $formattedDate . ' ' . $formattedTime;
+                                    }
+                                ?></td>
                                 <td><span class="badge badge-paid">Payé</span></td>
                             </tr>
                         <?php } ?>
