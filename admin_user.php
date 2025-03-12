@@ -121,7 +121,7 @@ if (isset($_GET['delete_id'])) {
                     </thead>
                     <tbody>
                     <?php 
-                    $query = mysqli_query($con, "SELECT * FROM user WHERE utype='user'");
+                    $query = mysqli_query($con, "SELECT * FROM user WHERE utype='client'");
                     while($row = mysqli_fetch_array($query)) {
                     ?>
                         <tr>
