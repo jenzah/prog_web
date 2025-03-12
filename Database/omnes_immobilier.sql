@@ -123,7 +123,7 @@ CREATE TABLE `user` (
   `upass` varchar(255) NOT NULL,
   `utype` varchar(50) NOT NULL,
   `uimage` varchar(300) NOT NULL,
-  `specialty` VARCHAR(100) DEFAULT NULL, -- residentiel, terrain, appartement, commercial
+  `specialty` VARCHAR(100) DEFAULT 'Résidentiel', -- residentiel, terrain, appartement, commercial
   `uaddress1` varchar(255) DEFAULT NULL,
   `uaddress2` varchar(255) DEFAULT NULL,
   `ucity` varchar(100) DEFAULT NULL,
@@ -342,7 +342,3 @@ ALTER TABLE `chat_participants`
 ALTER TABLE `chat_messages`
     ADD CONSTRAINT `fk_messages_rooms` FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
     ADD CONSTRAINT `fk_messages_user` FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE;
-
-ALTER TABLE `appointments`
-  ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`)  ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE;
