@@ -2,7 +2,7 @@
 session_start();
 include("config.php");
 
-if (!isset($_SESSION['uid']) || (!isset($_GET['agent_id']) && !isset($_GET['room_id']))) {
+if (!isset($_SESSION['uid']) || !isset($_GET['room_id'])) {
     header("Location: login.php");
     exit();
 }
