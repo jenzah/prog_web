@@ -90,7 +90,7 @@ include("config.php");
                                     // Initialisation des conditions de filtrage
                                     $where_conditions = [];
 
-                                    if($_SESSION['isAgent']) {
+                                    if(isset($_SESSION['isAgent']) && $_SESSION['isAgent']) {
                                         $where_conditions[] = "user.uid = '".$_SESSION['uid']."'";
 
                                         if(isset($_GET['keyword']) && !empty($_GET['keyword'])) {
