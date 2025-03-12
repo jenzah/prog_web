@@ -2,37 +2,64 @@
 session_start();
 include("config.php");
 
-if (!isset($_SESSION['uid']) || (!isset($_GET['agent_id']) && !isset($_GET['room_id']))) {
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['uid'])) {
     header("Location: login.php");
     exit();
 }
 
 $user_id = $_SESSION['uid']; // ID de l'utilisateur connecté
 
-// Si on vient depuis "Mes conversations"
+// Vérifier si une `room_id` est déjà fournie (cas où l'utilisateur clique sur une conversation existante)
 if (isset($_GET['room_id'])) {
     $room_id = intval($_GET['room_id']);
-} else {
-    // Création ou récupération d'une salle de chat avec l'agent
+} 
+// Sinon, on vient depuis "Messagerie" d'une propriété (avec `agent_id`)
+elseif (isset($_GET['agent_id'])) {
     $agent_id = intval($_GET['agent_id']);
-    $query = "SELECT room_id FROM chat_participants WHERE user_id IN ($user_id, $agent_id) 
-              GROUP BY room_id HAVING COUNT(DISTINCT user_id) = 2 LIMIT 1";
+
+    // Vérifier si une conversation existe déjà entre cet utilisateur et cet agent
+    $query = "
+        SELECT cr.room_id FROM chat_rooms cr
+        JOIN chat_participants cp1 ON cr.room_id = cp1.room_id
+        JOIN chat_participants cp2 ON cr.room_id = cp2.room_id
+        WHERE (cp1.user_id = $user_id AND cp2.user_id = $agent_id) 
+        OR (cp1.user_id = $agent_id AND cp2.user_id = $user_id)
+        LIMIT 1";
+    
     $result = mysqli_query($con, $query);
 
     if ($result && mysqli_num_rows($result) > 0) {
+        // Conversation existante trouvée
         $row = mysqli_fetch_assoc($result);
         $room_id = $row['room_id'];
     } else {
-        // Créer une nouvelle salle de chat
+        // Aucune conversation existante, donc on en crée une nouvelle
         mysqli_query($con, "INSERT INTO chat_rooms () VALUES ()");
         $room_id = mysqli_insert_id($con);
+
+        // Ajouter les participants (l'agent et l'utilisateur)
         mysqli_query($con, "INSERT INTO chat_participants (room_id, user_id) VALUES ($room_id, $user_id)");
         mysqli_query($con, "INSERT INTO chat_participants (room_id, user_id) VALUES ($room_id, $agent_id)");
     }
+
+    // Rediriger vers la bonne URL avec `room_id`
+    header("Location: messagerie.php?room_id=$room_id");
+    exit();
+} 
+// Aucun `room_id` ou `agent_id` trouvé → Erreur
+else {
+    die("<h3 style='color:red;'>Erreur : impossible d'ouvrir la messagerie.</h3>");
 }
 
-// Récupérer les messages
-$messages = mysqli_query($con, "SELECT * FROM chat_messages WHERE room_id = $room_id ORDER BY sent_at ASC");
+// Récupérer les messages de la salle de chat
+$messages = mysqli_query($con, "
+    SELECT chat_messages.*, user.uname 
+    FROM chat_messages 
+    JOIN user ON chat_messages.user_id = user.uid 
+    WHERE chat_messages.room_id = $room_id 
+    ORDER BY chat_messages.sent_at ASC
+");
 ?>
 
 <!DOCTYPE html>
@@ -101,23 +128,12 @@ $messages = mysqli_query($con, "SELECT * FROM chat_messages WHERE room_id = $roo
     <a href="conversations.php" class="btn btn-secondary mb-3">Retour aux conversations</a>
 
     <div id="chatbox" class="border p-3 mb-3" style="height: 300px; overflow-y: auto;">
-        <?php
-        // Récupération des messages avec le nom de l'utilisateur
-        $messages = mysqli_query($con, "
-            SELECT chat_messages.*, user.uname, user.utype 
-            FROM chat_messages 
-            JOIN user ON chat_messages.user_id = user.uid 
-            WHERE chat_messages.room_id = $room_id 
-            ORDER BY chat_messages.sent_at ASC
-        ");
-
-        while ($msg = mysqli_fetch_assoc($messages)) {
-            $nomExpediteur = ($msg['user_id'] == $user_id) ? "Vous" : htmlspecialchars($msg['uname']);
-            echo "<p><strong>" . $nomExpediteur . ":</strong> " . htmlspecialchars($msg['message']) . "</p>";
-        }
-        ?>
+        <?php while ($msg = mysqli_fetch_assoc($messages)) { ?>
+            <p><strong><?php echo ($msg['user_id'] == $user_id) ? "Vous" : htmlspecialchars($msg['uname']); ?>:</strong> 
+                <?php echo htmlspecialchars($msg['message']); ?>
+            </p>
+        <?php } ?>
     </div>
-
 
     <form id="chatForm" class="d-flex">
         <input type="hidden" name="room_id" value="<?php echo $room_id; ?>">
