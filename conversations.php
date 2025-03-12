@@ -25,7 +25,7 @@ $result = mysqli_query($con, $query);
 // Si l'utilisateur est un agent, récupérer la liste des utilisateurs (seulement `utype=user`)
 $users = [];
 if ($user_type === 'agent') {
-    $users_query = mysqli_query($con, "SELECT uid, uname, ufirstname FROM user WHERE utype = 'user'");
+    $users_query = mysqli_query($con, "SELECT uid, uname, ufirstname FROM user WHERE utype = 'client'");
     while ($user = mysqli_fetch_assoc($users_query)) {
         $users[] = $user;
     }
