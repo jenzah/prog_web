@@ -175,7 +175,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                 <th>Paiement</th>
                                 <?php } ?>
                                 <th>Commentaires</th>
-                                <th class="actions">Annuler le RDV</th>
+                                <th class="actions">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -190,27 +190,13 @@ $pastQuery = mysqli_query($con, $pastSql);
                         ?>
                             <tr>
                                 <td>
-                                    <!-- <div class="property-link">
-                                        <span class="property-title"><?php echo $app['property_title']; ?></span>
-                                        <a href="rdv_details.php?id=<?php echo $app['aid']; ?>" class="details-link">
-                                            <i class="fas fa-eye"></i>Voir détails du RDV
-                                        </a>
-                                    </div> -->
-                                    <div class="property-link">
-                                        <span class="property-title">
-                                            <?php 
-                                            if (empty($app['property_title']) || $app['property_title'] === null) {
-                                                echo "<em>Non spécifié</em>";
-                                                echo "</span>";
-                                            } else {
-                                                echo $app['property_title'];
-                                                ?>
-                                        </span>
-                                                <a href="rdv_details.php?id=<?php echo $app['aid']; ?>" class="details-link">
-                                                    <i class="fas fa-eye" style="margin-right: 5px;"></i>Voir détails du RDV
-                                                </a>
-                                            <?php } ?>
-                                    </div>
+                                    <?php 
+                                    if (empty($app['property_title']) || $app['property_title'] === null) {
+                                        echo "<em>Non spécifié</em>";
+                                        echo "</span>";
+                                    } else {
+                                        echo $app['property_title'];
+                                    }?>
                                 </td>
                                 
                                 <td>
@@ -243,7 +229,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                     <?php } else { ?>
                                     <div class="payment-container">
                                         <span class="badge-unpaid"><i class="fas fa-times-circle"></i> <?php echo number_format($app['rdv_price'], 0, ',', ' ') . ' €'; ?></span>
-                                        <a href="payment.php?appointment_id=<?php echo $app['aid']; ?>" class="payment-link">
+                                        <a href="payment_confirm.php?appointment_id=<?php echo $app['aid']; ?>" class="payment-link">
                                             <i class="fas fa-credit-card" style="margin-right: 5px;"></i> Payer
                                         </a>
                                     </div>
@@ -252,9 +238,14 @@ $pastQuery = mysqli_query($con, $pastSql);
                                 <?php } ?>
                                 <td class="comments"><?php echo $app['rdv_comments']; ?></td>
                                 <td class="actions text-center">
-                                    <a href="rdv_dashboard.php?cancel_id=<?php echo $app['aid']; ?>" onclick="return confirm('Voulez-vous annuler ce RDV ?');">
-                                        <img src="images/admin/delete.png" class="img-action" style="width: 23px !important; height: 23px !important;" title="Annuler">
-                                    </a>
+                                    <div class="property-link">
+                                        <span class="property-title"><a href="rdv_details.php?id=<?php echo $app['aid']; ?>" class="details-link">
+                                            <i class="fas fa-eye" style="margin-right: 5px;"></i>Voir détails du RDV
+                                        </a></span>
+                                        <span class="property-title"><a href="rdv_details.php?id=<?php echo $app['aid']; ?>" class="details-link">
+                                            <i class="fas fa-trash" style="margin-right: 5px;"></i>Annuler le RDV
+                                        </a></span>
+                                    </div>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -294,6 +285,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                 <th>Paiement</th>
                                 <?php } ?>
                                 <th>Commentaires</th>
+                                <th>Détails</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -307,15 +299,25 @@ $pastQuery = mysqli_query($con, $pastSql);
                             $formattedTime = $time->format('H:i');
                         ?>
                             <tr>
-                                <td>
-                                    <div class="property-link">
-                                        <span class="property-title"><?php echo $app['property_title']; ?></span>
-                                        <a href="rdv_details.php?id=<?php echo $app['aid']; ?>" class="details-link">
-                                            <i class="fas fa-eye"></i>Voir détails du RDV
-                                        </a>
-                                    </div>
+                            <td>
+                                    <?php 
+                                    if (empty($app['property_title']) || $app['property_title'] === null) {
+                                        echo "<em>Non spécifié</em>";
+                                        echo "</span>";
+                                    } else {
+                                        echo $app['property_title'];
+                                    }?>
                                 </td>
-                                <td><?php echo $app['rdv_place']; ?></td>
+                                
+                                <td>
+                                    <?php 
+                                    if (empty($app['rdv_place']) || $app['rdv_place'] === null) {
+                                        echo "<i>Non spécifié</i>";
+                                    } else {
+                                        echo $app['rdv_place'];
+                                    }
+                                    ?>
+                                </td>
                                 <td><?php echo $formattedDate; ?></td>
                                 <td><?php echo $formattedTime; ?></td>
 
@@ -337,7 +339,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                                     <?php } else { ?>
                                     <div class="payment-container">
                                         <span class="badge-unpaid"><i class="fas fa-times-circle"></i> <?php echo number_format($app['rdv_price'], 0, ',', ' ') . ' €'; ?></span>
-                                        <a href="payment.php?appointment_id=<?php echo $app['aid']; ?>" class="payment-link">
+                                        <a href="payment_confirm.php?appointment_id=<?php echo $app['aid']; ?>" class="payment-link">
                                             <i class="fas fa-credit-card"></i>Payer
                                         </a>
                                     </div>
@@ -345,6 +347,13 @@ $pastQuery = mysqli_query($con, $pastSql);
                                 </td>
                                 <?php } ?>
                                 <td class="comments"><?php echo $app['rdv_comments']; ?></td>
+                                <td class="actions text-center">
+                                    <div class="property-link">
+                                        <span class="property-title"><a href="rdv_details.php?id=<?php echo $app['aid']; ?>" class="details-link">
+                                            <i class="fas fa-eye" style="margin-right: 5px;"></i>Voir détails du RDV
+                                        </a></span>
+                                    </div>
+                                </td>
                             </tr>
                         <?php } ?>
                         </tbody>
