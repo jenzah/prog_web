@@ -96,16 +96,39 @@ CREATE TABLE `property` (
 --
 
 INSERT INTO `property` (`pid`, `agentid`, `title`, `propertyDescription`, `propertyType`, `area`, `nbRooms`, `nbBathrooms`, `price`, `location`, `city`, `department`, `pimage1`, `pimage2`, `pimage3`, `status`, `date`) VALUES
-(501, 201, 'Appartement Haussmannien', 'Lumineux avec moulures anciennes', 'résidentiel', 85, 3, 1, 780000, '12 Avenue Montaigne', 'Paris', 'Paris', '1.jpg', '2.jpg', '3.jpg', 'A vendre', '2025-02-28 10:30:00'),
-(502, 201, 'Loft industriel', 'Espace ouvert plein charme', 'résidentiel', 120, 2, 2, 950000, '5 Rue des Entrepreneurs', 'Boulogne-Billancourt', 'Hauts-de-Seine', '4.jpg', '5.jpg', '6.jpg', 'A vendre', '2025-02-27 15:45:00'),
-(503, 202, 'Local Commercial', 'Idéal pour restaurant chic', 'commercial', 150, 3, 2, 1200000, '28 Rue du Commerce', 'Versailles', 'Yvelines', '7.jpg', '8.jpg', '9.jpg', 'A vendre', '2025-03-01 09:15:00'),
-(504, 202, 'Terrain constructible', 'Vue dégagée zone résidentielle', 'terrain', 500, 0, 0, 320000, 'Chemin des Vignes', 'Saint-Germain-en-Laye', 'Yvelines', '10.jpg', '11.jpg', '12.jpg', 'A vendre', '2025-02-25 11:20:00'),
-(505, 203, 'Studio moderne', 'Proche transports et commerces', 'appartement A louer', 35, 1, 1, 950, '45 Rue Mouffetard', 'Paris', 'Paris', '13.jpg', '14.jpg', '15.jpg', 'A louer', '2025-02-26 14:00:00'),
-(506, 203, 'Maison de ville', 'Jardin privatif bien exposé', 'résidentiel', 145, 5, 2, 890000, '17 Rue des Rosiers', 'Neuilly-sur-Seine', 'Hauts-de-Seine', '16.jpg', '17.jpg', '18.jpg', 'vendu', '2025-02-22 16:30:00'),
-(507, 204, 'Bureaux modernes', 'Espace de travail lumineux', 'commercial', 200, 5, 2, 1500000, '8 Avenue des Champs-Élysées', 'Paris', 'Paris', '19.jpg', '20.jpg', '21.jpg', 'A vendre', '2025-03-02 10:00:00'),
-(508, 204, 'Appartement familial', 'Proche écoles et parcs', 'résidentiel', 110, 4, 2, 720000, '25 Rue des Écoles', 'Créteil', 'Val-de-Marne', '22.jpg', '23.jpg', '24.jpg', 'A louer', '2025-02-24 13:45:00'),
-(509, 205, 'Terrain avec vue', 'Constructible zone calme', 'terrain', 800, 0, 0, 450000, 'Route de la Forêt', 'Évry', 'Essonne', '25.jpg', '26.jpg', '27.jpg', 'A vendre', '2025-02-23 11:15:00'),
-(510, 205, 'Duplex contemporain', 'Prestations haut de gamme', 'résidentiel', 130, 4, 3, 1050000, '3 Boulevard Haussmann', 'Paris', 'Paris', '28.jpg', '29.jpg', '30.jpg', 'loué', '2025-02-21 09:30:00');
+
+-- Agent 201
+(501, 201, 'Appartement Parisien', 'Très lumineux avec vue sur Paris', 'résidentiel', 80, 3, 1, 750000, '12 Avenue Montaigne', 'Paris', 'Paris', '1.jpg', '2.jpg', NULL, 'A Vendre', '2025-02-28 10:30:00'),
+(502, 201, 'Loft Industriel', 'Espace ouvert plein de charme', 'résidentiel', 120, 2, 2, 950000, '5 Rue des Entrepreneurs', 'Boulogne-Billancourt', 'Hauts-de-Seine', '3.jpg', '4.jpg', NULL, 'A Vendre', '2025-02-27 15:45:00'),
+
+-- Agent 202
+(503, 202, 'Local Commercial', 'Idéal pour restaurant chic', 'commercial', 150, 3, 2, 1200000, '28 Rue du Commerce', 'Versailles', 'Yvelines', '5.jpg', '6.jpg', NULL, 'A Vendre', '2025-03-01 09:15:00'),
+(504, 202, 'Terrain Constructible', 'Vue dégagée zone résidentielle', 'terrain', 500, 0, 0, 320000, 'Chemin des Vignes', 'Saint-Germain-en-Laye', 'Yvelines', '7.jpg', '8.jpg', NULL, 'A Vendre', '2025-02-25 11:20:00'),
+
+-- Agent 203
+(505, 203, 'Studio Moderne', 'Proche transports et commerces', 'appartement A louer', 35, 1, 1, 950, '45 Rue Mouffetard', 'Paris', 'Paris', '9.jpg', NULL, NULL, 'A Louer', '2025-02-26 14:00:00'),
+(506, 203, 'Maison de Ville', 'Jardin privatif bien exposé', 'résidentiel', 145, 5, 2, 890000, '17 Rue des Rosiers', 'Neuilly-sur-Seine', 'Hauts-de-Seine', '10.jpg', NULL, NULL, 'Vendu', '2025-02-22 16:30:00'),
+
+-- Agent 204
+(507, 204, 'Bureaux Modernes', 'Espace de travail lumineux', 'commercial', 200, 5, 2, 1500000, '8 Avenue des Champs-Élysées', 'Paris', 'Paris', '11.jpg', NULL, NULL, 'A Vendre', '2025-03-02 10:00:00'),
+(508, 204, 'Appartement Familial', 'Proche écoles et parcs', 'résidentiel', 110, 4, 2, 720000, '25 Rue des Écoles', 'Créteil', 'Val-de-Marne', '12.jpg', NULL, NULL, 'A Louer', '2025-02-24 13:45:00'),
+
+-- Agent 205
+(509, 205, 'Terrain avec Vue', 'Constructible zone calme', 'terrain', 800, 0, 0, 450000, 'Route de la Forêt', 'Évry', 'Essonne', '13.jpg', NULL, NULL, 'A Vendre', '2025-02-23 11:15:00'),
+(510, 205, 'Duplex Contemporain', 'Prestations haut de gamme', 'résidentiel', 130, 4, 3, 1050000, '3 Boulevard Haussmann', 'Paris', 'Paris', '14.jpg', NULL, NULL, 'Loué', '2025-02-21 09:30:00'),
+
+-- Agent 206
+(511, 206, 'Appartement Vue Seine', 'Très lumineux avec balcon', 'résidentiel', 90, 3, 1, 820000, '15 Quai d Orsay', 'Paris', 'Paris', '15.jpg', NULL, NULL, 'A Vendre', '2025-02-29 10:00:00'),
+(512, 206, 'Maison de Campagne', 'Jardin privatif bien entretenu', 'résidentiel', 160, 5, 2, 980000, '20 Chemin des Fleurs', 'Fontainebleau', 'Seine-et-Marne', '16.jpg', NULL, NULL, 'Vendu', '2025-02-20 16:00:00'),
+
+-- Agent 207
+(513, 207, 'Studio Étudiant', 'Proche université et transports', 'appartement A louer', 30, 1, 1, 800, '25 Rue de la Sorbonne', 'Paris', 'Paris', '17.jpg', NULL, NULL, 'A Louer', '2025-03-01 14:30:00'),
+(514, 207, 'Bureaux Partagés', 'Espace de coworking moderne', 'commercial', 180, 5, 2, 1600000, '10 Rue de Rivoli', 'Paris', 'Paris', '18.jpg', NULL, NULL, 'A Vendre', '2025-03-03 10:00:00'),
+
+-- Agent 208
+(515, 208, 'Appartement Familial', 'Proche écoles et parcs', 'résidentiel', 120, 4, 2, 780000, '30 Rue des Écoles', 'Créteil', 'Val-de-Marne', '19.jpg', NULL, NULL, 'A Vendre', '2025-02-25 13:45:00'),
+(516, 208, 'Terrain Constructible', 'Vue dégagée zone résidentielle', 'terrain', 600, 0, 0, 380000, 'Chemin des Vignes', 'Saint-Germain-en-Laye', 'Yvelines', '20.jpg', NULL, NULL, 'A Vendre', '2025-02-24 11:20:00');
+
 
 -- --------------------------------------------------------
 
@@ -138,20 +161,46 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`uid`, `uname`, `ufirstname`, `uemail`, `uphone`, `upass`, `utype`, `uimage`) VALUES
-(201, 'Doe', 'John', 'agent1@example.com', '1234567890', 'agent1', 'agent', 'agent1.jpg'),
-(202, 'Williams', 'Alice', 'agent2@example.com', '1234567891', 'agent2', 'agent', 'agent2.jpg'),
-(203, 'Smith', 'Michael', 'agent3@example.com', '1234567892', 'agent3', 'agent', 'agent3.jpg'),
-(204, 'Taylor', 'Sophia', 'agent4@example.com', '1234567893', 'agent4', 'agent', 'agent4.jpg'),
-(205, 'Johnson', 'Daniel', 'agent5@example.com', '1234567894', 'agent5', 'agent', 'agent5.jpg'),
-(101, 'Miller', 'Emily', 'user1@example.com', '1234567895', 'user1', 'user', 'user1.jpg'),
-(102, 'Anderson', 'James', 'user2@example.com', '1234567896', 'user2', 'user', 'user2.jpg'),
-(301, 'Thomas', 'Robert', 'admin1@example.com', '1234567897', 'admin1', 'admin', 'admin1.jpg');
+INSERT INTO `user` (`uid`, `uname`, `ufirstname`, `uemail`, `uphone`, `upass`, `utype`, `uimage`, `specialty`, `uaddress1`, `uaddress2`, `ucity`, `upostal_code`, `ucountry`, `formations`, `experiences`) VALUES
 
-INSERT INTO `user` (`uid`, `uname`, `ufirstname`, `uemail`, `uphone`, `upass`, `utype`, `uimage`, `uaddress1`, `uaddress2`, `ucity`, `upostal_code`, `ucountry`) VALUES
-(401, 'kawtar', 'b', 'kawtar@gmail.com', '9077756576', 'kawtar', 'client', 'default.png', '12 Rue de Paris', NULL, 'Paris', '75001', 'France'),
-(402, 'Agent7', 'b7', 'agent7@email.com', '0600000001', 'password_hash', 'agent', 'default.png', '123 Rue des Agents', NULL, 'Paris', '75001', 'France'),
-(403, 'Agent8', 'b', 'agent8@email.com', '0600000002', 'password_hash', 'agent', 'default.png', '456 Boulevard des Experts', NULL, 'Lyon', '69001', 'France');
+-- Agents
+(201, 'Dupont', 'Pierre', 'agent1@example.com', '0600000001', 'agent1', 'agent', 'agent1.jpg', 'Résidentiel', '12 Rue de Paris', NULL, 'Paris', '75001', 'France', 'Diplômé de l École des Métiers de lImmobilier, Certificat en Gestion Immobilière', '5 ans d expérience dans la vente de biens résidentiels'),
+(202, 'Durand', 'Julie', 'agent2@example.com', '0600000002', 'agent2', 'agent', 'agent2.jpg', 'Résidentiel', '23 Rue de Lyon', NULL, 'Lyon', '69001', 'France', 'Licence en Économie, Spécialisation en Immobilier', '3 ans d expérience dans la location de logements'),
+(203, 'Martin', 'Sébastien', 'agent3@example.com', '0600000003', 'agent3', 'agent', 'agent3.jpg', 'Commercial', '45 Rue de Bordeaux', NULL, 'Bordeaux', '33000', 'France', 'Master en Gestion Immobilière, Certificat en Marketing', '7 ans d expérience dans la vente de locaux commerciaux'),
+(204, 'Lefebvre', 'Aurélie', 'agent4@example.com', '0600000004', 'agent4', 'agent', 'agent4.jpg', 'Commercial', '56 Rue de Toulouse', NULL, 'Toulouse', '31000', 'France', 'Diplômée de l Institut des Études Immobilières, Certificat en Évaluation Immobilière', '4 ans d expérience dans la gestion de bureaux'),
+(205, 'Garcia', 'Thomas', 'agent5@example.com', '0600000005', 'agent5', 'agent', 'agent5.jpg', 'Terrain', '78 Rue de Marseille', NULL, 'Marseille', '13001', 'France', 'BTS en Immobilier, Certificat en Urbanisme', '6 ans d expérience dans la vente de terrains constructibles'),
+(206, 'Moreau', 'Laurent', 'agent6@example.com', '0600000006', 'agent6', 'agent', 'agent6.jpg', 'Terrain', '90 Rue de Nice', NULL, 'Nice', '06000', 'France', 'Diplômé de l École Supérieure des Métiers de l Immobilier, Certificat en Géomètre', '2 ans d expérience dans la promotion immobilière'),
+(207, 'Roux', 'Christophe', 'agent7@example.com', '0600000007', 'agent7', 'agent', 'agent7.jpg', 'Appartement', '123 Rue de Strasbourg', NULL, 'Strasbourg', '67000', 'France', 'Licence en Droit, Spécialisation en Droit Immobilier', '8 ans d expérience dans la gestion de copropriétés'),
+(208, 'Fournier', 'Catherine', 'agent8@example.com', '0600000008', 'agent8', 'agent', 'agent8.jpg', 'Appartement', '145 Rue de Lille', NULL, 'Lille', '59000', 'France', 'Master en Économie Immobilière, Certificat en Évaluation de Biens', '9 ans d expérience dans la vente d appartements de luxe'),
+
+-- Clients
+(301, 'Leroy', 'Marie', 'client1@example.com', '0600000009', 'client1', 'client', 'client1.jpg', NULL, '10 Rue de Rouen', NULL, 'Rouen', '76000', 'France', NULL, NULL),
+(302, 'Bertrand', 'Philippe', 'client2@example.com', '0600000010', 'client2', 'client', 'client2.jpg', NULL, '20 Rue de Reims', NULL, 'Reims', '51000', 'France', NULL, NULL),
+(303, 'Marchand', 'Isabelle', 'client3@example.com', '0600000011', 'client3', 'client', 'client3.jpg', NULL, '30 Rue de Dijon', NULL, 'Dijon', '21000', 'France', NULL, NULL),
+(304, 'Pierre', 'Sylvie', 'client4@example.com', '0600000012', 'client4', 'client', 'client4.jpg', NULL, '40 Rue de Clermont', NULL, 'Clermont-Ferrand', '63000', 'France', NULL, NULL),
+(305, 'Dubois', 'François', 'client5@example.com', '0600000013', 'client5', 'client', 'client5.jpg', NULL, '50 Rue de Grenoble', NULL, 'Grenoble', '38000', 'France', NULL, NULL),
+(306, 'Girard', 'Nathalie', 'client6@example.com', '0600000014', 'client6', 'client', 'client6.jpg', NULL, '60 Rue de Montpellier', NULL, 'Montpellier', '34000', 'France', NULL, NULL),
+(307, 'Lambert', 'Christine', 'client7@example.com', '0600000015', 'client7', 'client', 'client7.jpg', NULL, '70 Rue de Rennes', NULL, 'Rennes', '35000', 'France', NULL, NULL),
+(308, 'Mercier', 'Jean-Pierre', 'client8@example.com', '0600000016', 'client8', 'client', 'client8.jpg', NULL, '80 Rue de Caen', NULL, 'Caen', '14000', 'France', NULL, NULL),
+(309, 'Boucher', 'Sébastien', 'client9@example.com', '0600000017', 'client9', 'client', 'client9.jpg', NULL, '90 Rue de Le Havre', NULL, 'Le Havre', '76600', 'France', NULL, NULL),
+(310, 'Dupré', 'Valérie', 'client10@example.com', '0600000018', 'client10', 'client', 'client10.jpg', NULL, '100 Rue de Nantes', NULL, 'Nantes', '44000', 'France', NULL, NULL),
+(311, 'Fleury', 'Pascal', 'client11@example.com', '0600000019', 'client11', 'client', 'client11.jpg', NULL, '110 Rue de Brest', NULL, 'Brest', '29200', 'France', NULL, NULL),
+(312, 'Guérin', 'Cécile', 'client12@example.com', '0600000020', 'client12', 'client', 'client12.jpg', NULL, '120 Rue de Quimper', NULL, 'Quimper', '29000', 'France', NULL, NULL),
+(313, 'Huet', 'Laurent', 'client13@example.com', '0600000021', 'client13', 'client', 'client13.jpg', NULL, '130 Rue de Vannes', NULL, 'Vannes', '56000', 'France', NULL, NULL),
+(314, 'Joly', 'Sandrine', 'client14@example.com', '0600000022', 'client14', 'client', 'client14.jpg', NULL, '140 Rue de Saint-Malo', NULL, 'Saint-Malo', '35400', 'France', NULL, NULL),
+(315, 'Klein', 'Éric', 'client15@example.com', '0600000023', 'client15', 'client', 'client15.jpg', NULL, '150 Rue de Bayonne', NULL, 'Bayonne', '64100', 'France', NULL, NULL),
+(316, 'Lacroix', 'Caroline', 'client16@example.com', '0600000024', 'client16', 'client', 'client16.jpg', NULL, '160 Rue de Pau', NULL, 'Pau', '64000', 'France', NULL, NULL),
+(317, 'Lefort', 'Olivier', 'client17@example.com', '0600000025', 'client17', 'client', 'client17.jpg', NULL, '170 Rue de Tarbes', NULL, 'Tarbes', '65000', 'France', NULL, NULL),
+(318, 'Lemaitre', 'Sophie', 'client18@example.com', '0600000026', 'client18', 'client', 'client18.jpg', NULL, '180 Rue d Auch', NULL, 'Auch', '32000', 'France', NULL, NULL),
+(319, 'Leroux', 'Gérard', 'client19@example.com', '0600000027', 'client19', 'client', 'client19.jpg', NULL, '190 Rue de Castres', NULL, 'Castres', '81100', 'France', NULL, NULL),
+(320, 'Lévêque', 'Isabelle', 'client20@example.com', '0600000028', 'client20', 'client', 'client20.jpg', NULL, '200 Rue d Albi', NULL, 'Albi', '81000', 'France', NULL, NULL),
+
+-- Admins
+(401, 'Bourgeois', 'Pierre', 'admin1@example.com', '0600000029', 'admin1', 'admin', 'admin1.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(402, 'Clerc', 'Marie', 'admin2@example.com', '0600000030', 'admin2', 'admin', 'admin2.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(403, 'Dumont', 'Jean', 'admin3@example.com', '0600000031', 'admin3', 'admin', 'admin3.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(404, 'Ferrand', 'Sophie', 'admin4@example.com', '0600000032', 'admin4', 'admin', 'admin4.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(405, 'Gauthier', 'Laurent', 'admin5@example.com', '0600000033', 'admin5', 'admin', 'admin5.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 
 -- --------------------------------------------------------
@@ -251,45 +300,70 @@ CREATE TABLE IF NOT EXISTS `agent_schedules` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `agent_schedules` (`agent_id`, `day_of_week`, `workday_start`, `workday_end`, `is_working_day`, `morning_slots`, `afternoon_slots`) VALUES
--- Agent 201 (works 4 days a week, starts early at 8:00, no Wednesday)
-(201, 'Monday', '08:00:00', '17:00:00', 1, 4, 4),
-(201, 'Tuesday', '08:00:00', '17:00:00', 1, 4, 4),
-(201, 'Wednesday', '00:00:00', '00:00:00', 0, 0, 0),
-(201, 'Thursday', '08:00:00', '17:00:00', 1, 4, 4),
-(201, 'Friday', '08:00:00', '17:00:00', 1, 4, 4),
-(201, 'Saturday', '10:00:00', '15:00:00', 0, 0, 0),
 
--- Agent 202 (works 5 days, doesn't work Wednesday morning)
-(202, 'Monday', '09:00:00', '18:00:00', 1, 3, 5),
-(202, 'Tuesday', '09:00:00', '18:00:00', 1, 3, 5),
-(202, 'Wednesday', '13:00:00', '18:00:00', 1, 0, 5),
-(202, 'Thursday', '09:00:00', '18:00:00', 1, 3, 5),
-(202, 'Friday', '09:00:00', '18:00:00', 1, 3, 5),
-(202, 'Saturday', '10:00:00', '15:00:00', 1, 2, 2),
+-- Agent 201 (travaille 5 jours, mercredi après-midi)
+(201, 'Monday', '09:00:00', '17:00:00', 1, 3, 5),
+(201, 'Tuesday', '09:00:00', '17:00:00', 1, 3, 5),
+(201, 'Wednesday', '13:00:00', '17:00:00', 1, 0, 5),
+(201, 'Thursday', '09:00:00', '17:00:00', 1, 3, 5),
+(201, 'Friday', '09:00:00', '17:00:00', 1, 3, 5),
+(201, 'Saturday', '10:00:00', '14:00:00', 1, 2, 2),
 
--- Agent 203 (works 5 days, doesn't work Wednesday morning)
-(203, 'Monday', '09:00:00', '18:00:00', 1, 3, 5),
-(203, 'Tuesday', '09:00:00', '18:00:00', 1, 3, 5),
-(203, 'Wednesday', '13:00:00', '18:00:00', 1, 0, 5),
-(203, 'Thursday', '09:00:00', '18:00:00', 1, 3, 5),
-(203, 'Friday', '09:00:00', '18:00:00', 1, 3, 5),
-(203, 'Saturday', '10:00:00', '15:00:00', 0, 0, 0),
+-- Agent 202 (travaille 5 jours, mercredi matin)
+(202, 'Monday', '09:00:00', '17:00:00', 1, 3, 5),
+(202, 'Tuesday', '09:00:00', '17:00:00', 1, 3, 5),
+(202, 'Wednesday', '09:00:00', '12:00:00', 1, 3, 0),
+(202, 'Thursday', '09:00:00', '17:00:00', 1, 3, 5),
+(202, 'Friday', '09:00:00', '17:00:00', 1, 3, 5),
+(202, 'Saturday', '10:00:00', '14:00:00', 1, 2, 2),
 
--- Agent 204 (works 4 days a week, doesn't work Wednesday afternoon)
-(204, 'Monday', '09:00:00', '18:00:00', 1, 3, 5),
-(204, 'Tuesday', '09:00:00', '18:00:00', 1, 3, 5),
-(204, 'Wednesday', '09:00:00', '12:00:00', 1, 3, 0),
-(204, 'Thursday', '00:00:00', '00:00:00', 0, 0, 0),
-(204, 'Friday', '09:00:00', '18:00:00', 1, 3, 5),
-(204, 'Saturday', '10:00:00', '15:00:00', 1, 2, 2),
+-- Agent 203 (travaille 5 jours, tout le mercredi)
+(203, 'Monday', '09:00:00', '17:00:00', 1, 3, 5),
+(203, 'Tuesday', '09:00:00', '17:00:00', 1, 3, 5),
+(203, 'Wednesday', '00:00:00', '00:00:00', 0, 0, 0),
+(203, 'Thursday', '09:00:00', '17:00:00', 1, 3, 5),
+(203, 'Friday', '09:00:00', '17:00:00', 1, 3, 5),
+(203, 'Saturday', '10:00:00', '14:00:00', 1, 2, 2),
 
--- Agent 205 (works 5 days, doesn't work Wednesday afternoon)
-(205, 'Monday', '10:00:00', '19:00:00', 1, 2, 5),
-(205, 'Tuesday', '10:00:00', '19:00:00', 1, 2, 5),
-(205, 'Wednesday', '10:00:00', '12:00:00', 1, 2, 0),
-(205, 'Thursday', '10:00:00', '19:00:00', 1, 2, 5),
-(205, 'Friday', '10:00:00', '19:00:00', 1, 2, 5),
-(205, 'Saturday', '10:00:00', '15:00:00', 0, 0, 0);
+-- Agent 204 (travaille 4 jours, mercredi après-midi)
+(204, 'Monday', '09:00:00', '17:00:00', 1, 3, 5),
+(204, 'Tuesday', '09:00:00', '17:00:00', 1, 3, 5),
+(204, 'Wednesday', '13:00:00', '17:00:00', 1, 0, 5),
+(204, 'Thursday', '09:00:00', '17:00:00', 1, 3, 5),
+(204, 'Friday', '09:00:00', '17:00:00', 1, 3, 5),
+(204, 'Saturday', '10:00:00', '14:00:00', 0, 0, 0),
+
+-- Agent 205 (travaille 5 jours, mercredi matin)
+(205, 'Monday', '09:00:00', '17:00:00', 1, 3, 5),
+(205, 'Tuesday', '09:00:00', '17:00:00', 1, 3, 5),
+(205, 'Wednesday', '09:00:00', '12:00:00', 1, 3, 0),
+(205, 'Thursday', '09:00:00', '17:00:00', 1, 3, 5),
+(205, 'Friday', '09:00:00', '17:00:00', 1, 3, 5),
+(205, 'Saturday', '10:00:00', '14:00:00', 1, 2, 2),
+
+-- Agent 206 (travaille 4 jours, tout le mercredi)
+(206, 'Monday', '09:00:00', '17:00:00', 1, 3, 5),
+(206, 'Tuesday', '09:00:00', '17:00:00', 1, 3, 5),
+(206, 'Wednesday', '00:00:00', '00:00:00', 0, 0, 0),
+(206, 'Thursday', '09:00:00', '17:00:00', 1, 3, 5),
+(206, 'Friday', '09:00:00', '17:00:00', 1, 3, 5),
+(206, 'Saturday', '10:00:00', '14:00:00', 0, 0, 0),
+
+-- Agent 207 (travaille 5 jours, mercredi après-midi)
+(207, 'Monday', '09:00:00', '17:00:00', 1, 3, 5),
+(207, 'Tuesday', '09:00:00', '17:00:00', 1, 3, 5),
+(207, 'Wednesday', '13:00:00', '17:00:00', 1, 0, 5),
+(207, 'Thursday', '09:00:00', '17:00:00', 1, 3, 5),
+(207, 'Friday', '09:00:00', '17:00:00', 1, 3, 5),
+(207, 'Saturday', '10:00:00', '14:00:00', 1, 2, 2),
+
+-- Agent 208 (travaille 5 jours, mercredi matin)
+(208, 'Monday', '09:00:00', '17:00:00', 1, 3, 5),
+(208, 'Tuesday', '09:00:00', '17:00:00', 1, 3, 5),
+(208, 'Wednesday', '09:00:00', '12:00:00', 1, 3, 0),
+(208, 'Thursday', '09:00:00', '17:00:00', 1, 3, 5),
+(208, 'Friday', '09:00:00', '17:00:00', 1, 3, 5),
+(208, 'Saturday', '10:00:00', '14:00:00', 1, 2, 2);
 
 --
 -- Indexes for dumped tables
@@ -330,10 +404,6 @@ ALTER TABLE `user`
 --
 -- Contraintes pour les tables déchargées
 --
-ALTER TABLE `appointments`
-  ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE;
-
 
 ALTER TABLE `chat_participants`
     ADD CONSTRAINT `fk_participant_rooms` FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
