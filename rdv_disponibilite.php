@@ -13,12 +13,15 @@ if (!isset($_GET['agent_id'])) {
     exit();
 }
 
+// week parameter to handle navigation
+$week_offset = isset($_GET['week']) ? intval($_GET['week']) : 0;
+
 function getAgentDetail($con, $agent_id) {
     $query = mysqli_query($con, "SELECT * FROM user WHERE uid = $agent_id AND utype = 'agent'");
     return mysqli_fetch_assoc($query);
 }
 
-function getWeeklySchedule($con, $agent_id) {
+function getSchedule($con, $agent_id) {
     // Récupérer les plages horaires de l'agent
     $schedule_query = mysqli_query($con, "SELECT * FROM agent_schedules WHERE agent_id = $agent_id ORDER BY FIELD(day_of_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')");
     $schedules = [];
@@ -28,10 +31,10 @@ function getWeeklySchedule($con, $agent_id) {
     return $schedules;
 }
 
-function getAppointments($con, $agent_id) {
-    // Récupérer les rendez-vous existants pour la semaine en cours
-    $date_debut = date('Y-m-d', strtotime('monday this week'));
-    $date_fin = date('Y-m-d', strtotime('saturday this week'));
+function getAppointments($con, $agent_id, $week_offset = 0) {
+    // Récupérer les rendez-vous existants pour la semaine spécifiée
+    $date_debut = date('Y-m-d', strtotime("monday this week $week_offset weeks"));
+    $date_fin = date('Y-m-d', strtotime("saturday this week $week_offset weeks"));
     $rdv_query = mysqli_query($con, "SELECT rdv_date, rdv_time FROM appointments 
                                     WHERE agent_id = $agent_id 
                                     AND rdv_date BETWEEN '$date_debut' AND '$date_fin'
@@ -49,22 +52,24 @@ function getWorkdayBoundaries($schedules) {
     $earliest_start = "23:59:59"; // Start with latest possible time
     $latest_end = "00:00:00";     // Start with earliest possible time
     
-    if (empty($schedules)) {
-        // Set default values for boundaries to show a full calendar
-        $earliest_start = '09:00:00';
-        $latest_end = '18:00:00';
-    } else {
-        foreach ($schedules as $schedule) {
-            // Only consider working days
-            if ($schedule['is_working_day'] == 1) {
-                if ($schedule['workday_start'] < $earliest_start) {
-                    $earliest_start = $schedule['workday_start'];
-                }
-                if ($schedule['workday_end'] > $latest_end) {
-                    $latest_end = $schedule['workday_end'];
-                }
+    foreach ($schedules as $schedule) {
+        // Only consider working days
+        if ($schedule['is_working_day'] == 1) {
+            if ($schedule['workday_start'] < $earliest_start) {
+                $earliest_start = $schedule['workday_start'];
+            }
+            if ($schedule['workday_end'] > $latest_end) {
+                $latest_end = $schedule['workday_end'];
             }
         }
+    }
+    
+    // If no working days found, set defaults
+    if ($earliest_start == "23:59:59") {
+        $earliest_start = "09:00:00";
+    }
+    if ($latest_end == "00:00:00") {
+        $latest_end = "18:00:00";
     }
     
     return ['earliest' => $earliest_start,
@@ -82,10 +87,10 @@ function generateTimeSlots($earliest, $latest) {
     return $horaires;
 }
 
-function getCurrentWeekDates() {
+function getCurrentWeekDates($week_offset = 0) {
     $dates = [];
     for ($i = 0; $i < 6; $i++) {
-        $dates[] = date('Y-m-d', strtotime("monday this week +$i days"));
+        $dates[] = date('Y-m-d', strtotime("monday this week $week_offset weeks +$i days"));
     }
     return $dates;
 }
@@ -98,19 +103,27 @@ function getAgentPropertiesCount($con, $agent_id) {
 
 $agent_id = intval($_GET['agent_id']); 
 
-// Récupérer les spécialités de l'agent
-$specialty = $agent['specialty'] ?? "Non spécifié";
-
 $jours = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 $jours_fr = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
 
 $agent = getAgentDetail($con, $agent_id);
-$schedules = getWeeklySchedule($con, $agent_id);
-$rendez_vous = getAppointments($con, $agent_id);
+$schedules = getSchedule($con, $agent_id);
+$rendez_vous = getAppointments($con, $agent_id, $week_offset);
 $boundaries = getWorkdayBoundaries($schedules);
 $horaires = generateTimeSlots($boundaries['earliest'], $boundaries['latest']);
-$dates = getCurrentWeekDates();
+$dates = getCurrentWeekDates($week_offset);
 $properties_count = getAgentPropertiesCount($con, $agent_id);
+
+// Récupérer les spécialités de l'agent
+$specialty = $agent['specialty'] ?? "Non spécifié";
+
+// Get week start and end dates for display
+$week_start = date('d/m/Y', strtotime("monday this week $week_offset weeks"));
+$week_end = date('d/m/Y', strtotime("saturday this week $week_offset weeks"));
+
+// Calculate previous and next week offsets
+$prev_week = $week_offset - 1;
+$next_week = $week_offset + 1;
 ?>
 
 
@@ -140,6 +153,10 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
 <link rel="stylesheet" type="text/css" href="fonts/flaticon/flaticon.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/login.css">
+
+<style>
+    
+</style>
 </head>
 
 <body>
@@ -155,7 +172,7 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
                 <div class="col-md-6">
                     <nav aria-label="breadcrumb" class="float-md-right">
                         <ol class="breadcrumb bg-transparent m-0 p-0">
-                            <li class="breadcrumb-item text-white"><a href="index.php">Accueil</a></li>
+                            <li class="breadcrumb-item text-white"><a href="liste_agents.php">Agents</a></li>
                             <li class="breadcrumb-item active">Disponibilité</li>
                         </ol>
                     </nav>
@@ -168,8 +185,7 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
         <div class="container">
             <div class="row mb-4">
                 <div class="col-lg-12">
-                    <h2 class="text-secondary double-down-line text-center">Calendrier de Disponibilité</h2>
-                    <p class="text-center">Semaine du <?= date('d/m/Y', strtotime('monday this week')) ?> au <?= date('d/m/Y', strtotime('saturday this week')) ?></p>
+                    <h2 class="text-secondary text-center">Calendrier de Disponibilité</h2>
                 </div>
             </div>
             
@@ -190,14 +206,9 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
                         
                         <div class="agent-stat">
                             <strong><i class="fa fa-envelope"></i> Email:</strong>
-                            <?php if (!$_SESSION['isAgent'] && !$_SESSION['isAdmin']) { ?>
                             <div class="float-right text-truncate" style="max-width: 65%; font-size: 13px;">
                                 <a href="mailto:<?php echo htmlspecialchars($agent['uemail']); ?>"><?php echo htmlspecialchars($agent['uemail']); ?></a>
                             </div>
-                            <?php }else{?>
-                            <span class="float-right" style="max-width: 65%; font-size: 13px;"><?= htmlspecialchars($agent['uemail']) ?></span>
-                            <?php }?>
-
 
                         </div>
                         
@@ -236,6 +247,24 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
                 
                 <!-- Colonne de droite - Calendrier -->
                 <div class="col-lg-9 col-md-8">
+                    <!-- Week Navigation Bar -->
+                    <div class="week-navigation">
+                        <a href="?agent_id=<?= $agent_id ?>&week=<?= $prev_week ?>" class="week-nav-btn prev">
+                            <i class="fa fa-chevron-left"></i>
+                        </a>
+                        <div class="week-title">Semaine du <?= $week_start ?> au <?= $week_end ?></div>
+                        <a href="?agent_id=<?= $agent_id ?>&week=<?= $next_week ?>" class="week-nav-btn next">
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                    
+                    <?php if (empty($schedules)) { ?>
+                    <div class="alert alert-info text-center">
+                        <h4><i class="fa fa-info-circle"></i> Agent non disponible</h4>
+                        <p>Cet agent n'a pas encore configuré son calendrier de disponibilité.</p>
+                        <p>Veuillez contacter l'agent directement par email ou téléphone pour organiser un rendez-vous.</p>
+                    </div>
+                    <?php } else { ?>
                     <div class="table-responsive">
                         <table class="table table-bordered auto-table text-center content-center <?php echo (!$_SESSION['isAgent'] && !$_SESSION['isAdmin']) ? 'client-calendar' : 'staff-calendar'; ?>">
                             <thead class="bg-primary text-white">
@@ -339,6 +368,7 @@ $properties_count = getAgentPropertiesCount($con, $agent_id);
                         </div>
                         <?php } ?>
                     </div>
+                    <?php } ?>
 
                     <?php if(!isset($_SESSION['uid'])) { ?>
                     <div class="mt-4">

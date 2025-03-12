@@ -308,9 +308,8 @@ ALTER TABLE `user`
 
 
 ALTER TABLE `appointments`
-  ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`),
-  ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`),
-  ADD CONSTRAINT `fk_appointments_property` FOREIGN KEY (`property_id`) REFERENCES `property` (`pid`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE;
 
 
 ALTER TABLE `chat_participants`

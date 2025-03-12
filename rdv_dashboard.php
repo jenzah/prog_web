@@ -134,7 +134,7 @@ $pastQuery = mysqli_query($con, $pastSql);
                     <div class="col-md-6">
                         <nav aria-label="breadcrumb" class="float-md-right">
                             <ol class="breadcrumb bg-transparent m-0 p-0">
-                                <li class="breadcrumb-item text-white"><a href="home.php">
+                                <li class="breadcrumb-item text-white"><a href="index.php">
                                     <?php echo ($_SESSION['isAgent']) ? 'Mon agenda' : 'Mon compte'; ?>
                                 </a></li>
                                 <li class="breadcrumb-item active">Mes RDVs</li>
@@ -242,7 +242,8 @@ $pastQuery = mysqli_query($con, $pastSql);
                                         <span class="property-title"><a href="rdv_details.php?id=<?php echo $app['aid']; ?>" class="details-link">
                                             <i class="fas fa-eye" style="margin-right: 5px;"></i>Voir détails du RDV
                                         </a></span>
-                                        <span class="property-title"><a href="rdv_details.php?id=<?php echo $app['aid']; ?>" class="details-link">
+                                        <span class="property-title">
+                                            <a class="details-link" href="rdv_dashboard.php?cancel_id=<?php echo $app['aid']; ?>&cancel=1" class="btn cancel-btn" onclick="return confirm('Êtes-vous sûr de vouloir annuler ce rendez-vous ?');">
                                             <i class="fas fa-trash" style="margin-right: 5px;"></i>Annuler le RDV
                                         </a></span>
                                     </div>
