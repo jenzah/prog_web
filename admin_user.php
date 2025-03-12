@@ -21,7 +21,7 @@ if (isset($_GET['delete_id'])) {
     $user_id = (int) $_GET['delete_id'];
 
     // Vérifier si l'utilisateur existe
-    $checkQuery = mysqli_query($con, "SELECT * FROM user WHERE uid='$user_id' AND utype='user'");
+    $checkQuery = mysqli_query($con, "SELECT * FROM user WHERE uid='$user_id' AND utype='client'");
     if (mysqli_num_rows($checkQuery) > 0) {
         // Suppression
         $deleteQuery = mysqli_query($con, "DELETE FROM user WHERE uid='$user_id'");
