@@ -72,7 +72,7 @@ $row = mysqli_fetch_assoc($query);
                             <div class="col-md-6">
                                 <nav aria-label="breadcrumb" class="float-left float-md-right">
                                     <ol class="breadcrumb bg-transparent m-0 p-0">
-                                        <li class="breadcrumb-item text-white"><a href="home.php">Accueil</a></li>
+                                        <li class="breadcrumb-item text-white"><a href="index.php">Accueil</a></li>
                                         <li class="breadcrumb-item active">Propriétés</li>
                                     </ol>
                                 </nav>
@@ -145,7 +145,7 @@ $row = mysqli_fetch_assoc($query);
                                     <span class="float-right"><?php echo htmlspecialchars($row['uphone']); ?></span>
                                 </div>
 
-                                <?php if (!$_SESSION['isAgent']) { ?>
+                                <?php if(isset($_SESSION['isAgent']) && !$_SESSION['isAgent']) { ?>
                                 <!-- Boutons actions -->
                                 <div class="mt-4 d-flex flex-column align-items-center">
                                     <!-- Bouton "Prendre Rendez-vous" -->

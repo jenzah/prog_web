@@ -15,6 +15,7 @@ if(empty($_SESSION['isAdmin'])) {
     header("Location:unauthorised.php");
     exit();
 }
+
 // Récupérer les types de propriétés depuis la base de données
 $propertyTypesQuery = mysqli_query($con, "SELECT DISTINCT propertyType FROM property");
 $propertyTypes = [];
@@ -25,7 +26,21 @@ while ($row = mysqli_fetch_assoc($propertyTypesQuery)) {
 // Messages d'erreur ou de succès
 $error = "";
 $msg = "";
-if (isset($_POST['add'])) {
+
+// Variables de sélection utilisateur
+$selectedPropertyType = isset($_POST['propertyType']) ? $_POST['propertyType'] : '';
+$agents = [];
+
+// Si un type de propriété a été sélectionné, récupérer les agents correspondants
+if(!empty($selectedPropertyType)) {
+    $agentQuery = mysqli_query($con, "SELECT uid, uname, ufirstname, specialty FROM user 
+                                     WHERE utype = 'agent' AND specialty = '$selectedPropertyType'");
+    while($row = mysqli_fetch_assoc($agentQuery)) {
+        $agents[] = $row;
+    }
+}
+
+if (isset($_POST['add']) && !empty($_POST['agentid'])) {
     // Récupération des champs du formulaire
     $title = mysqli_real_escape_string($con, $_POST['title']);
     $propertyDescription = mysqli_real_escape_string($con, $_POST['propertyDescription']);
@@ -38,7 +53,7 @@ if (isset($_POST['add'])) {
     $city = mysqli_real_escape_string($con, $_POST['city']);
     $department = mysqli_real_escape_string($con, $_POST['department']);
     $status = mysqli_real_escape_string($con, $_POST['status']);
-    $agentid = (int)$_SESSION['uid']; // Assigne l'ID de l'agent connecté
+    $agentid = (int)$_POST['agentid']; // Récupérer l'ID de l'agent sélectionné
 
     // Dossier de stockage des images
     $upload_dir = "images/property/";
@@ -72,10 +87,12 @@ if (isset($_POST['add'])) {
 
     if ($result) {
         $msg = "<p class='alert alert-success'>Propriété ajoutée avec succès !</p>";
+        // Réinitialiser les variables pour un nouveau formulaire
+        $selectedPropertyType = '';
+        $agents = [];
     } else {
-        $error = "<p class='alert alert-danger'>Erreur lors de l'ajout de la propriété.</p>";
+        $error = "<p class='alert alert-danger'>Erreur lors de l'ajout de la propriété: " . mysqli_error($con) . "</p>";
     }
-
 }
 ?>
 <!DOCTYPE html>
@@ -129,7 +146,7 @@ if (isset($_POST['add'])) {
                     <div class="col-md-6">
                         <nav aria-label="breadcrumb" class="float-md-right">
                             <ol class="breadcrumb bg-transparent m-0 p-0">
-                                <li class="breadcrumb-item text-white"><a href="home.php">Accueil</a></li>
+                                <li class="breadcrumb-item text-white"><a href="index.php">Accueil</a></li>
                                 <li class="breadcrumb-item active">Gestion Propriétés</li>
                             </ol>
                         </nav>
@@ -144,88 +161,121 @@ if (isset($_POST['add'])) {
             <div class="col-md-8 offset-md-2">
                 <?php echo $error; ?>
                 <?php echo $msg; ?>
-                <form method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label>Titre</label>
-                        <input type="text" name="title" class="form-control" required>
-                    </div>
+                
+                <!-- Step 1: Select Property Type -->
+                <?php if(empty($selectedPropertyType) || !empty($msg)): ?>
+                    <form method="post" class="mb-4">
+                        <div class="form-group">
+                            <label>Étape 1: Sélectionner le Type de Propriété</label>
+                            <select name="propertyType" class="form-control" required>
+                                <option value="">Sélectionner un type</option>
+                                <option value="résidentiel">Résidentiel</option>
+                                <option value="commercial">Commercial</option>
+                                <option value="terrain">Terrain</option>
+                                <option value="appartement">Appartement</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary ">Continuer</button>
+                    </form>
+                
+                <!-- Step 2: Complete Property Form -->
+                <?php elseif(!empty($selectedPropertyType)): ?>
+                    <form method="post" enctype="multipart/form-data">
+                        <h4 class="mb-3">Type de propriété sélectionné: <?php echo htmlspecialchars($selectedPropertyType); ?></h4>
+                        <!-- Hidden field to maintain the property type -->
+                        <input type="hidden" name="propertyType" value="<?php echo htmlspecialchars($selectedPropertyType); ?>">
+                        
+                        <div class="form-group">
+                            <label>Agent Responsable</label>
+                            <select name="agentid" class="form-control" required>
+                                <option value="">Sélectionner un agent</option>
+                                <?php if(empty($agents)): ?>
+                                    <option value="" disabled>Aucun agent disponible pour ce type de propriété</option>
+                                <?php else: ?>
+                                    <?php foreach($agents as $agent): ?>
+                                        <option value="<?php echo $agent['uid']; ?>">
+                                            <?php echo htmlspecialchars($agent['ufirstname'] . ' ' . strtoupper($agent['uname'])); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea name="propertyDescription" class="form-control" required></textarea>
-                    </div>
+                        <div class="form-group">
+                            <label>Titre</label>
+                            <input type="text" name="title" class="form-control" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Type de Propriété</label>
-                        <select name="propertyType" class="form-control" required>
-                            <option value="">Sélectionner un type</option>
-                            <?php foreach ($propertyTypes as $type) { ?>
-                                <option value="<?php echo $type; ?>"><?php echo ucfirst($type); ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="propertyDescription" class="form-control" required></textarea>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Superficie (m²)</label>
-                        <input type="number" name="area" class="form-control" required>
-                    </div>
+                        <div class="form-group">
+                            <label>Superficie (m²)</label>
+                            <input type="number" name="area" class="form-control" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Nombre de Chambres</label>
-                        <input type="number" name="nbRooms" class="form-control" required>
-                    </div>
+                        <div class="form-group">
+                            <label>Nombre de Chambres</label>
+                            <input type="number" name="nbRooms" class="form-control" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Nombre de Salles de Bain</label>
-                        <input type="number" name="nbBathrooms" class="form-control" required>
-                    </div>
+                        <div class="form-group">
+                            <label>Nombre de Salles de Bain</label>
+                            <input type="number" name="nbBathrooms" class="form-control" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Prix (€)</label>
-                        <input type="number" name="price" class="form-control" required>
-                    </div>
+                        <div class="form-group">
+                            <label>Prix (€)</label>
+                            <input type="number" name="price" class="form-control" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Adresse</label>
-                        <input type="text" name="location" class="form-control" required>
-                    </div>
+                        <div class="form-group">
+                            <label>Adresse</label>
+                            <input type="text" name="location" class="form-control" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Ville</label>
-                        <input type="text" name="city" class="form-control" required>
-                    </div>
+                        <div class="form-group">
+                            <label>Ville</label>
+                            <input type="text" name="city" class="form-control" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Département</label>
-                        <input type="text" name="department" class="form-control" required>
-                    </div>
+                        <div class="form-group">
+                            <label>Département</label>
+                            <input type="text" name="department" class="form-control" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Statut</label>
-                        <select name="status" class="form-control" required>
-                            <option value="disponible">A vendre</option>
-                            <option value="vendu">A louer</option>
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label>Statut</label>
+                            <select name="status" class="form-control" required>
+                                <option value="A vendre">A vendre</option>
+                                <option value="A louer">A louer</option>
+                            </select>
+                        </div>
 
-                    <h5 class="text-secondary">Images</h5>
-                    <div class="form-group">
-                        <label>Image 1</label>
-                        <input type="file" name="pimage1" class="form-control">
-                    </div>
+                        <h5 class="text-secondary">Images</h5>
+                        <div class="form-group">
+                            <label>Image 1</label>
+                            <input type="file" name="pimage1" class="form-control">
+                        </div>
 
-                    <div class="form-group">
-                        <label>Image 2</label>
-                        <input type="file" name="pimage2" class="form-control">
-                    </div>
+                        <div class="form-group">
+                            <label>Image 2</label>
+                            <input type="file" name="pimage2" class="form-control">
+                        </div>
 
-                    <div class="form-group">
-                        <label>Image 3</label>
-                        <input type="file" name="pimage3" class="form-control">
-                    </div>
+                        <div class="form-group">
+                            <label>Image 3</label>
+                            <input type="file" name="pimage3" class="form-control">
+                        </div>
 
-                    <button type="submit" name="add" class="btn btn-primary btn-block mt-4 mb-5">Ajouter</button>
-                </form>
+                        <div class="form-group">
+                            <button type="submit" name="add" class="btn btn-primary btn-block mt-4">Ajouter</button>
+                            <a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="btn btn-secondary btn-block mb-5">Annuler</a>
+                        </div>
+                    </form>
+                <?php endif; ?>
             </div>
         </div>
 

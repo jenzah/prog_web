@@ -15,13 +15,6 @@ if(empty($_SESSION['isAdmin'])) {
     exit();
 }
 
-// Récupérer les spécialités distinctes de la BDD
-$specialtiesQuery = mysqli_query($con, "SELECT DISTINCT specialty FROM user WHERE specialty IS NOT NULL AND specialty <> ''");
-$specialties = [];
-while ($row = mysqli_fetch_assoc($specialtiesQuery)) {
-    $specialties[] = $row['specialty'];
-}
-
 // Messages d'erreur ou de succès
 $error = "";
 $msg = "";
@@ -32,7 +25,8 @@ if (isset($_POST['add'])) {
     $firstname = mysqli_real_escape_string($con, $_POST['firstname']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $phone = mysqli_real_escape_string($con, $_POST['phone']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Sécurisation du mot de passe
+    // $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Sécurisation du mot de passe
+    $password = mysqli_real_escape_string($con, $_POST['password']); // Sécurisation du mot de passe
     $specialty = mysqli_real_escape_string($con, $_POST['specialty']);
 
     // Dossier de stockage des images
@@ -156,11 +150,10 @@ if (isset($_POST['add'])) {
                         <label>Spécialité</label>
                         <select name="specialty" class="form-control">
                             <option value="">Sélectionner une spécialité</option>
-                            <?php foreach ($specialties as $spec) { ?>
-                                <option value="<?php echo $spec; ?>" <?php if (!empty($_POST['specialty']) && $_POST['specialty'] == $spec) echo 'selected'; ?>>
-                                    <?php echo ucfirst($spec); ?>
-                                </option>
-                            <?php } ?>
+                            <option value="résidentiel">Résidentiel</option>
+                            <option value="résidentiel">Commercial</option>
+                            <option value="résidentiel">Terrain</option>
+                            <option value="résidentiel">Appartement</option>
                         </select>
                     </div>
 

@@ -310,6 +310,10 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `uemail` (`uemail`);
 
 
+ALTER TABLE `appointments`
+  ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE;
+
 
 ALTER TABLE `chat_participants`
     ADD CONSTRAINT `fk_participant_rooms` FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
