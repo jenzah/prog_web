@@ -309,19 +309,6 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`uid`),
   ADD UNIQUE KEY `uemail` (`uemail`);
 
-
-ALTER TABLE `appointments`
-  ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE;
-
-
-ALTER TABLE `chat_participants`
-    ADD CONSTRAINT `fk_participant_rooms` FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
-    ADD CONSTRAINT `fk_chat_user` FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE;
-
-ALTER TABLE `chat_messages`
-    ADD CONSTRAINT `fk_messages_rooms` FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
-    ADD CONSTRAINT `fk_messages_user` FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE;
 --
 -- AUTO_INCREMENT for dumped tables
 --
@@ -340,10 +327,22 @@ ALTER TABLE `user`
   MODIFY `uid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 
-ALTER TABLE `appointments`
-  ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`)  ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`);
-
 --
 -- Contraintes pour les tables déchargées
 --
+ALTER TABLE `appointments`
+  ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE;
+
+
+ALTER TABLE `chat_participants`
+    ADD CONSTRAINT `fk_participant_rooms` FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
+    ADD CONSTRAINT `fk_chat_user` FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE;
+
+ALTER TABLE `chat_messages`
+    ADD CONSTRAINT `fk_messages_rooms` FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
+    ADD CONSTRAINT `fk_messages_user` FOREIGN KEY (user_id) REFERENCES user(uid) ON DELETE CASCADE;
+
+ALTER TABLE `appointments`
+  ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`)  ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`) ON DELETE CASCADE;
