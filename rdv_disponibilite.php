@@ -37,8 +37,7 @@ function getAppointments($con, $agent_id, $week_offset = 0) {
     $date_fin = date('Y-m-d', strtotime("saturday this week $week_offset weeks"));
     $rdv_query = mysqli_query($con, "SELECT rdv_date, rdv_time FROM appointments 
                                     WHERE agent_id = $agent_id 
-                                    AND rdv_date BETWEEN '$date_debut' AND '$date_fin'
-                                    AND rdv_status != 'annulé'");
+                                    AND rdv_date BETWEEN '$date_debut' AND '$date_fin'");
     $rendez_vous = [];
     while ($row = mysqli_fetch_assoc($rdv_query)) {
         $date = $row['rdv_date'];
