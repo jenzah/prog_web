@@ -67,9 +67,10 @@ DROP TABLE IF EXISTS `user`;
 -- Table structure for table `property`
 --
 
+
 DROP TABLE IF EXISTS `property`;
 CREATE TABLE `property` (
-  `pid` int(50) NOT NULL,
+  `pid` int(50) NOT NULL, 
   `agentid` int(50) NOT NULL,
   `title` varchar(200) NOT NULL,
   `propertyDescription` longtext NOT NULL,
@@ -87,6 +88,8 @@ CREATE TABLE `property` (
   `status` varchar(50) NOT NULL, -- a vendre, a louer, vendu, loué
   `date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
 
 --
 -- Dumping data for table `property`
@@ -307,11 +310,6 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `uemail` (`uemail`);
 
 
-ALTER TABLE `appointments`
-  ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`),
-  ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`),
-  ADD CONSTRAINT `fk_appointments_property` FOREIGN KEY (`property_id`) REFERENCES `property` (`pid`) ON DELETE SET NULL ON UPDATE CASCADE;
-
 
 ALTER TABLE `chat_participants`
     ADD CONSTRAINT `fk_participant_rooms` FOREIGN KEY (room_id) REFERENCES chat_rooms(room_id) ON DELETE CASCADE,
@@ -337,6 +335,10 @@ ALTER TABLE `property`
 ALTER TABLE `user`
   MODIFY `uid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
+
+ALTER TABLE `appointments`
+  ADD CONSTRAINT `fk_appointments_client` FOREIGN KEY (`client_id`) REFERENCES `user` (`uid`)  ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_appointments_agent` FOREIGN KEY (`agent_id`) REFERENCES `user` (`uid`);
 
 --
 -- Contraintes pour les tables déchargées

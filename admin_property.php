@@ -129,13 +129,13 @@ $query = mysqli_query($con, $sql);
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <h2 class="page-name text-white text-uppercase"><b>Liste des Propriétés</b></h2>
+                        <h2 class="page-name text-white text-uppercase"><b>Gestion Propriétés</b></h2>
                     </div>
                     <div class="col-md-6">
                         <nav aria-label="breadcrumb" class="float-md-right">
                             <ol class="breadcrumb bg-transparent m-0 p-0">
                                 <li class="breadcrumb-item text-white"><a href="home.php">Accueil</a></li>
-                                <li class="breadcrumb-item active">Liste des Propriétés</li>
+                                <li class="breadcrumb-item active">Gestion Propriétés</li>
                             </ol>
                         </nav>
                     </div>
