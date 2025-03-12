@@ -1322,7 +1322,12 @@ blockquote {
 
 .staff-calendar .dispo:hover {
     /* Override any hover effects */
-    background-color: inherit !important;
+    background-color: white !important;
+}
+.passe {
+    background-color: #b4b4b4;
+	color: white; 
+    cursor: default;
 }
 .indispo { 
 	background-color: #b4b4b4; 

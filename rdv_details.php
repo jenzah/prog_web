@@ -19,6 +19,10 @@ if(!isset($_GET['id'])) {
 $appointmentId = (int) $_GET['id'];
 $userId = $_SESSION['uid'];
 
+// Définir les variables d'accès utilisateur
+$isAdmin = isset($_SESSION['utype']) && $_SESSION['utype'] === 'admin';
+$isAgent = isset($_SESSION['utype']) && $_SESSION['utype'] === 'agent';
+
 // Annuler un rendez-vous si "cancel" est présent dans l'URL
 if (isset($_GET['cancel'])) {
     // Vérifier si le rendez-vous existe et appartient à l'utilisateur courant
@@ -59,10 +63,12 @@ $sql = "SELECT a.*,
                agent.uimage as agent_image,
                agent.specialty as agent_specialty,
                agent.cv as agent_cv,
+               client.uid as client_id,
                client.uname as client_name,
                client.ufirstname as client_firstname,
                client.uphone as client_phone,
-               client.uemail as client_email
+               client.uemail as client_email,
+               client.uimage as client_image
         FROM appointments a
         LEFT JOIN property p ON a.property_id = p.pid
         LEFT JOIN user agent ON a.agent_id = agent.uid
@@ -81,11 +87,41 @@ if (mysqli_num_rows($query) == 0) {
 
 $app = mysqli_fetch_assoc($query);
 
-// Compter le nombre de propriétés de l'agent
-$properties_count_query = mysqli_query($con, "SELECT COUNT(*) as count FROM property WHERE agentid = " . $app['agent_id']);
-$properties_count = 0;
-if ($properties_count_result = mysqli_fetch_assoc($properties_count_query)) {
-    $properties_count = $properties_count_result['count'];
+// Déterminer les propriétés en fonction du rôle de l'utilisateur connecté
+if ($isAgent) {
+    // Si c'est l'agent qui est connecté, montrer les infos du client
+    $personToShowId = $app['client_id'];
+    $personToShowName = $app['client_name'];
+    $personToShowFirstName = $app['client_firstname'];
+    $personToShowEmail = $app['client_email'];
+    $personToShowPhone = $app['client_phone'];
+    $personToShowImage = $app['client_image'];
+    $personToShowRole = 'Client';
+    
+    // Compter le nombre de RDV du client
+    $client_appointments_query = mysqli_query($con, "SELECT COUNT(*) as count FROM appointments WHERE client_id = " . $app['client_id']);
+    $person_stats = 0;
+    if ($count_result = mysqli_fetch_assoc($client_appointments_query)) {
+        $person_stats = $count_result['count'];
+    }
+    $personStatsLabel = "Total des RDVs";
+} else {
+    // Si c'est un client ou admin qui est connecté, montrer les infos de l'agent
+    $personToShowId = $app['agent_id'];
+    $personToShowName = $app['agent_name'];
+    $personToShowFirstName = $app['agent_firstname'];
+    $personToShowEmail = $app['agent_email'];
+    $personToShowPhone = $app['agent_phone'];
+    $personToShowImage = $app['agent_image'];
+    $personToShowRole = 'Agent Immobilier';
+    
+    // Compter le nombre de propriétés de l'agent
+    $properties_count_query = mysqli_query($con, "SELECT COUNT(*) as count FROM property WHERE agentid = " . $app['agent_id']);
+    $person_stats = 0;
+    if ($properties_count_result = mysqli_fetch_assoc($properties_count_query)) {
+        $person_stats = $properties_count_result['count'];
+    }
+    $personStatsLabel = "Propriétés";
 }
 
 // Formater la date et l'heure
@@ -108,10 +144,6 @@ if ($app['rdv_date'] < $currentDate) {
 elseif ($app['rdv_date'] == $currentDate && $app['rdv_time'] < $currentTime) {
     $isPastAppointment = true;
 }
-
-// Définir les variables d'accès utilisateur
-$isAdmin = isset($_SESSION['utype']) && $_SESSION['utype'] === 'admin';
-$isAgent = isset($_SESSION['utype']) && $_SESSION['utype'] === 'agent';
 
 // Définir l'emplacement par défaut si non spécifié
 $rdvPlace = !empty($app['rdv_place']) ? $app['rdv_place'] : "Sur place: 12 Rue de Paris, 75001 Paris";
@@ -170,8 +202,8 @@ $agentSpecialty = isset($specialtyLabels[$app['agent_specialty']]) ? $specialtyL
         margin-bottom: 15px;
         color: #555;
     }
-    /* Agent sidebar styling */
-    .agent-info-sidebar {
+    /* Person sidebar styling */
+    .person-info-sidebar {
         background-color: #ffffff;
         border-radius: 5px;
         box-shadow: 0 0 15px rgba(0,0,0,0.1);
@@ -180,7 +212,7 @@ $agentSpecialty = isset($specialtyLabels[$app['agent_specialty']]) ? $specialtyL
         height: 100%;
     }
 
-    .agent-photo {
+    .person-photo {
         width: 150px;
         height: 150px;
         border-radius: 50%;
@@ -189,7 +221,7 @@ $agentSpecialty = isset($specialtyLabels[$app['agent_specialty']]) ? $specialtyL
         border: 3px solid #f5f5f5;
     }
 
-    .agent-stat {
+    .person-stat {
         padding: 10px 0;
         border-bottom: 1px solid #eee;
         font-size: 14px;
@@ -198,7 +230,7 @@ $agentSpecialty = isset($specialtyLabels[$app['agent_specialty']]) ? $specialtyL
         align-items: center;
     }
 
-    .agent-stat:last-of-type {
+    .person-stat:last-of-type {
         border-bottom: none;
     }
 
@@ -261,38 +293,40 @@ $agentSpecialty = isset($specialtyLabels[$app['agent_specialty']]) ? $specialtyL
             <div class="full-row">
                 <div class="container">
                     <div class="row">
-                        <!-- Colonne de gauche - Profil de l'agent -->
+                        <!-- Colonne de gauche - Profil de la personne (agent ou client selon qui est connecté) -->
                         <div class="col-lg-4">
-                            <div class="agent-info-sidebar">
+                            <div class="person-info-sidebar">
                                 <div class="text-center mb-4">
-                                    <img src="images/profile_pic/<?= !empty($app['agent_image']) ? $app['agent_image'] : 'default.jpg' ?>" class="agent-photo" alt="Photo de l'agent">
-                                    <h4 class="text-secondary"><?= htmlspecialchars($app['agent_firstname']) ?> <?= htmlspecialchars(strtoupper($app['agent_name'])) ?></h4>
-                                    <p class="text-muted mb-3">Agent Immobilier</p>
+                                    <img src="images/profile_pic/<?= !empty($personToShowImage) ? $personToShowImage : 'default.jpg' ?>" class="person-photo" alt="Photo du <?= $personToShowRole ?>">
+                                    <h4 class="text-secondary"><?= htmlspecialchars($personToShowFirstName) ?> <?= htmlspecialchars(strtoupper($personToShowName)) ?></h4>
+                                    <p class="text-muted mb-3"><?= $personToShowRole ?></p>
                                 </div>
                                 
-                                <div class="agent-stat">
+                                <?php if (!$isAgent) { // Si c'est un client qui voit le profil d'un agent ?>
+                                <div class="person-stat">
                                     <strong><i class="fa fa-briefcase"></i> Spécialité:</strong> 
                                     <span class="float-right"><?= htmlspecialchars($agentSpecialty) ?></span>
                                 </div>
+                                <?php } ?>
                                 
-                                <div class="agent-stat">
+                                <div class="person-stat">
                                     <strong><i class="fa fa-envelope"></i> Email:</strong>
                                     <div class="float-right text-truncate" style="max-width: 65%; font-size: 13px;">
-                                        <a href="mailto:<?php echo htmlspecialchars($app['agent_email']); ?>"><?php echo htmlspecialchars($app['agent_email']); ?></a>
+                                        <a href="mailto:<?php echo htmlspecialchars($personToShowEmail); ?>"><?php echo htmlspecialchars($personToShowEmail); ?></a>
                                     </div>
                                 </div>
                                 
-                                <div class="agent-stat">
+                                <div class="person-stat">
                                     <strong><i class="fa fa-phone"></i> Téléphone:</strong> 
-                                    <span class="float-right"><?= htmlspecialchars($app['agent_phone']) ?></span>
+                                    <span class="float-right"><?php echo htmlspecialchars($personToShowPhone); ?></span>
                                 </div>
                                 
-                                <div class="agent-stat">
-                                    <strong><i class="fa fa-building"></i> Propriétés:</strong> 
-                                    <span class="float-right"><?= $properties_count ?></span>
+                                <div class="person-stat">
+                                    <strong><i class="fa fa-<?= $isAgent ? 'calendar' : 'building' ?>"></i> <?= $personStatsLabel ?>:</strong> 
+                                    <span class="float-right"><?= $person_stats ?></span>
                                 </div>
                                 
-                                <!-- Boutons actions -->
+                                <!-- Boutons actions - visibles uniquement pour les clients qui consultent un agent -->
                                 <?php if (!$isAgent) { ?>
                                 <div class="mt-4 d-flex flex-column align-items-center">
                                     <!-- Bouton "Prendre Rendez-vous" -->
@@ -314,6 +348,14 @@ $agentSpecialty = isset($specialtyLabels[$app['agent_specialty']]) ? $specialtyL
                                     <!-- Bouton "Messagerie" -->
                                     <a href="messagerie.php?agent_id=<?php echo htmlspecialchars($app['agent_id']); ?>" class="btn btn-secondary btn-block w-75">
                                         <i class="fa fa-comments"></i> Messagerie
+                                    </a>
+                                </div>
+                                <?php } else { ?>
+                                <!-- Boutons pour l'agent qui consulte un client -->
+                                <div class="mt-4 d-flex flex-column align-items-center">
+                                    <!-- Bouton "Messagerie" pour contacter le client -->
+                                    <a href="messagerie.php?client_id=<?php echo htmlspecialchars($app['client_id']); ?>" class="btn btn-secondary btn-block w-75">
+                                        <i class="fa fa-comments"></i> Contacter le client
                                     </a>
                                 </div>
                                 <?php } ?>
@@ -338,7 +380,16 @@ $agentSpecialty = isset($specialtyLabels[$app['agent_specialty']]) ? $specialtyL
                                     <p class="detail-value"><i class="fas fa-map-marker-alt text-primary"></i> <?php echo $rdvPlace; ?></p>
                                 </div>
                                 
-                                <?php if ($isAdmin || $isAgent) { ?>
+                                <?php if (!$isAgent) { // Si c'est un client qui consulte ?>
+                                <div class="mb-4">
+                                    <p class="detail-title">Agent Immobilier</p>
+                                    <p class="detail-value">
+                                        <i class="fas fa-user text-primary"></i> <?php echo $app['agent_firstname'] . ' ' . strtoupper($app['agent_name']); ?><br>
+                                        <i class="fas fa-phone text-primary"></i> <?php echo $app['agent_phone']; ?><br>
+                                        <i class="fas fa-envelope text-primary"></i> <?php echo $app['agent_email']; ?>
+                                    </p>
+                                </div>
+                                <?php } else { // Si c'est un agent qui consulte ?>
                                 <div class="mb-4">
                                     <p class="detail-title">Client</p>
                                     <p class="detail-value">

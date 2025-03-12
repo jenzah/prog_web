@@ -10,7 +10,7 @@ if (!isset($_SESSION['uid'])) {
 }
 
 $userId = $_SESSION['uid'];
-$paymentId = isset($_GET['payment_id']) ? intval($_GET['payment_id']) : 0;
+$paymentId = isset($_GET['appointment_id']) ? intval($_GET['appointment_id']) : 0;
 
 if ($paymentId <= 0) {
     die("<p class='alert alert-danger'>ID de paiement invalide.</p>");
@@ -25,7 +25,7 @@ $query = mysqli_query($con, "
     LEFT JOIN user agent ON a.agent_id = agent.uid
     WHERE a.aid = '$paymentId' 
     AND a.client_id = '$userId' 
-    AND a.rdv_payment_status = 'pending'
+    AND a.is_paid = 0
 ");
 
 if (!$query || mysqli_num_rows($query) == 0) {
@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $update = mysqli_query($con, "
                 UPDATE appointments 
-                SET rdv_payment_status = 'completed', rdv_payment_date = NOW()
+                SET is_paid = 1, rdv_payment_date = NOW()
                 WHERE aid = '$paymentId' AND client_id = '$userId'
             ");
 
